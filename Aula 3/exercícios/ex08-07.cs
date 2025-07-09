@@ -1,89 +1,70 @@
-﻿using System.Diagnostics;
-using System.Linq.Expressions;
+﻿// Objetivo
+// Criar um programa que valida a estrutura de um CPF e o formata para exibição.
+
+// Descrição
+// O programa deve solicitar ao usuário que digite um número de CPF. Em seguida, você deve criar os seguintes métodos:
+
+// Um método ValidarCpf que recebe uma string (o CPF) e retorna um bool indicando se ele possui 11 dígitos e se todos são números.
+
+// Um método FormatarCpf que recebe uma string (o CPF válido) e retorna uma nova string com o CPF formatado no padrão "XXX.XXX.XXX-XX".
+
+// No método Main, chame esses métodos. Se o CPF for inválido, exiba uma mensagem de erro. Se for válido, exiba o CPF formatado.
+
+// Regras de validação simples para este exercício:
+
+// O CPF deve ter exatamente 11 caracteres.
+
+// Todos os caracteres devem ser dígitos numéricos.
+
+// Exemplo de interação:
+
+// Entrada inválida:
+
+// Digite o CPF (apenas números): 12345
+// CPF inválido! O CPF deve conter 11 dígitos numéricos.
+// Entrada válida:
+
+// Digite o CPF (apenas números): 12345678901
+// CPF formatado: 123.456.789-01
 
 class Program
 {
-    public static void ExibirMenu()
+    public static bool ValidarCpf(string cpf)
     {
-        Console.WriteLine("Digite a opção para fazer uma equação:\n");
-        Console.WriteLine("1-Soma\n");
-        Console.WriteLine("2-Multiplicação\n");
-        Console.WriteLine("3-Subtração\n");
-        Console.WriteLine("3-Divisão");
-    }
-
-    public static double ObterNumero(string prompt)
-    {
-        Console.WriteLine(prompt);
-        double numero = Convert.ToDouble(Console.ReadLine());
-        return numero;
-    }
-
-    public static double SomarNumeros(double n1, double n2)
-    {
-        double resultado = n1 + n2;
-        return resultado;
-    }
-
-    public static double MultiplicarNumeros(double n1, double n2)
-    {
-        double resultado = n1 * n2;
-        return resultado;
-    }
-    public static double SubtrairNumeros(double n1, double n2)
-    {
-        double resultado = n1 - n2;
-        return resultado;
-    }
-    public static double DividirNumeros(double n1, double n2)
-    {
-        double resultado;
-        if (n2 == 0)
+        if (cpf.Length != 11)
         {
-            Console.WriteLine("Não é possível fazer essa operação");
-            resultado = 0;
+            return false;
         }
         else
         {
-            resultado = n1 / n2;
+            foreach (char c in cpf)
+            {
+                if (!char.IsDigit(c))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
-        return resultado;
-
     }
+
+    public static string FormatarCpf(string cpfValido)
+    {
+         return $"{cpfValido.Substring(0, 3)}.{cpfValido.Substring(3, 3)}.{cpfValido.Substring(6, 3)}-{cpfValido.Substring(9, 2)}";
+    }
+    
     static void Main(string[] args)
     {
-        ExibirMenu();
-        string Opcao = Console.ReadLine();
-        do
+        Console.WriteLine("Digite o CPF:");
+        string cpf = Console.ReadLine();
+
+        if (ValidarCpf(cpf) == true)
         {
-            string promptN1 = "Digite o primeiro número: ";
-            double n1 = ObterNumero(promptN1);
-            string promptN2 = "Digite o segundo número: ";
-            double n2 = ObterNumero(promptN2);
-            switch (Opcao)
-            {
-                case "1":
-                    Console.WriteLine($"Resultado: {SomarNumeros(n1, n2)}");
-                    break;
-
-                case "2":
-                    Console.WriteLine($"Resultado: {MultiplicarNumeros(n1, n2)}");
-                    break;
-
-                case "3":
-                    Console.WriteLine($"Resultado: {SubtrairNumeros(n1, n2)}");
-                    break;
-
-                case "4":
-                    Console.WriteLine($"Resultado: {DividirNumeros(n1, n2)}");
-                    break;
-
-                case "S":
-                default:
-                    Console.WriteLine("Digite apenas as opções: \n1-Soma\n2Multiplicação\n3-Subtração\n4-Divisão\nS-Sair");
-                    break;
-            }
-
-        } while (Opcao == "S");
+           Console.WriteLine(FormatarCpf(cpf));
+        }
+        else
+        {
+            Console.WriteLine("CPF inválido! O CPF deve conter 11 dígitos numéricos.");
+        }
     }
 }
