@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\TI 07\\Desktop\\Thais\\curso\\CursoFMX\\Aula 3\\exercícios\\Aula 3.csproj": {}
+    "C:\\Users\\TI 07\\Desktop\\Thais\\curso\\CursoFMX\\Aula 4\\exercicio\\exercicio.csproj": {}
   },
   "projects": {
-    "C:\\Users\\TI 07\\Desktop\\Thais\\curso\\CursoFMX\\Aula 3\\exercícios\\Aula 3.csproj": {
+    "C:\\Users\\TI 07\\Desktop\\Thais\\curso\\CursoFMX\\Aula 4\\exercicio\\exercicio.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\TI 07\\Desktop\\Thais\\curso\\CursoFMX\\Aula 3\\exercícios\\Aula 3.csproj",
-        "projectName": "Aula 3",
-        "projectPath": "C:\\Users\\TI 07\\Desktop\\Thais\\curso\\CursoFMX\\Aula 3\\exercícios\\Aula 3.csproj",
+        "projectUniqueName": "C:\\Users\\TI 07\\Desktop\\Thais\\curso\\CursoFMX\\Aula 4\\exercicio\\exercicio.csproj",
+        "projectName": "exercicio",
+        "projectPath": "C:\\Users\\TI 07\\Desktop\\Thais\\curso\\CursoFMX\\Aula 4\\exercicio\\exercicio.csproj",
         "packagesPath": "C:\\Users\\TI 07\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\TI 07\\Desktop\\Thais\\curso\\CursoFMX\\Aula 3\\exercícios\\obj\\",
+        "outputPath": "C:\\Users\\TI 07\\Desktop\\Thais\\curso\\CursoFMX\\Aula 4\\exercicio\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\TI 07\\AppData\\Roaming\\NuGet\\NuGet.Config"
