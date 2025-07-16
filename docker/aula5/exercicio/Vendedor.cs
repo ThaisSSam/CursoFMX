@@ -7,12 +7,12 @@ public class Vendedor : Funcionario
     public decimal ComissaoPorVenda { get; set; }
     private int _totalVendas { get; set; }
 
-    public Vendedor(string nome, decimal salarioBase, decimal comissaoPorVenda, int _totalVendas): base(nome, salarioBase)
+    public Vendedor(string nome, decimal salarioBase, decimal comissaoPorVenda, int totalVendas) : base(nome, salarioBase)
     {
-        nome = nome;
-        salarioBase = salarioBase;
+        Nome = nome;
+        SalarioBase = salarioBase;
         ComissaoPorVenda = comissaoPorVenda;
-        _totalVendas = 0;
+        _totalVendas = totalVendas;
     }
 
     public void RegistrarVenda(int quantidade)

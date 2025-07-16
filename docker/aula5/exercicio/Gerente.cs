@@ -8,8 +8,8 @@ public class Gerente : Funcionario
 
     public Gerente(string nome, decimal salarioBase, string departamento) : base(nome, salarioBase)
     {
-        nome = nome;
-        salarioBase = salarioBase;
+        Nome = nome;
+        SalarioBase = salarioBase;
         Departamento = departamento;
     }
 
@@ -20,8 +20,8 @@ public class Gerente : Funcionario
 
     public override decimal CalcularSalarioTotal()
     {
-        salarioBase += salarioBase * 0.2;
-        return salarioBase;
+        SalarioBase += SalarioBase * 0.2m;
+        return SalarioBase;
     }
 
 

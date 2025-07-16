@@ -1,25 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "/workspaces/CursoFMX/docker/aula5/exercicio/exercicio.csproj": {}
+    "C:\\Users\\thais\\OneDrive\\Documentos\\MeusProjetos\\cursoFMX\\CursoFMX\\docker\\aula5\\exercicio\\exercicio.csproj": {}
   },
   "projects": {
-    "/workspaces/CursoFMX/docker/aula5/exercicio/exercicio.csproj": {
+    "C:\\Users\\thais\\OneDrive\\Documentos\\MeusProjetos\\cursoFMX\\CursoFMX\\docker\\aula5\\exercicio\\exercicio.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/workspaces/CursoFMX/docker/aula5/exercicio/exercicio.csproj",
+        "projectUniqueName": "C:\\Users\\thais\\OneDrive\\Documentos\\MeusProjetos\\cursoFMX\\CursoFMX\\docker\\aula5\\exercicio\\exercicio.csproj",
         "projectName": "exercicio",
-        "projectPath": "/workspaces/CursoFMX/docker/aula5/exercicio/exercicio.csproj",
-        "packagesPath": "/root/.nuget/packages/",
-        "outputPath": "/workspaces/CursoFMX/docker/aula5/exercicio/obj/",
+        "projectPath": "C:\\Users\\thais\\OneDrive\\Documentos\\MeusProjetos\\cursoFMX\\CursoFMX\\docker\\aula5\\exercicio\\exercicio.csproj",
+        "packagesPath": "C:\\Users\\thais\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\thais\\OneDrive\\Documentos\\MeusProjetos\\cursoFMX\\CursoFMX\\docker\\aula5\\exercicio\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/root/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\thais\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -58,7 +65,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.412/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.411/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
