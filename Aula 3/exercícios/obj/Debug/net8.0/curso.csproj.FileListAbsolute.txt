@@ -1,4 +1,0 @@
-C:\Users\TI 07\Desktop\Thais\curso\obj\Debug\net8.0\curso.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\TI 07\Desktop\Thais\curso\obj\Debug\net8.0\curso.AssemblyInfoInputs.cache
-C:\Users\TI 07\Desktop\Thais\curso\obj\Debug\net8.0\curso.AssemblyInfo.cs
-C:\Users\TI 07\Desktop\Thais\curso\obj\Debug\net8.0\curso.csproj.CoreCompileInputs.cache
