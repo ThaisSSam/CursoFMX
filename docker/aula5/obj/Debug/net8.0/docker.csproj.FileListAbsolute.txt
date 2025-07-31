@@ -1,0 +1,10 @@
+/workspaces/CursoFMX/docker/aula5/obj/Debug/net8.0/docker.GeneratedMSBuildEditorConfig.editorconfig
+/workspaces/CursoFMX/docker/aula5/obj/Debug/net8.0/docker.AssemblyInfoInputs.cache
+/workspaces/CursoFMX/docker/aula5/obj/Debug/net8.0/docker.AssemblyInfo.cs
+/workspaces/CursoFMX/docker/aula5/obj/Debug/net8.0/docker.csproj.CoreCompileInputs.cache
+/workspaces/CursoFMX/docker/aula5/obj/Debug/net8.0/docker.sourcelink.json
+C:/Users/TI 07/Desktop/Thais/curso/CursoFMX/docker/aula5/obj/Debug/net8.0/docker.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/TI 07/Desktop/Thais/curso/CursoFMX/docker/aula5/obj/Debug/net8.0/docker.AssemblyInfoInputs.cache
+C:/Users/TI 07/Desktop/Thais/curso/CursoFMX/docker/aula5/obj/Debug/net8.0/docker.AssemblyInfo.cs
+C:/Users/TI 07/Desktop/Thais/curso/CursoFMX/docker/aula5/obj/Debug/net8.0/docker.csproj.CoreCompileInputs.cache
+C:/Users/TI 07/Desktop/Thais/curso/CursoFMX/docker/aula5/obj/Debug/net8.0/docker.sourcelink.json
