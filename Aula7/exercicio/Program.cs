@@ -1,9 +1,29 @@
-﻿using exercicio;
-using exercicio.Classe;
-using exercicio.ClasseAbstrata;
-using exercicio.Interface;
+﻿using System;
+using System.Collections.Generic;
+using exercicio.Classe;           
+using exercicio.Interface;       
+using exercicio.ClasseAbstrata;  
 
-List = new Lista<INotificavel>;
+class Program
+{
+    static void Main()
+    {
+        List<INotificavel> Lista = new List<INotificavel>();
 
-Lista Add(EmailNotificador);
-Lista Add(SmsNotificador);
+        EmailNotificador emailNotificador = new EmailNotificador("sistema@empresa.com", "cliente@email.com");
+        SmsNotificador smsNotificador = new SmsNotificador("Sistema","(99)99999-9999");
+
+        Lista.Add(emailNotificador);
+        Lista.Add(smsNotificador);
+
+        foreach (var item in Lista)
+        {
+            if (item is NotificadorBase notificador)
+            {
+                notificador.ConfigurarCredenciais();
+            }
+
+            item.EnviarNotificacao("Mensagem de teste!");
+        }
+    }
+}

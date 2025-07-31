@@ -1,8 +1,9 @@
 using System;
 
-namespace exercicio.Interface;
-
-abstract interface INotificavel
+namespace exercicio.Interface
 {
-    void EviarNotificacao(string mensagem);
+    public interface INotificavel
+    {
+        void EnviarNotificacao(string mensagem);
+    }
 }

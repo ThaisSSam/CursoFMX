@@ -1,13 +1,19 @@
-using System;
-
-namespace exercicio.ClasseAbstrata;
-
-public class NotificadorBase
+namespace exercicio.ClasseAbstrata
 {
-    public string Remetente { get; set; }
-    protected NotificadorBase(string remetente);
+    public abstract class NotificadorBase
+    {
+        public string Remetente { get; set; }
 
-    public void LogarNotificacao(string mensagem);
+        protected NotificadorBase(string remetente)
+        {
+            Remetente = remetente;
+        }
 
-    public abstract void ConfigurarCredenciais();
+        public void LogarNotificacao(string mensagem)
+        {
+            Console.WriteLine($"Log: {mensagem}");
+        }
+
+        public abstract void ConfigurarCredenciais();
+    }
 }

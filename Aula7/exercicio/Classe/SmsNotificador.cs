@@ -1,25 +1,28 @@
 using System;
+using exercicio.ClasseAbstrata;
+using exercicio.Interface;
 
-namespace exercicio.Classe;
-
-public class SmsNotificador : NotificadorBase, INotificavel
+namespace exercicio.Classe
 {
-    public string NumeroTelefone { get; set; }
-
-    public SmsNotificador(string Remetente, string NumeroTelefone)
+    public class SmsNotificador : NotificadorBase, INotificavel
     {
-        Remetente = Remetente;
-        NumeroTelefone = NumeroTelefone;
-    }
+        public string NumeroTelefone { get; set; }
 
-    override void ConfigurarCredenciais()
-    {
-        Console.WriteLine("Configurando credenciais de SMS...");
-    }
+        public SmsNotificador(string remetente, string numeroTelefone)
+            : base(remetente)
+        {
+            NumeroTelefone = numeroTelefone;
+        }
 
-    void EnviarNotificacao(string mensagem)
-    {
-        Console.WriteLine($"SMS de {Remetente} para {NumeroTelefone}: {mensagem}");
-        LogarNotificacao(mensagem);
+        public override void ConfigurarCredenciais()
+        {
+            Console.WriteLine("Configurando credenciais de SMS...");
+        }
+
+        public void EnviarNotificacao(string mensagem)
+        {
+            Console.WriteLine($"SMS de {Remetente} para {NumeroTelefone}: {mensagem}");
+            LogarNotificacao(mensagem);
+        }
     }
 }

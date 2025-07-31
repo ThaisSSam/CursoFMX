@@ -1,24 +1,28 @@
 using System;
+using exercicio.ClasseAbstrata;
+using exercicio.Interface;
 
-namespace exercicio.Classe;
-
-public class EmailNotification : NotificadorBase, INotificavel
+namespace exercicio.Classe
 {
-    public string EmailDestino { get; set; }
-    public EmailNotificador(string Remetente, string EmailDestino)
+    public class EmailNotificador : NotificadorBase, INotificavel
     {
-        Remetente = Remetente;
-        EmailDestino = EmailDestino;
-    }
+        public string EmailDestino { get; set; }
 
-    override void ConfigurarCredenciais()
-    {
-        Console.WriteLine("Configurando credenciais de e-mail...");
-    }
+        public EmailNotificador(string remetente, string emailDestino)
+            : base(remetente)
+        {
+            EmailDestino = emailDestino;
+        }
 
-    void EnviarNotificacao(string mensagem)
-    {
-        Console.WriteLine($"Email de {Remetente} para {EmailDestino}: {mensagem}");
-        LogarNotificacao(mensagem);
+        public override void ConfigurarCredenciais()
+        {
+            Console.WriteLine("Configurando credenciais de e-mail...");
+        }
+
+        public void EnviarNotificacao(string mensagem)
+        {
+            Console.WriteLine($"Email de {Remetente} para {EmailDestino}: {mensagem}");
+            LogarNotificacao(mensagem);
+        }
     }
 }
