@@ -41,3 +41,6 @@ Preparar ambiente com os instaladores abaixo.
 No terminal digitar o código *dotnet new console* \
 O código de ser feito no arquivo **program.cs** \
 Para rodar o projeto no terminal utilize o código *dotnet run* 
+
+#Certificados
+- [Dotnet](certificados/Certificado%20FMX%20Academy_Módulo%201_Thais%20Sampaio.pdf)
