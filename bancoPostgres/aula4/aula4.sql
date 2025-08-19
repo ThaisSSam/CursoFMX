@@ -53,74 +53,21 @@ with vendas as(
 	clientes as(
 		select cli.*
 		from clientes cli
+	),
+	insert_teste as(
+		insert into tabel
 	)
 select vendas.id, vendas.valor, vendas.data_venda, clientes.nome
 	from vendas
 	inner join clientes on clientes.id= vendas.cliente_id
 
--- colocar o insert em uma tabela temporária
+
+
 create table tabela_teste(
 	id int,
 	valor numeric(10,2),
 	data_venda date,
-	nome character varying(100))
-	
-with vendas as(
-	select ven.*
-	from vendas ven
-	where valor > 1000
-	), 	
-	clientes as(
-		select cli.*
-		from clientes cli
-	),
-	insert_teste as(
-		insert into tabela_teste values(10,10,'2025-08-14', 'itb')
-		returning *
+	nome character vaying(100)
 	)
-	select * from tabela_teste
-
-
-
--- Ex 1
-select cli.id, ven.valor
-	from vendas ven
-	inner join clientes cli on cli.id = ven.cliente_id
-	where valor > (select avg(valor)
-						from vendas)
--- Ex 2
-select ven.*, (select sum(ven.valor)
-				from vendas ven
-				where cli.id = ven.cliente_id
-				) total
-	from vendas ven
-	inner join clientes cli on cli.id = ven.cliente_id
-	where valor in (select ven.valor
-					from vendas ven
-					inner join clientes cli on cli.id = ven.cliente_id
-					)
-	order by ven.cliente_id
-	
--- Ex 3
-with valor as(
-	select cli.id, sum(ven.valor)
-	from vendas ven
-	inner join clientes cli on cli.id = ven.cliente_id
-	where cli.id = ven.cliente_id
-	group by cli.id 
-	)
-select *
-	from valor
-	
-
--- Ex 4
-select upper(nome)
-from clientes
-
--- Ex 5
-select substring(nome from 1 for 3)
-from clientes
-
-
 
 	
