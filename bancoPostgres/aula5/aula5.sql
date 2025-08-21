@@ -25,7 +25,6 @@ select abs(-4.1)
 select random()
 -- De 1 - 11
 select (random() * 10 + 1)::int
-
 -- Horário de brasília
 select now()
 -- Horário local
@@ -44,26 +43,24 @@ select extract(day from now()),
 		now()
 
 
--- Mais ou menos do tempo atual
 select now() + interval '1 year'
 select now() - interval '1 year'
 
--- Agregação em linha (Window function), adiciona uma coluna com o cálculo
+
 select ve.id, ve.cliente_id, cli.nome, ve.valor, 
 sum(ve.valor) over(partition by ve.cliente_id) as total_cliente,
 count(ve.valor) over(partition by ve.cliente_id) as qtde_vendas
 from vendas ve
 inner join clientes cli on cli.id = ve.cliente_id
-
--- Ranking (posição) das consultas
-select *
-from (select ve.cliente_id, cli.nome,
-	sum(ve.valor), 
+ 
+select ve.cliente_id, cli.nome,
+	sum(ve.valor) ,
 	rank() over (order by sum(ve.valor) desc) as ranking
 from vendas ve
 inner join clientes cli on cli.id = ve.cliente_id
 group by ve.cliente_id, cli.nome) a
-where ranking between 1 and 3
+order by ranking 
+
 
 
 -- 	Ex 1
@@ -73,7 +70,7 @@ select id, valor, (select round(valor,2)
 from vendas v1
 
 -- Ex 2
-select id, valor, extract(year from data_venda) as ano_venda
+select id, valor, extract(year from data_venda)
 from vendas v1
 
 -- Ex 3
@@ -92,5 +89,5 @@ select cli.nome,
 from vendas ve
 inner join clientes cli on cli.id = ve.cliente_id
 group by ve.cliente_id, cli.nome, ve.valor
-order by ranking
+order by ranking 
 
