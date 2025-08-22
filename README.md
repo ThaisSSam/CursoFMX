@@ -44,3 +44,5 @@ Para rodar o projeto no terminal utilize o código *dotnet run*
 
 # Certificados
 - [Dotnet](certificados/Certificado%20FMX%20Academy_Módulo%201_Thais%20Sampaio.pdf)
+- [Mindset](certificados/Thais%20dos%20Santos%20Sampaio%20-%20Certificado%20Mindset.pdf)
+- [Gestão Ágil Scrum](certificados/Thais%20dos%20Santos%20Sampaio%20-%20Certificado%20Gestão%20Ágil%20Scrum.pdf)
