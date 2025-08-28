@@ -3,7 +3,7 @@
 ## PRÉ-REQUISITOS:
 Preparar ambiente com os instaladores abaixo.
 
-### NET SDK (Software Development Kit)
+## NET SDK (Software Development Kit)
 
 #### Como instalar:
   - [Instalar DotNet](https://dotnet.microsoft.com/pt-br/download)
@@ -34,15 +34,19 @@ Preparar ambiente com os instaladores abaixo.
   4. Clique no botão **Install** ao lado da extensão "C# Dev Kit".
   5. (Pode pedir para reiniciar o VS Code).
 
----
-
-## COMEÇAR UM NOVO PROJETO:
+### COMEÇAR UM NOVO PROJETO .NET:
 
 No terminal digitar o código *dotnet new console* \
 O código de ser feito no arquivo **program.cs** \
 Para rodar o projeto no terminal utilize o código *dotnet run* 
 
+---
+
+## pgAdmin 4 - PostgreSQL Tools
+  - [Instalar](https://www.pgadmin.org/download/pgadmin-4-windows/)
+  - Baixe e execute o instalador.
+  
 # Certificados
-- [Dotnet](certificados/Certificado%20FMX%20Academy_Módulo%201_Thais%20Sampaio.pdf)
-- [Mindset](certificados/Thais%20dos%20Santos%20Sampaio%20-%20Certificado%20Mindset.pdf)
-- [Gestão Ágil Scrum](certificados/Thais%20dos%20Santos%20Sampaio%20-%20Certificado%20Gestão%20Ágil%20Scrum.pdf)
+  - [Dotnet](certificados/Certificado%20FMX%20Academy_Módulo%201_Thais%20Sampaio.pdf)
+  - [Mindset](certificados/Thais%20dos%20Santos%20Sampaio%20-%20Certificado%20Mindset.pdf)
+  - [Gestão Ágil Scrum](certificados/Thais%20dos%20Santos%20Sampaio%20-%20Certificado%20Gestão%20Ágil%20Scrum.pdf)
