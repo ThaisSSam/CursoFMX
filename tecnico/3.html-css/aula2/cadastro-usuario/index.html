@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de usuário</title>
+</head>
+<body>
+    <header style="display: flex; flex-direction: row; align-items: center;">
+        <img style="width: 80px; margin: 30px;" src="assets/itb_equipamentos_logo.jpg" alt="Logo ITB">
+        <h1>Cadastro de usuário</h1>
+    </header>
+
+    <main>
+        <h2>Formulário de cadastro</h2>
+        <form action="/enviar" method="post">
+            <div>
+                <label for="nome">Nome completo</label>
+                <input type="text" name="nome" id="nome" required>
+            </div>
+            <br>
+            <div>
+                <label for="email">E-mail</label>
+                <input type="email" name="email" id="email" required>
+            </div>
+            <br>
+            <div>
+                <label for="senha">Senha</label>
+                <input type="password" name="senha" id="senha" required>
+            </div>
+            <br>
+            <div>
+                <label for="confirma-senha">Confirmação da senha</label>
+                <input type="password" name="confirma-senha" id="confirma-senha" required>
+            </div>
+            <hr>
+
+            <section>
+                <h3>Gênero</h3>
+                <div>
+                    <label for="masculino">Masculino</label>
+                    <input type="radio" name="genero" id="masculino">
+                </div>
+                <div>
+                    <label for="feminino">Feminino</label>
+                    <input type="radio" name="genero" id="feminino">
+                </div>
+                <div>
+                    <label for="naoResponder">Prefiro não responder</label>
+                    <input type="radio" name="genero" id="naoResponder">
+                </div>
+            </section>
+            <hr>
+
+            <section id="interresses">
+                <h3>Interesses</h3>
+                <div>
+                    <label for="html">HTML</label>
+                    <input type="checkbox" id="html" name="html">
+                </div>
+                <div>
+                    <label for="css">CSS</label>
+                    <input type="checkbox" id="css" name="css">
+                </div>
+                <div>
+                    <label for="js">JavaScript</label>
+                    <input type="checkbox" id="js" name="js">
+                </div>
+                <div>
+                    <label for="c">C#</label>
+                    <input type="checkbox" id="c" name="c">
+                </div>
+                <div>
+                    <label for="python">Python</label>
+                    <input type="checkbox" id="python" name="python">
+                </div>
+                <div>
+                    <label for="java">Java</label>
+                    <input type="checkbox" id="java" name="java">
+                </div>
+                <hr>
+            </section>
+            <div>
+                <button type="submit">Cadastrar</button>
+                <button type="reset">Limpar</button>
+            </div>
+        </form>
+        <footer>
+            <img style="width: 80px; position: relative; left: 75dvw;" src="assets/itb_equipamentos_logo.jpg" alt="Logo ITB">
+        </footer>
+    </main>
+
+    
+</body>
+</html>
