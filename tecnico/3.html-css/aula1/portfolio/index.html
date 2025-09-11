@@ -6,39 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="icon-home.png">
     <title>Portifólio</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
     <header>
-        <h1>Portifólio</h1>
-        <nav style="display: flex; flex-direction: row;">
-            <div style="display: flex; flex-direction: row; margin-left:10px; align-items: center;">
-                <span style="display: flex; width: 4px; height: 4px; border-radius: 50%; background-color: darkgreen; margin-right: 3px;"></span>
-                <a href="#sobre" style="text-decoration: none; color: darkgreen;">Sobre</a>
+        <h1 >Portifólio</h1>
+        <nav>
+            <div class="menu">
+                <span></span>
+                <a href="#sobre">Sobre</a>
             </div>
-            <div style="display: flex; flex-direction: row;margin-left: 10px; align-items: center;">
-                <span style="display: flex; width: 4px; height: 4px; border-radius: 50%; background-color: darkgreen; margin-right: 3px;"></span>
-                <a href="#hobbies" style="text-decoration: none; color: darkgreen;">Hobbies</a>
+            <div class="menu">
+                <span></span>
+                <a href="#hobbies">Hobbies</a>
             </div>
-            <div style="display: flex; flex-direction: row;margin-left: 10px; align-items: center;">
-                <span style="display: flex; width: 4px; height: 4px; border-radius: 50%; background-color: darkgreen; margin-right: 3px;"></span>
-                <a href="#contatos" style="text-decoration: none; color: darkgreen;">Contatos</a>
+            <div class="menu">
+                <span></span>
+                <a href="#contatos">Contatos</a>
             </div>
         </nav>
+        <hr>
     </header>
-    <hr style="background-color: rgb(149, 182, 160); height: 3px;">
     
     <main>
         <section id="sobre" >
             <div style="display: flex; flex-direction: row;">
-            <img src="assets/foto-perfil.png" alt="Foto de Thais" width="100" height="120" loading="lazy" style="border-radius: 70%; display: flex; flex-direction: row;">
+            <img src="assets/foto-perfil.png" alt="Foto de Thais" width="100" height="120" loading="lazy" class="foto">
 
-            <h2 style="width: fit-content; margin-left: 30px;">Thais dos Santos Sampaio</h2>
+            <h2>Thais dos Santos Sampaio</h2>
             </div>
 
-            <p >Estou estagiando no setor de TI na ITB, estudando sistemas para internet no IFSP e sistemas de informações ead pela Anhembi</p>
-
+            <p >Estou estagiando no setor de TI na ITB, estudando sistemas para internet no IFSP e sistemas de informações ead pela Anhembi
+            </p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus, reiciendis animi? Excepturi possimus debitis dicta ad. Soluta quo deserunt, rem nostrum facilis voluptas, enim consequuntur commodi quas blanditiis minus et asperiores ullam deleniti? Nulla est adipisci vitae ad obcaecati quisquam voluptate. Nihil repellat facilis eligendi cum minima, voluptate similique eaque quas nobis quisquam autem aliquam accusamus, odit laborum, quod magni reiciendis ex. Maiores, natus, nesciunt sunt, repellendus odit at delectus cum autem fugiat nostrum deserunt nisi obcaecati! Optio, vero natus iure perferendis rerum quae incidunt illum. Explicabo libero numquam mollitia quibusdam, soluta iure aut vel dolorum corporis corrupti beatae molestias!</p>
         </section>
-        <hr style="background-color: rgb(149, 182, 160); height: 3px;">
+        <hr>
 
         <section id="hobbies">
             <h2>Meus hobbies</h2>
@@ -49,14 +51,16 @@
             </ul>
         </section>
 
-        <hr style="background-color: rgb(149, 182, 160); height: 3px;">
+        <hr>
         <section id="contatos">
-            <p>Você pode me encontrar no <a style="color: darkgreen;" href="https://github.com/thaisssam">GitHub</a></p>
+            <h2>Contatos</h2>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aspernatur tempore, aperiam qui nemo numquam similique doloribus dicta hic distinctio eaque blanditiis tempora quia ad modi deserunt accusantium vel id molestias consectetur neque dolor, nesciunt veniam perferendis! Voluptatum suscipit necessitatibus consequatur repellat, nihil libero amet. Enim iure repellendus voluptatem. Eveniet labore maiores dolorum eum culpa fuga officiis est asperiores vero corporis?</p>
+            <p>Você pode me encontrar no <a href="https://github.com/thaisssam">GitHub</a></p>
         </section>
     </main>
     
     <footer>
-        <img src="assets/img/itb_equipamentos_logo.jpg" alt="Logo da ITB">
+        <img src="assets/img/itb_equipamentos_logo.jpg" alt="Logo da ITB" class="logo">
     </footer>
 </body>
 </html>

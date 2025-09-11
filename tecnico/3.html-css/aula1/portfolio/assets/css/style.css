@@ -1,0 +1,105 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    --corFundo: beige;
+    --corClara: rgb(149, 182, 160);
+    --corMédia: darkgreen;
+    --corEscura: rgb(25, 66, 1);
+}
+
+body{
+    background-color: var(--corFundo);
+}
+
+header{
+    position: fixed; 
+    width: 100dvw; 
+    height: fit-content;
+    background-color: var(--corFundo); 
+    top:0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+h1{
+    justify-self: center;
+    align-self: center;
+    margin-top: 0.5rem;
+}
+
+nav{
+    display: flex; 
+    flex-direction: row; background-color:var(--corClara); 
+    padding: 0.5rem;
+    margin-bottom: -1rem;
+}
+
+.menu{
+    display: flex; 
+    flex-direction: row; margin-left:15px; 
+    align-items: center;
+    background-color: var(--corClara);
+}
+
+a{
+    color: var(--corEscura); text-decoration: none;
+}
+
+a:hover{
+    text-decoration: underline;
+    color: var(--corMédia);
+}
+
+span{
+    display: flex; 
+    width: 4px; height: 4px; border-radius: 50%; background-color: var(--corEscura); margin-right: 3px;
+}
+
+hr{
+    background-color: var(--corClara); 
+    height: 3px;
+}
+
+main{
+    margin-top: 7rem;
+}
+
+section{
+    padding: 1rem;
+}
+
+.foto{
+    border-radius: 70%; 
+    display: flex; 
+    flex-direction: row;
+}
+
+h2{
+    width: fit-content; 
+    margin-left: 30px;
+}
+
+p{
+    margin: 15px 0;
+}
+
+ul{
+    margin-left: 1rem;
+}
+
+li{
+    margin: 0.5rem 0;
+}
+
+footer{
+    display: flex;
+    width: 100dvw;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo{
+    width: 100px;
+}
+
