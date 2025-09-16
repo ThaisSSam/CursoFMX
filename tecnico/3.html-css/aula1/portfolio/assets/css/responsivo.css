@@ -1,0 +1,63 @@
+@media (min-width: 425px) {
+    *{
+        --txtTitulo: 28px;
+        --txtParagrafo: 16px;
+        --txtMenu: 20px
+    }
+
+    #hobbies{
+        width: 50dvw;
+        margin-left: 2rem;
+        box-shadow: 2px 0px 0rem var(--corClara);
+    }
+
+    #contatos{
+        width: 30dvw;
+    }
+}
+
+@media (min-width: 768px) {
+    section {
+        padding: 1rem;
+    }
+    
+    #sobre{
+        box-shadow: 2px 0px 0rem var(--corClara);
+    }
+
+    #hobbies{
+        width: fit-content;
+        margin-left: 0;
+    }
+
+    #contatos{
+        width: fit-content;
+    }
+
+    #projetos{
+        width: 100dvw;
+    }
+
+    .container-projetos{
+        display: grid;
+        grid-template-columns: 50dvw 50dvw;
+        width: 100dvw;
+    }
+
+    .ImgsDiv img {
+        width: 40dvw;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container-projetos{
+        display: grid;
+        grid-template-columns: 31dvw 31dvw 31dvw;
+        gap: 0.5rem;
+        width: 100dvw;
+    }
+
+    .ImgsDiv img {
+        width: 28dvw;
+    }
+}
