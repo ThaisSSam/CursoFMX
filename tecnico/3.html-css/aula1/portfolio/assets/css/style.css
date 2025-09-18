@@ -7,8 +7,8 @@
     --corEscura: rgb(25, 66, 1);
     --txtTitulo: 20px;
     --txtParagrafo: 14px;
-    --txtMenu: 16px
-
+    --txtMenu: 16px;
+    font-family: 'Atma', system-ui;
 }
 
 body{
@@ -48,6 +48,10 @@ nav{
     font-size: var(--txtMenu);
 }
 
+.menu a:hover{
+    font-weight: bold;
+}
+
 a{
     color: var(--corEscura); text-decoration: none;
 }
@@ -85,6 +89,10 @@ section{
     height: 15dvh;
     width: auto;
     margin-right: 0.5rem;
+    animation-name: animacao;
+    animation-duration: 5s;
+    animation-iteration-count: infinite ;
+    animation-direction: alternate;
 }
 
 h2{
@@ -133,19 +141,36 @@ footer{
     align-items: center;
     justify-items: center;
     margin-top: 0.5rem;
+
+}
+
+@keyframes animacao{
+    from{ scale: 1;}
+    to { scale: 1.3;}
 }
 
 .projeto{
     width: max-content;
     height: auto;
-    margin: 0.5rem;
+    margin: 2rem 0.5rem -0.5rem 0.5rem;
     padding: 0.5rem;
     border: 2px dotted var(--corClara);
+    background-color: var(--corFundo);
+    transition: all 2s ease-in-out;
+}
+
+.projeto:hover {
+    scale: 1.3;
+}
+
+.projeto:hover .link{
+    display: flex;
 }
 
 .ImgsDiv img{
     width: 55dvw;
     height: auto;
+    cursor: pointer;
 }
 
 #hobbies{
@@ -159,9 +184,46 @@ footer{
 #sobre{
     display: flex;
     flex-direction: row;
+    padding: 2rem;
+}
+
+#sobre img{
+    margin-top: 1.5rem;
+    z-index: -1;
+}
+
+#sobre div{
+    margin-left: 1rem;
 }
 
 #sobre p{
     margin-left: 1rem;
     max-width: 450px;
+}
+
+.link{
+    display: none;
+}
+
+.link-git{
+    background-color: var(--corClara);
+    color: var(--corEscura);
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 1rem;
+    transition: all 0.5s ease-in-out;
+}
+
+.link-git:hover{
+    background-color: var(--corEscura);
+    color: var(--corClara);
+    scale: 1.08;
+}
+
+.link-git:active{
+    scale: 0.9;
+}
+
+footer{
+    margin-top: 2rem;
 }
