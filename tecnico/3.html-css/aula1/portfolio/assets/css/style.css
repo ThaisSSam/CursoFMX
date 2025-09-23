@@ -227,3 +227,45 @@ footer{
 footer{
     margin-top: 2rem;
 }
+
+.tabela{
+    width: 80%;
+}
+
+table{
+    width: 100%;
+    margin-left: 3rem;;
+}
+
+th{
+    background-color: var(--corEscura);
+    color: var(--corFundo);
+}
+
+th, td{
+    padding: 0.2rem;
+}
+
+tr:nth-child(even){
+    background-color: var(--corClara);
+}
+
+tfoot{
+    font-weight: bold;
+    color: var(--corEscura);
+}
+
+.musica{
+    display: flex;
+    width: 100%;
+    align-content: center;
+    justify-content: center;
+}
+
+.video{
+    display: flex;
+    width: 100%;
+    align-content: center;
+    justify-content: center;
+    width: 100%;
+}
