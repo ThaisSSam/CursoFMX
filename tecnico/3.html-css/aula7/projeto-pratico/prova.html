@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Produto</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="menu">
+                <li><a href="#inicio">Início</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#galeria">Galeria</a></li>
+                <li><a href="#especificacoes">Especificações</a></li>
+                <li><a href="#solicitar-prod">Solicitar</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section id="inicio">
+            <h1 id="titulo">Carro</h1>
+            <img src="assets/img/carro.jpg" alt="Carro cinza">
+        </section>
+
+        <section id="sobre">
+            <h2>Sobre</h2>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt maiores earum quisquam eum nihil, voluptatem dolores quae, ex adipisci recusandae cumque porro amet est assumenda labore nam id? Aperiam, culpa?</p>
+        </section>
+
+        <section id="galeria">
+            <h2>Galeria</h2>
+            <div class="grid">
+                <img src="assets/img/carro.jpg" alt="Carro cinza">
+                <img src="assets/img/carro.jpg" alt="Carro cinza">
+                <img src="assets/img/carro.jpg" alt="Carro cinza">
+                <img src="assets/img/carro.jpg" alt="Carro cinza">
+                <img src="assets/img/carro.jpg" alt="Carro cinza">
+            </div>
+        </section>
+
+        <section id="especificacoes">
+            <h2>Especificações</h2>
+            <p>Tabela de Especificações Técnicas</p>
+            <table class="tabela" border="1">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Descrição</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Material</td>
+                        <td>Lorem, ipsum dolor.</td>
+                        <td>Lorem, ipsum.</td>
+                    </tr>
+                    <tr>
+                        <td>Peso</td>
+                        <td>Lorem ipsum dolor sit.</td>
+                        <td>Lorem, ipsum dolor.</td>
+                    </tr>
+                    <tr>
+                        <td>Dimensões</td>
+                        <td>Lorem, ipsum.</td>
+                        <td>Lorem, ipsum dolor.</td>
+                    </tr>
+                    <tr>
+                        <td>Garantia</td>
+                        <td>Lorem, ipsum dolor.</td>
+                        <td>Lorem ipsum dolor sit.</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3">*Valores meramente ilustrativos</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </section>
+
+        <section id="solicitar-prod">
+            <h2>Solicitar produto</h2>
+            <form action="">
+                <div>
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" placeholder="José da Silva">
+                </div>
+                <div>
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" placeholder="jose.silva@email.com">
+                </div>
+                <div>
+                    <label for="tel">Telefone</label>
+                    <input type="tel" id="tel" placeholder="(00)00000-0000">
+                </div>
+                <div>
+                    <button type="submit">Solicitar</button>
+                </div>
+            </form>
+        </section>
+
+    </main>
+</body>
+</html>
