@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\4.api\\aula2\\Modulo-5-APIs\\LojaApi\\LojaApi.csproj": {}
+    "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\4.api\\aula2\\Modulo-5-APIs\\LojaApi\\LojaApi.csproj": {}
   },
   "projects": {
-    "c:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\4.api\\aula2\\Modulo-5-APIs\\LojaApi\\LojaApi.csproj": {
+    "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\4.api\\aula2\\Modulo-5-APIs\\LojaApi\\LojaApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\4.api\\aula2\\Modulo-5-APIs\\LojaApi\\LojaApi.csproj",
+        "projectUniqueName": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\4.api\\aula2\\Modulo-5-APIs\\LojaApi\\LojaApi.csproj",
         "projectName": "LojaApi",
-        "projectPath": "c:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\4.api\\aula2\\Modulo-5-APIs\\LojaApi\\LojaApi.csproj",
+        "projectPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\4.api\\aula2\\Modulo-5-APIs\\LojaApi\\LojaApi.csproj",
         "packagesPath": "C:\\Users\\TI 07\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\4.api\\aula2\\Modulo-5-APIs\\LojaApi\\obj\\",
+        "outputPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\4.api\\aula2\\Modulo-5-APIs\\LojaApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\TI 07\\AppData\\Roaming\\NuGet\\NuGet.Config"

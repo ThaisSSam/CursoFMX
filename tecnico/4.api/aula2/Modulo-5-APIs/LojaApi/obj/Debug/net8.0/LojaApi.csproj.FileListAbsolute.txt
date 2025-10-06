@@ -26,3 +26,8 @@ C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\4.api\aula2\Modulo-5-APIs\LojaApi\
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\4.api\aula2\Modulo-5-APIs\LojaApi\obj\Debug\net8.0\LojaApi.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\4.api\aula2\Modulo-5-APIs\LojaApi\obj\Debug\net8.0\refint\LojaApi.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\4.api\aula2\Modulo-5-APIs\LojaApi\obj\Debug\net8.0\LojaApi.pdb
+c:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\4.api\aula2\Modulo-5-APIs\LojaApi\bin\Debug\net8.0\LojaApi.deps.json
+c:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\4.api\aula2\Modulo-5-APIs\LojaApi\bin\Debug\net8.0\LojaApi.runtimeconfig.json
+c:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\4.api\aula2\Modulo-5-APIs\LojaApi\bin\Debug\net8.0\LojaApi.pdb
+c:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\4.api\aula2\Modulo-5-APIs\LojaApi\obj\Debug\net8.0\LojaApi.genruntimeconfig.cache
+c:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\4.api\aula2\Modulo-5-APIs\LojaApi\obj\Debug\net8.0\ref\LojaApi.dll

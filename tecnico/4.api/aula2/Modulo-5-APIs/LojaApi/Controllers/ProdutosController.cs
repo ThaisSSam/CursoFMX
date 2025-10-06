@@ -12,9 +12,9 @@ namespace LojaApi.Controllers
         [HttpGet]
         public ActionResult<List<Produto>> GetAll()
         {
-            var clientes = ProdutoRepository.GetAll();
+            var produtos = ProdutoRepository.GetAll();
             // 200 OK - Sucesso 
-            return Ok(clientes);
+            return Ok(produtos);
         }
 
         [HttpGet("{id}")]
@@ -30,24 +30,61 @@ namespace LojaApi.Controllers
 
             // 200 OK - Sucesso 
             return Ok(produto);
-        } 
-        
-        [HttpPost]  
-        public ActionResult<Produto> Add(Produto novoProduto)  
-        { 
-            // Validação simples (o ideal é fazer validações mais complexas) 
-            if (string.IsNullOrWhiteSpace(novoProduto.Nome)) 
-            { 
-                // 400 Bad Request - Erro no cliente (dados inválidos) 
-                return BadRequest("O nome do cliente é obrigatório.");  
-            } 
+        }
 
-            var produtoCriado = ProdutoRepository.Add(novoProduto); 
+        [HttpPost]
+        public ActionResult<Produto> Add(Produto novoProduto)
+        {
+            // Validação simples (o ideal é fazer validações mais complexas) 
+            if (string.IsNullOrWhiteSpace(novoProduto.Nome))
+            {
+                // 400 Bad Request - Erro no produto (dados inválidos) 
+                return BadRequest("O nome do produto é obrigatório.");
+            }
+
+            var produtoCriado = ProdutoRepository.Add(novoProduto);
 
             // 201 Created - Novo recurso criado com sucesso 
             // Retorna o recurso criado e a URL para acessá-lo (boa prática REST) 
-            return CreatedAtAction(nameof(GetById), new { id = produtoCriado.Id }, produtoCriado);  
+            return CreatedAtAction(nameof(GetById), new { id = produtoCriado.Id }, produtoCriado);
+        }
+
+        // Endpoint: PUT api/Produtos/{id} 
+        [HttpPut("{id}")]
+        public ActionResult<Produto> Update(int id, Produto produtoAtualizado)
+        {
+            // Validação de entrada 
+            if (string.IsNullOrWhiteSpace(produtoAtualizado.Nome))
+            {
+                return BadRequest("O nome do produto é obrigatório para atualização.");
+            }
+
+            var produto = ProdutoRepository.Update(id, produtoAtualizado);
+
+            if (produto == null)
+            {
+                // 404 Not Found - Tentou atualizar algo que não existe 
+                return NotFound();
+            }
+
+            // 200 OK - Sucesso (Recurso substituído) 
+            return Ok(produto);
         } 
 
+        // Endpoint: DELETE api/Produtos/{id} 
+        [HttpDelete("{id}")] 
+        public IActionResult Delete(int id) // Usamos IActionResult pois não retornaremos um objeto Produto 
+        { 
+            var sucesso = ProdutoRepository.Delete(id); 
+
+            if (!sucesso) 
+            { 
+                // 404 Not Found - Tentou deletar algo que não existe 
+                return NotFound(); 
+            } 
+
+            // 204 No Content - Sucesso, mas não há corpo de resposta (padrão REST para DELETE) 
+            return NoContent();  
+        } 
     }
 }
