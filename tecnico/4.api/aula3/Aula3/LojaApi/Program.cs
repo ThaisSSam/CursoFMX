@@ -1,3 +1,4 @@
+// Program.cs
 using LojaApi.Repositories;
 using LojaApi.Repositories.Interfaces;
 using LojaApi.Services;
@@ -5,17 +6,24 @@ using LojaApi.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+// Adiciona os serviços ao contêiner de injeção de dependência.
 builder.Services.AddControllers();
 
-// Serviço
+// >>>>> CONFIGURAÇÃO DA INJEÇÃO DE DEPENDÊNCIA (DI) <<<<<
+
+// 1. Registro do Serviço
 builder.Services.AddScoped<IClienteService, ClienteService>();
 
-// Repositório
+builder.Services.AddScoped<IProdutoService, ProdutoService>();
+
+// 2. Registro do Repositório
+//    Sempre que alguém (como o ClienteService) pedir a Interface IClienteRepository,
+//    entregue a implementação (mockada) ClienteRepository.
 builder.Services.AddSingleton<IClienteRepository, ClienteRepository>();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddSingleton<IProdutoRepository, ProdutoRepository>();
+
+// Configuração do Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -29,9 +37,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
