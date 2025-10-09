@@ -49,7 +49,7 @@ namespace LojaApi.Controllers
             {
                 return BadRequest("O nome é obrigatório");
             }
-            var produto = _produtoService.Add(produtoAtualizado);
+            var produto = _produtoService.Update(id, produtoAtualizado);
             if (produto == null) return NotFound();
             return Ok(produto);
         }
