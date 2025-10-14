@@ -32,11 +32,3 @@ d:\AulaCSharp\Modulo-5-APIs\Aula3\LojaApi\obj\Debug\net8.0\refint\LojaApi.dll
 d:\AulaCSharp\Modulo-5-APIs\Aula3\LojaApi\obj\Debug\net8.0\LojaApi.pdb
 d:\AulaCSharp\Modulo-5-APIs\Aula3\LojaApi\obj\Debug\net8.0\LojaApi.genruntimeconfig.cache
 d:\AulaCSharp\Modulo-5-APIs\Aula3\LojaApi\obj\Debug\net8.0\ref\LojaApi.dll
-C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\4.api\aula4\Aula4\LojaApi\obj\Debug\net8.0\LojaApi.csproj.AssemblyReference.cache
-C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\4.api\aula4\Aula4\LojaApi\obj\Debug\net8.0\LojaApi.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\4.api\aula4\Aula4\LojaApi\obj\Debug\net8.0\LojaApi.AssemblyInfoInputs.cache
-C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\4.api\aula4\Aula4\LojaApi\obj\Debug\net8.0\LojaApi.AssemblyInfo.cs
-C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\4.api\aula4\Aula4\LojaApi\obj\Debug\net8.0\LojaApi.csproj.CoreCompileInputs.cache
-C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\4.api\aula4\Aula4\LojaApi\obj\Debug\net8.0\LojaApi.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\4.api\aula4\Aula4\LojaApi\obj\Debug\net8.0\LojaApi.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\4.api\aula4\Aula4\LojaApi\obj\Debug\net8.0\LojaApi.sourcelink.json

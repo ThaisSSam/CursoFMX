@@ -3357,24 +3357,32 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\TI 07\\.nuget\\packages\\": {}
+    "C:\\Users\\Gamer\\.nuget\\packages\\": {},
+    "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\4.api\\aula4\\Aula4\\LojaApi\\LojaApi.csproj",
+      "projectUniqueName": "D:\\AulaCSharp\\Modulo-5-APIs\\Aula5\\LojaApi\\LojaApi.csproj",
       "projectName": "LojaApi",
-      "projectPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\4.api\\aula4\\Aula4\\LojaApi\\LojaApi.csproj",
-      "packagesPath": "C:\\Users\\TI 07\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\4.api\\aula4\\Aula4\\LojaApi\\obj\\",
+      "projectPath": "D:\\AulaCSharp\\Modulo-5-APIs\\Aula5\\LojaApi\\LojaApi.csproj",
+      "packagesPath": "C:\\Users\\Gamer\\.nuget\\packages\\",
+      "outputPath": "D:\\AulaCSharp\\Modulo-5-APIs\\Aula5\\LojaApi\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\TI 07\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Gamer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -3392,7 +3400,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0": {
@@ -3438,7 +3447,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.411/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

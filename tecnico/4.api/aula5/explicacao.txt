@@ -1,0 +1,10 @@
+Entidades - mais baixa
+Data - Acesso ao banco
+Controllers - Receber requisições (verbos http) e passar para service
+Services - regras de negócio
+Repositories - mandar pro banco
+
+
+Ordem de fzr
+
+Entidades -> Repositories -> Repositories/Interfaces -> Services -> Services/Interfaces

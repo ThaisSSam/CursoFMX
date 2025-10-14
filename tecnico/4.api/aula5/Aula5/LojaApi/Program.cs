@@ -1,6 +1,5 @@
 // Program.cs
 using LojaApi.Data;
-using LojaApi.Entities;
 using LojaApi.Repositories;
 using LojaApi.Repositories.Interfaces;
 using LojaApi.Services;
@@ -15,7 +14,7 @@ builder.Services.AddControllers();
 // >>>>> CONFIGURAÇÃO DA INJEÇÃO DE DEPENDÊNCIA (DI) <<<<<
 
 // >>>>> CONFIGURAÇÃO DO ENTITY FRAMEWORK CORE E DI <<<<< 
-
+ 
 // 1. Configuração do DbContext com PostgreSQL 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection"); 
 builder.Services.AddDbContext<LojaContext>(options => 
@@ -28,9 +27,11 @@ builder.Services.AddScoped<IClienteService, ClienteService>();
 //    Sempre que alguém (como o ClienteService) pedir a Interface IClienteRepository,
 //    entregue a implementação (mockada) ClienteRepository.
 builder.Services.AddScoped<IClienteRepository, ClienteDBRepository>();
-builder.Services.AddScoped<IProdutoRepository, ProdutoDBRepository>();
-builder.Services.AddScoped<ICategoriaRepository, CategoriaDBRepository>();
-builder.Services.AddScoped<IClienteRepository, ClienteDBRepository>();
+
+builder.Services.AddScoped<IProdutoService, ProdutoService>(); 
+builder.Services.AddScoped<IProdutoRepository, ProdutoDBRepository>(); 
+builder.Services.AddScoped<ICategoriaService, CategoriaService>(); 
+builder.Services.AddScoped<ICategoriaRepository, CategoriaDBRepository>(); 
 
 // Configuração do Swagger
 builder.Services.AddEndpointsApiExplorer();
