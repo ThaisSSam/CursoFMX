@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Aula 5</title>
+</head>
+<body>
+    <header>
+        <h1>Aula 5</h1>
+    </header>
+    <main>
+        
+        <form id="cadastro"> 
+            <p id="mensagem"></p>
+            <div>
+                <label>Nome:</label> 
+                <input type="text" id="nome" placeholder="Seu nome completo" name="nome"/> 
+                <p data-error-for="email"></p> 
+            </div>
+            <div>
+                <label>E-mail:</label> 
+                <input type="email" id="email" placeholder="exemplo@email.com"  name="email"/> 
+                <p data-error-for="email"></p>
+            </div>
+            <div>
+                <label>Idade:</label> 
+                <input type="number" id="idade" placeholder="Digite sua idade" name="idade"/>
+                <p data-error-for="email"></p> 
+            </div>
+            <div>
+                <label>Senha:</label> 
+                <input type="password" id="senha" placeholder="Crie uma senha" name="senha"/> 
+                <p data-error-for="email"></p>
+            </div>
+            <div>
+                <label>Repita a senha:</label> 
+                <input type="password" id="rep-senha" placeholder="Repita a senha" name="rep-senha"/> 
+                <p data-error-for="email"></p>
+            </div>
+            <div>
+                <button type="submit">Cadastrar</button> 
+            </div>
+        </form> 
+    </main>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
