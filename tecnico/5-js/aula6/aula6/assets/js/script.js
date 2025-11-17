@@ -47,8 +47,17 @@ const botao = document.getElementById("buscar");
 // });
 
 botao.addEventListener("click", async (e) => {
+    e.preventDefault();
+    
     const usuario = document.getElementById("user");
     const resultado = document.getElementById("resultado");
+
+    if(!usuario || usuario.length <=0 ){
+        resultado.textContent = "Digite um nome de usuário";
+        return;
+    }   
+
+    resultado.textContent = "Carregando...";
 
     try {
         const resposta = await fetch(`https://api.github.com/users/${usuario}`);
@@ -65,10 +74,21 @@ botao.addEventListener("click", async (e) => {
             }
             return;
         }
+        const dados = await resposta.json();
+
+        resultado.innerHTML = `
+            <img src="${dados.avatar_url}" width="120">
+            <h2>${dados.name}</h2>
+            <p>Seguidores: ${dados.followers}</p>
+        `;
     } catch (error) {
-        console.error("erro de conexão com a API");
+        resultado.textContent ="erro de conexão com a API";
+        console.error(error);
     }
 });
+
+
+
 
 document.getElementById("btn2").addEventListener("click", async () => {
     const pesquisa = document.getElementById("pesquisa").value.trim();
@@ -118,5 +138,48 @@ document.getElementById("btn2").addEventListener("click", async () => {
     area.appendChild(lista);
     } catch (erro) {
         area.textContent = "Erro ao buscar conselhos.";
+    }
+});
+
+
+
+// EXECÍCIO CEP
+const botaoCep =document.getElementById("buscarCep");
+botaoCep.addEventListener("click", async () => {
+    const cep = document.getElementById("cep").value.trim();
+    const resultado = document.getElementById("resultadoCep");
+
+    if (!cep || cep.length !== 8 || isNaN(cep)) {
+        resultado.textContent = "Digite um CEP válido com 8 números.";
+        return;
+    }
+
+    resultado.textContent = "Carregando...";
+
+    try {
+        const resposta = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+
+        if (!resposta.ok) {
+            resultado.textContent = "Erro ao buscar o CEP.";
+            return;
+        }
+
+        const dados = await resposta.json();
+
+        if (dados.erro) {
+            resultado.textContent = "CEP não encontrado!";
+            return;
+        }
+
+        resultado.innerHTML = `
+            <p><strong>Logradouro:</strong> ${dados.logradouro}</p>
+            <p><strong>Bairro:</strong> ${dados.bairro}</p>
+            <p><strong>Cidade:</strong> ${dados.localidade}</p>
+            <p><strong>UF:</strong> ${dados.uf}</p>
+        `;
+    } catch (erro) {
+        // 5. Tratamento de erro
+        resultado.textContent = "Erro ao conectar com a API.";
+        console.error(erro);
     }
 });
