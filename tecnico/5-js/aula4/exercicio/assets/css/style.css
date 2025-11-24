@@ -1,0 +1,33 @@
+.btn-remover{
+    width: 1rem;
+    height: 1rem;
+    background-color: red;
+    background-image: url(/aula4/exercicio/assets/images/icon-fechar.png);
+    background-size: contain;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.btn-remover:active{
+    scale: 1.2;
+}
+
+.btn-remover:hover{
+    scale: 0.8;
+}
+
+#adicionar{
+    cursor: pointer;
+}
+
+#limpar{
+    cursor: pointer;
+}
+
+li{
+    display: flex;
+    margin: 1rem 0rem;
+    border-bottom: 1px solid black;
+    width: 25dvw;
+    justify-content: space-between;
+}

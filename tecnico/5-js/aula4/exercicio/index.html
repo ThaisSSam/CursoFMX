@@ -3,15 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
     <title>Exercício aula 4</title>
 </head>
 <body>
     <header>
         <h1>Lista de tarefas</h1>
     </header>
-    <form action="">
-        <label for="tarefa">Tarefa</label>
-        <input type="text" id="tarefa">
-    </form>
+    <section class="formulario">
+        <form action="">
+            <label for="tarefa">Tarefa</label>
+            <input type="text" id="tarefa">
+        </form>
+    </section>
+
+    <section>
+        <ul id="lista"></ul>
+    </section>
+
+    <p id="cont">0</p>
+
+    <section class="botoes">
+        <button type="submit" id="adicionar">Adicionar</button>
+        <button type="reset" id="limpar">Limpar tudo</button>
+    </section>
+    <script src="assets/js/script.js"></script>
 </body>
 </html>
