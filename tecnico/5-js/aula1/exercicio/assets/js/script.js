@@ -34,4 +34,9 @@ for (let i = 0; i < perguntas.length; i++) {
         data: resposta
     });
 }
-console.table(respostas);
+console.log(respostas[0].data);
+if(respostas[0].data.trim() !== "João" && respostas[0].data.trim() !== "joão" && respostas[0].data.trim() !== "Joao" && respostas[0].data.trim() !== "joao"){
+    console.log('Você não é o João');
+}else{    
+    console.table(respostas);
+}
