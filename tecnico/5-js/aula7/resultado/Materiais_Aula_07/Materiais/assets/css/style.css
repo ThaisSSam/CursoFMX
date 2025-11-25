@@ -1,0 +1,49 @@
+*{
+  margin: 0;
+  padding: 0; 
+  box-sizing: border-box;
+}
+
+.navbar {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 10px;
+  background: #030303;
+  color: white;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.navbar a:hover {
+  background: #333333;
+}
+
+.card {
+  margin: 8px;
+  padding: 10px;
+  border: 1px solid #a4a4a4;
+  border-radius: 10px;
+}
+
+.card header h2{
+  margin-bottom: 8px;
+}
+
+.flex-wrap{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.flex-1{
+  flex: 1;
+}
