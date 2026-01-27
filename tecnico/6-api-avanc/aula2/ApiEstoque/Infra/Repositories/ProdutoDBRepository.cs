@@ -22,16 +22,22 @@ public class ProdutoDBRepository : IProdutoDBRepository
 
     public Produto? ObterPorId(int id)
     {
-        var produto = _context.Produtos.Include(p => p.Fabricante).ToList();
-        return produto.FirstOrDefault(p => p.Id == id);
+        // O filtro .FirstOrDefault acontece no Banco de Dados (SQL WHERE)
+        return _context.Produtos
+            .Include(p => p.Fabricante)
+            .FirstOrDefault(p => p.Id == id);
     }
+
 
     public Produto Adicionar(Produto novoProduto)
     {
-        
-        var produto = _context.Produtos.Include(p => p.Fabricante).ToList();
-        produto.Add(novoProduto);
+        // 1. Adiciona diretamente ao DbSet do contexto
+        _context.Produtos.Add(novoProduto);
         _context.SaveChanges();
+
+        // 2. Carrega explicitamente a referência do fabricante para que ela não seja null no retorno
+        _context.Entry(novoProduto).Reference(p => p.Fabricante).Load();
+
         return novoProduto;
     }
 
