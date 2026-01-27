@@ -1,7 +1,10 @@
 using System;
+using System.Threading.Tasks;
 using ApiEstoque.Entities;
 using ApiEstoque.Infra.Context;
+using ApiEstoque.Infra.DTOs;
 using ApiEstoque.Infra.Repositories.Interfaces;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiEstoque.Infra.Repositories;
@@ -9,43 +12,61 @@ namespace ApiEstoque.Infra.Repositories;
 public class ProdutoDBRepository : IProdutoDBRepository
 {
     private readonly LojaDbContext _context;
+    private readonly IMapper _mapper;
 
-    public ProdutoDBRepository(LojaDbContext context)
+    public ProdutoDBRepository(LojaDbContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
-    public List<Produto> ObterTodos()
+    public async Task<List<Produto>> ObterTodosAsync()
     {
-        return _context.Produtos.Include(p => p.Fabricante).ToList();
+        return await _context.Produtos.Include(p => p.Fabricante).ToListAsync();
     }
 
-    public Produto? ObterPorId(int id)
+    // public Produto? ObterPorId(int id)
+    // {
+    //     return _context.Produtos
+    //         .Include(p => p.Fabricante)
+    //         .FirstOrDefault(p => p.Id == id);
+    // }
+    public async Task <Produto?> ObterPorIdAsync(int id)
     {
-        // O filtro .FirstOrDefault acontece no Banco de Dados (SQL WHERE)
-        return _context.Produtos
+        return await _context.Produtos
             .Include(p => p.Fabricante)
-            .FirstOrDefault(p => p.Id == id);
+            .FirstOrDefaultAsync(p => p.Id == id);
     }
 
-
-    public Produto Adicionar(Produto novoProduto)
+    public async Task<Produto> AdicionarAsync(Produto novoProduto)
     {
         // 1. Adiciona diretamente ao DbSet do contexto
-        _context.Produtos.Add(novoProduto);
-        _context.SaveChanges();
+        await _context.Produtos.AddAsync(novoProduto);
+        await _context.SaveChangesAsync();
 
         // 2. Carrega explicitamente a referência do fabricante para que ela não seja null no retorno
-        _context.Entry(novoProduto).Reference(p => p.Fabricante).Load();
+        await _context.Entry(novoProduto).Reference(p => p.Fabricante).LoadAsync();
 
         return novoProduto;
     }
 
-    public void Deletar(Produto produto)
+    public async Task<Produto> AtualizarAsync(Produto produtoModificado)
+    {
+        var produtoAlterado = _mapper.Map<Produto>(produtoModificado);
+        _context.Produtos.Update(produtoAlterado);
+        await _context.SaveChangesAsync();
+        return produtoAlterado;
+    }
+
+    public async Task DeletarAsync(Produto produto)
     {
         _context.Produtos.Remove(produto);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
 
+    async Task<Produto?> IProdutoDBRepository.ObterFabricantePorIdAsync(int FabricanteId)
+    {
+        return await _context.Produtos.FirstOrDefaultAsync(f => f.FabricanteId == FabricanteId);
+    }
 }

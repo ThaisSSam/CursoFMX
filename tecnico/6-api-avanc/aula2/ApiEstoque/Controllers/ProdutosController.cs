@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using ApiEstoque.Entities;
 using ApiEstoque.Infra.Context;
 using ApiEstoque.Infra.DTOs;
@@ -16,16 +17,16 @@ public class ProdutosController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<List<ProdutoDto>> ObterTodos()
+    public async Task<ActionResult<List<ProdutoDto>>> ObterTodosAsync()
     {
     
-        return Ok(_estoqueService.ObterTodos());
+        return Ok(await _estoqueService.ObterTodosAsync());
     }
 
     [HttpGet("{id}")]
-    public ActionResult<ProdutoDto> ObterPorId(int id)
+    public async Task<ActionResult<ProdutoDto>> ObterPorIdAsync(int id)
     {
-        var produto = _estoqueService.ObterPorId(id);
+        var produto = await _estoqueService.ObterPorIdAsync(id);
 
         if(produto == null)
         {
@@ -35,27 +36,22 @@ public class ProdutosController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<ProdutoDto>Adicionar([FromBody] CriarProdutoDto produtoDto)
+    public async Task<ActionResult<ProdutoDto>>AdicionarAsync([FromBody] CriarProdutoDto produtoDto)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
 
-        var produtoAdicionado = _estoqueService.Adicionar(produtoDto);
+        var produtoAdicionado = await _estoqueService.AdicionarAsync(produtoDto);
 
-        return CreatedAtAction(nameof(ObterPorId), new{id = produtoAdicionado.Id}, produtoAdicionado);
+        return CreatedAtAction(nameof(ObterPorIdAsync), new{id = produtoAdicionado.Id}, produtoAdicionado);
     } 
 
     [HttpDelete("{id}")]
-    public ActionResult Deletar(int id)
+    public async Task<ActionResult> Deletar(int id)
     {
-        var deletado = _estoqueService.Deletar(id);
-
-        if(!deletado)
-        {
-            return NotFound();
-        }
+        await _estoqueService.DeletarAsync(id);
 
         return Ok(new{mensagem = "Deletado com sucesso"});
     }

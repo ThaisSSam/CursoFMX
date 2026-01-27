@@ -29,7 +29,6 @@ public class LojaDbContext : DbContext {
 
             entity.HasKey(f => f.Id);
             entity.Property(f => f.Id).HasColumnName("id");
-
             entity.Property(f => f.Nome).HasColumnName("nome").HasMaxLength(100).IsRequired();
 
         });

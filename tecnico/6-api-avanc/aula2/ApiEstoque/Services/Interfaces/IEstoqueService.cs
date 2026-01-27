@@ -5,11 +5,12 @@ namespace ApiEstoque.Services.Interfaces;
 
 public interface IEstoqueService
 {
-    List<ProdutoDto> ObterTodos();
+    Task<List<ProdutoDto>> ObterTodosAsync();
 
-    ProdutoDto? ObterPorId(int id);
+    Task<ProdutoDto?> ObterPorIdAsync(int id);
 
-    ProdutoDto Adicionar(CriarProdutoDto produtoDto);
+    Task<ProdutoDto> AdicionarAsync(CriarProdutoDto produtoDto);
 
-    bool Deletar(int id);
+    Task DeletarAsync(int id);
+    Task ObterFabricantePorIdAsync(int id);
 }

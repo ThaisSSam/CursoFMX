@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using ApiEstoque.Entities;
 using ApiEstoque.Infra.DTOs;
 using ApiEstoque.Infra.Repositories.Interfaces;
@@ -20,36 +21,52 @@ public class EstoqueService : IEstoqueService
         _mapper = mapper;
     }
 
-    public List<ProdutoDto> ObterTodos()
+    public async Task<List<ProdutoDto>> ObterTodosAsync()
     {
-        var produtos = _produtoDBRepository.ObterTodos().ToList();
+        var produtos = await _produtoDBRepository.ObterTodosAsync();
+        var produtosList = produtos.ToList();
 
-        return _mapper.Map<List<ProdutoDto>>(produtos);
+        return _mapper.Map<List<ProdutoDto>>(produtosList);
     }
 
-    public ProdutoDto? ObterPorId(int id)
+    public async Task<ProdutoDto?> ObterPorIdAsync(int id)
     {
-        var produto = _produtoDBRepository.ObterPorId(id);
+        var produto = await _produtoDBRepository.ObterPorIdAsync(id);
         return _mapper.Map<ProdutoDto>(produto);
     }
 
-    public ProdutoDto Adicionar(CriarProdutoDto produtoDto)
+    public async Task<FabricanteDto?> ObterFabricantePorIdAsync(int id)
+    {
+        var fabricante = await _produtoDBRepository.ObterPorIdAsync(id);
+        return _mapper.Map<FabricanteDto>(fabricante);
+    }
+
+    public async Task<ProdutoDto> AdicionarAsync(CriarProdutoDto produtoDto)
     {
         var novoProduto = _mapper.Map<Produto>(produtoDto);
-        var produtoAdicionado = _produtoDBRepository.Adicionar(novoProduto);
+        var produtoAdicionado = await _produtoDBRepository.AdicionarAsync(novoProduto);
         return _mapper.Map<ProdutoDto>(produtoAdicionado);
     }
 
-    public bool Deletar(int id)
+    public async Task<bool> DeletarAsync(int id)
     {
-        var produtoExistente = _produtoDBRepository.ObterPorId(id);
+        var produtoExistente = await _produtoDBRepository.ObterPorIdAsync(id);
         if (produtoExistente == null)
         {
             return false;
         }
 
-        _produtoDBRepository.Deletar(produtoExistente);
+        await _produtoDBRepository.DeletarAsync(produtoExistente);
         return true;
     }
 
+    Task IEstoqueService.DeletarAsync(int id)
+    {
+        return DeletarAsync(id);
+    }
+
+    Task IEstoqueService.ObterFabricantePorIdAsync(int id)
+    {
+        return ObterFabricantePorIdAsync(id);
+    }
 }

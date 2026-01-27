@@ -5,11 +5,14 @@ namespace ApiEstoque.Infra.Repositories.Interfaces;
 
 public interface IProdutoDBRepository
 {
-    List<Produto> ObterTodos();
+    Task<List<Produto>> ObterTodosAsync();
 
-    Produto ObterPorId(int id);
+    Task<Produto> ObterPorIdAsync(int id);
 
-    Produto Adicionar(Produto novoProduto);
+    Task <Produto> AdicionarAsync(Produto novoProduto);
 
-    void Deletar(Produto Produto);
+    Task<Produto> AtualizarAsync(Produto produto);
+
+    Task DeletarAsync(Produto Produto);
+    Task ObterFabricantePorIdAsync(int FabricanteId);
 }
