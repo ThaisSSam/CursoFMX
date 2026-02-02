@@ -1,32 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\aula2\\ApiEstoque\\ApiEstoque.csproj": {}
+    "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\aula2\\ApiEstoque\\ApiEstoque.csproj": {}
   },
   "projects": {
-    "C:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\aula2\\ApiEstoque\\ApiEstoque.csproj": {
+    "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\aula2\\ApiEstoque\\ApiEstoque.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\aula2\\ApiEstoque\\ApiEstoque.csproj",
+        "projectUniqueName": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\aula2\\ApiEstoque\\ApiEstoque.csproj",
         "projectName": "ApiEstoque",
-        "projectPath": "C:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\aula2\\ApiEstoque\\ApiEstoque.csproj",
-        "packagesPath": "C:\\Users\\thais\\.nuget\\packages\\",
-        "outputPath": "C:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\aula2\\ApiEstoque\\obj\\",
+        "projectPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\aula2\\ApiEstoque\\ApiEstoque.csproj",
+        "packagesPath": "C:\\Users\\TI 07\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\aula2\\ApiEstoque\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\thais\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\TI 07\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
