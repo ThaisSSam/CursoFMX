@@ -31,7 +31,7 @@ public class ProdutoDBRepository : IProdutoDBRepository
     //         .Include(p => p.Fabricante)
     //         .FirstOrDefault(p => p.Id == id);
     // }
-    public async Task <Produto?> ObterPorIdAsync(int id)
+    public async Task <Produto> ObterPorIdAsync(int id)
     {
         return await _context.Produtos
             .Include(p => p.Fabricante)
@@ -65,7 +65,7 @@ public class ProdutoDBRepository : IProdutoDBRepository
     }
 
 
-    async Task<Produto?> IProdutoDBRepository.ObterFabricantePorIdAsync(int FabricanteId)
+    public async Task<Produto?> ObterFabricantePorIdAsync(int FabricanteId)
     {
         return await _context.Produtos.FirstOrDefaultAsync(f => f.FabricanteId == FabricanteId);
     }

@@ -36,17 +36,12 @@ public class ProdutosController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<ProdutoDto>>AdicionarAsync([FromBody] CriarProdutoDto produtoDto)
+    public async Task<ActionResult<ProdutoDto>> AdicionarAsync([FromBody] CriarProdutoDto produtoDto)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
         var produtoAdicionado = await _estoqueService.AdicionarAsync(produtoDto);
 
-        return CreatedAtAction(nameof(ObterPorIdAsync), new{id = produtoAdicionado.Id}, produtoAdicionado);
-    } 
+        return CreatedAtAction("ObterPorId", new { id = produtoAdicionado.Id }, produtoAdicionado);
+    }
 
     [HttpDelete("{id}")]
     public async Task<ActionResult> Deletar(int id)
@@ -54,5 +49,18 @@ public class ProdutosController : ControllerBase
         await _estoqueService.DeletarAsync(id);
 
         return Ok(new{mensagem = "Deletado com sucesso"});
+    }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult<ProdutoDto>> AtualizarAsync(int id, [FromBody] CriarProdutoDto produtoDto)
+    {
+        var resultado = await _estoqueService.AtualizarAsync(id, produtoDto);
+
+        if (resultado == null)
+        {
+            return NotFound(new { mensagem = "Produto não encontrado." });
+        }
+
+        return Ok(resultado);
     }
 }

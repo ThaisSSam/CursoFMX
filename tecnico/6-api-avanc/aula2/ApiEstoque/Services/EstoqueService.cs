@@ -69,4 +69,22 @@ public class EstoqueService : IEstoqueService
     {
         return ObterFabricantePorIdAsync(id);
     }
+
+    public async Task<ProdutoDto?> AtualizarAsync(int id, CriarProdutoDto produtoDto)
+{
+    var produtoExistente = await _produtoDBRepository.ObterPorIdAsync(id);
+
+    if (produtoExistente == null)
+    {
+        return null;
+    }
+
+    _mapper.Map(produtoDto, produtoExistente);
+
+    await _produtoDBRepository.AtualizarAsync(produtoExistente);
+
+    var produtoAtualizado = await _produtoDBRepository.ObterPorIdAsync(id);
+
+    return _mapper.Map<ProdutoDto>(produtoAtualizado);
+}
 }

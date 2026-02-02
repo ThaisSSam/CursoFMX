@@ -42,20 +42,36 @@ public class FabricanteService : IFabricanteService
         return _mapper.Map<FabricanteDto>(fabricanteAdicionado);
     }
 
-    public async Task<bool> DeletarFabricanteAsync(int id)
+    public async Task<FabricanteDto> DeletarFabricanteAsync(int id)
     {
         var fabricanteExistente = await _fabricanteDBRepository.ObterFabricantePorIdAsync(id);
         if (fabricanteExistente == null)
         {
-            return false;
+            return null;
         }
 
+        var fabricanteDto = _mapper.Map<FabricanteDto>(fabricanteExistente);
+
+    
         await _fabricanteDBRepository.DeletarFabricanteAsync(fabricanteExistente);
-        return true;
+        
+        return fabricanteDto;
     }
 
-    Task<FabricanteDto> IFabricanteService.DeletarFabricanteAsync(int id)
+    public async Task<FabricanteDto?> AtualizarFabricanteAsync(int id, CriarFabricanteDto fabricanteDto)
     {
-        throw new NotImplementedException();
+        var fabricanteExistente = await _fabricanteDBRepository.ObterFabricantePorIdAsync(id);
+
+        if (fabricanteExistente == null)
+        {
+            return null; 
+        }
+
+        _mapper.Map(fabricanteDto, fabricanteExistente);
+
+        await _fabricanteDBRepository.AtualizarFabricanteAsync(fabricanteExistente);
+
+        return _mapper.Map<FabricanteDto>(fabricanteExistente);
     }
+
 }

@@ -38,32 +38,16 @@ public class FabricanteDBRepository : IFabricanteDBRepository
         return novoFabricante;
     }
 
-    public async Task<Fabricante> AtualizarFabricanteAsync(FabricanteDto fabricanteModificado)
+    public async Task<Fabricante> AtualizarFabricanteAsync(Fabricante fabricanteModificado)
     {
-        var fabricanteAlterado = _mapper.Map<Fabricante>(fabricanteModificado);
-        _context.Fabricantes.Update(fabricanteAlterado);
+        _context.Fabricantes.Update(fabricanteModificado);
         await _context.SaveChangesAsync();
-        return fabricanteAlterado;
+        return fabricanteModificado;
     }
 
     public async Task DeletarFabricanteAsync(Fabricante fabricante)
     {
         _context.Fabricantes.Remove(fabricante);
         await _context.SaveChangesAsync();
-    }
-
-    Task<Fabricante> IFabricanteDBRepository.AdicionarFabricanteAsync(Fabricante novoFabricante)
-    {
-        return AdicionarFabricanteAsync(novoFabricante);
-    }
-
-    Task<List<Fabricante>> IFabricanteDBRepository.ObterTodosFabricanteAsync()
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<Fabricante> AtualizarFabricanteAsync(Fabricante fabricante)
-    {
-        throw new NotImplementedException();
     }
 }

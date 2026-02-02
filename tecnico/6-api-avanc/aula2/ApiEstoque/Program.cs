@@ -13,10 +13,14 @@ builder.Services.AddDbContext<LojaDbContext>(options =>
     options.UseNpgsql(connectionString));
 
 // Add services to the container.
+
 builder.Services.AddScoped<IEstoqueService, EstoqueService>();
 builder.Services.AddScoped<IProdutoDBRepository, ProdutoDBRepository>();
-
+builder.Services.AddScoped<IFabricanteService, FabricanteService>();
+builder.Services.
+AddScoped<IFabricanteDBRepository, FabricanteDBRepository>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

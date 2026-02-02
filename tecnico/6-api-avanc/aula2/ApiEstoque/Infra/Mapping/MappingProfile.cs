@@ -25,7 +25,9 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.FabricanteDetalhe, opt=> opt.MapFrom(src => src.Fabricante))
             ;
         
-        CreateMap<CriarProdutoDto, Produto>();            
+        CreateMap<CriarProdutoDto, Produto>();      
+
+        CreateMap<CriarFabricanteDto, Fabricante>();
 
 
     }

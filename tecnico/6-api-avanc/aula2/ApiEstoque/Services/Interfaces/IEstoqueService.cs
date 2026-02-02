@@ -13,4 +13,6 @@ public interface IEstoqueService
 
     Task DeletarAsync(int id);
     Task ObterFabricantePorIdAsync(int id);
+
+    Task<ProdutoDto?> AtualizarAsync(int id, CriarProdutoDto produtoDto);
 }

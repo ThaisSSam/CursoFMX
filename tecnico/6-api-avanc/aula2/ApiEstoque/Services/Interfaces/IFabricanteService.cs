@@ -13,4 +13,6 @@ public interface IFabricanteService
     Task<FabricanteDto> AdicionarFabricanteAsync(CriarFabricanteDto fabricanteDto);
 
     Task <FabricanteDto> DeletarFabricanteAsync(int id);
+
+    Task<FabricanteDto?> AtualizarFabricanteAsync(int id, CriarFabricanteDto fabricanteDto);
 }

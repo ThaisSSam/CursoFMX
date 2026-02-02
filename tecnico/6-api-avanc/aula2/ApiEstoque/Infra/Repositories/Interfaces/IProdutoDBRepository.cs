@@ -14,5 +14,5 @@ public interface IProdutoDBRepository
     Task<Produto> AtualizarAsync(Produto produto);
 
     Task DeletarAsync(Produto Produto);
-    Task ObterFabricantePorIdAsync(int FabricanteId);
+    Task<Produto?> ObterFabricantePorIdAsync(int FabricanteId);
 }

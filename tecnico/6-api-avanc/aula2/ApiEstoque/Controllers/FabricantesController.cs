@@ -5,7 +5,9 @@ using ApiEstoque.Services.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ApiEstoque.Controllers;
+
+[ApiController]
+[Route("api/[controller]")] 
 
 public class FabricantesController : ControllerBase
 {
@@ -46,14 +48,37 @@ public class FabricantesController : ControllerBase
 
         var fabricanteAdicionado = await _fabricanteService.AdicionarFabricanteAsync(fabricanteDto);
 
-        return CreatedAtAction(nameof(ObterFabricantePorIdAsync), new{id = fabricanteAdicionado.Id}, fabricanteAdicionado);
+        return CreatedAtAction("ObterFabricantePorId", new{id = fabricanteAdicionado.Id}, fabricanteAdicionado);
     } 
 
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeletarFabricanteAsync(int id)
     {
-        await _fabricanteService.DeletarFabricanteAsync(id);
+        var resultado = await _fabricanteService.DeletarFabricanteAsync(id);
 
-        return Ok(new{mensagem = "Deletado com sucesso"});
+        if (resultado == null)
+        {
+            return NotFound(new { mensagem = "Fabricante não encontrado para exclusão." });
+        }
+
+        return Ok(new { mensagem = "Deletado com sucesso", dados = resultado });
+    }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult<FabricanteDto>> AtualizarFabricanteAsync(int id, [FromBody] CriarFabricanteDto fabricanteDto)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var resultado = await _fabricanteService.AtualizarFabricanteAsync(id, fabricanteDto);
+
+        if (resultado == null)
+        {
+            return NotFound(new { mensagem = "Fabricante não encontrado para atualização." });
+        }
+
+        return Ok(resultado);
     }
 }
