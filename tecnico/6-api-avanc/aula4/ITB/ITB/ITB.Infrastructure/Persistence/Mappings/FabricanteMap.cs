@@ -21,5 +21,9 @@ public class FabricanteMap : IEntityTypeConfiguration<Fabricante>
         .HasColumnName("nome")
         .HasColumnType("varchar(100)") // Força o uso de varchar em vez de text
         .IsRequired(); // NOT NULL
+
+        builder.Property(f => f.Cnpj)
+        .HasColumnName("cnpj")
+        .HasColumnType("varchar(14)");
     }
 }
