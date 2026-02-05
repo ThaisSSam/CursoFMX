@@ -4,6 +4,7 @@ using ITB.Application.Services;
 using ITB.Domain.Entities;
 using ITB.Domain.Interfaces;
 using ITB.Infrastructure.Persistence;
+using ITB.Infrastructure.Persistence.Repositories;
 using ITB.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -31,6 +32,10 @@ public static class DependencyInjection
         services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 
         services.AddScoped<ICategoriaService, CategoriaService>();
+
+        services.AddScoped<IProdutoRepository, ProdutoRepository>();
+
+        services.AddScoped<IProdutoService, ProdutoService>();
 
         // 5. AutoMapper
         services.AddAutoMapper(cfg => 

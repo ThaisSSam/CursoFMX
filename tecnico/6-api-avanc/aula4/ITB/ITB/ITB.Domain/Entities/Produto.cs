@@ -8,5 +8,5 @@ public class Produto
     public string? nome { get; set; }
     public decimal preco { get; set; }
     public int fabricanteId { get; set; }
-    public Fabricante? fabricante { get; set; }
+    public virtual Fabricante? fabricante { get; set; }
 }

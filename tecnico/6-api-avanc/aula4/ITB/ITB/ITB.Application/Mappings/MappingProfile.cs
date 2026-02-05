@@ -11,16 +11,23 @@ public class MappingProfile : Profile
         // Consultas
         CreateMap<Fabricante, FabricanteReadDto>();
 
+        CreateMap<Categoria, CategoriaReadDto>();
+
+        CreateMap<Produto, ProdutoReadDto>();
+
         // Inserção
         CreateMap<FabricanteCreateDto, Fabricante>();
 
-        // Atualização
-        CreateMap<FabricanteUpdateDto, Fabricante>();
-
-        CreateMap<Categoria, CategoriaReadDto>();
-
         CreateMap<CategoriaCreateDto, Categoria>();
 
-        CreateMap<CategoriaUpdateDto, Categoria>();
+        CreateMap<ProdutoCreateDto, Produto>();
+
+        // Atualização
+        CreateMap<FabricanteUpdateDto, Fabricante>();       
+
+        CreateMap<CategoriaUpdateDto, Categoria>(); 
+
+        CreateMap<ProdutoUpdateDto, Produto>();
+        
     }
 }

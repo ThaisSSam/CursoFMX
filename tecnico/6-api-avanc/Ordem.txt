@@ -1,0 +1,41 @@
+1º Passo: O Coração (Domain)
+Antes de tudo, defina o que é o dado e como ele deve ser salvo.
+
+Entidade (Produto.cs): Crie a classe com as propriedades básicas.
+
+Interface do Repositório (IProdutoRepository.cs): Defina o contrato (o que o banco deve fazer).
+
+2º Passo: A Estrutura (Infrastructure)
+Agora você diz ao banco como essa entidade se transforma em tabela.
+
+Mapping (ProdutoMapping.cs): Use a Fluent API para definir nomes de colunas (minúsculos), tipos (varchar, decimal) e chaves estrangeiras.
+
+DbContext (AppDbContext.cs): Adicione o DbSet<Produto> para que o EF reconheça a nova tabela.
+
+Repositório (ProdutoRepository.cs): Implemente os métodos (Add, Update, Delete) usando o _context.
+
+3º Passo: O MOMENTO DA MIGRATION ⚠️
+Quando usar: Assim que você terminar o mapeamento e o DbContext, antes de mexer na lógica de negócio.
+
+dotnet ef migrations add NomeDaMigration: Para gerar o arquivo de evolução.
+
+dotnet ef database update: Para criar a tabela física no PostgreSQL.
+
+Nota: Se você mudar qualquer propriedade na Entidade ou regra no Mapping depois, deve gerar uma nova migration.
+
+4º Passo: A Comunicação (Application)
+Aqui você prepara os dados para viajar entre o banco e o usuário.
+
+DTOs (ProdutoReadDto.cs, etc.): Crie as classes que filtram o que a API envia/recebe.
+
+Interface do Serviço (IProdutoService.cs): Defina as tarefas da aplicação.
+
+MappingProfile (MappingProfile.cs): Configure o AutoMapper para converter Entidade ↔ DTO.
+
+Service (ProdutoService.cs): Implemente a lógica, chamando o repositório e fazendo o mapeamento.
+
+5º Passo: A Conexão (IoC)
+Dependency Injection (DependencyInjection.cs): Registre o novo Repositório e o novo Serviço no contêiner de dependências para que o .NET saiba como resolvê-los.
+
+6º Passo: A Porta de Entrada (API)
+Controller (ProdutosController.cs): Crie os endpoints (HttpGet, HttpPost, etc.) que recebem as requisições e chamam o Service.

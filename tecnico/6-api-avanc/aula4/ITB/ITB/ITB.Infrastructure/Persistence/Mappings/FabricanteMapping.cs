@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ITB.Infrastructure.Persistence.Mappings;
 
-public class FabricanteMapping : IEntityTypeConfiguration<Fabricante>
+public class FabricanteMap : IEntityTypeConfiguration<Fabricante>
 {
     public void Configure(EntityTypeBuilder<Fabricante> builder)
     {
@@ -13,15 +13,14 @@ public class FabricanteMapping : IEntityTypeConfiguration<Fabricante>
         builder.ToTable("fabricantes");
         // 2. Chave Primária
         builder.HasKey(f => f.Id);
-     
+        // 3. Configuração de Colunas e Tipos (O que você precisa saber)
         builder.Property(f => f.Id)
         .HasColumnName("id")
-        .ValueGeneratedOnAdd();
-
+        .ValueGeneratedOnAdd(); // Garante que o banco gere o ID (Serial/Identity)
         builder.Property(f => f.Nome)
         .HasColumnName("nome")
-        .HasColumnType("varchar(100)") 
-        .IsRequired(); 
+        .HasColumnType("varchar(100)") // Força o uso de varchar em vez de text
+        .IsRequired(); // NOT NULL
 
         builder.Property(f => f.Cnpj)
         .HasColumnName("cnpj")
