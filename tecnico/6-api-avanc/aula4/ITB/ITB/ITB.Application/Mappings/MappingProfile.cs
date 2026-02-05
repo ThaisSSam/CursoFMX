@@ -28,6 +28,5 @@ public class MappingProfile : Profile
         CreateMap<CategoriaUpdateDto, Categoria>(); 
 
         CreateMap<ProdutoUpdateDto, Produto>();
-        
     }
 }

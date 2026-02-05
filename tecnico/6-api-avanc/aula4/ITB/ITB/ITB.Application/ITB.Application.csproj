@@ -13,9 +13,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ITB.Domain\ITB.Domain.csproj" />
+    <ProjectReference Include="..\ITB.Domain.Core\ITB.Domain.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Commands\" />
     <Folder Include="Mappings\" />
   </ItemGroup>
 

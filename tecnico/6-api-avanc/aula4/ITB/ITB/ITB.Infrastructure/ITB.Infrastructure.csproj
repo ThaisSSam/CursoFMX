@@ -8,12 +8,18 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ITB.Domain\ITB.Domain.csproj" />
+    <ProjectReference Include="..\ITB.Domain.Core\ITB.Domain.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.2" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Bus\" />
   </ItemGroup>
 
 </Project>

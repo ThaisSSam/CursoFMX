@@ -34,8 +34,8 @@ public class ProdutoMapping : IEntityTypeConfiguration<Produto>
 
         // 4. Relacionamento (Um Produto tem um Fabricante)
         builder.HasOne(p => p.fabricante)     
-           .WithMany()                  
-           .HasForeignKey(p => p.fabricanteId) 
-           .OnDelete(DeleteBehavior.Restrict);
+            .WithMany()                  
+            .HasForeignKey(p => p.fabricanteId) 
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
