@@ -1,16 +1,19 @@
+using ITB.API.Middleware;
 using ITB.IoC; // Essencial para o método de extensão
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // 1. Configuração do Serilog
-Log.Logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration)
-    .Enrich.FromLogContext()
-    .WriteTo.Console()
-    .CreateLogger();
+// Log.Logger = new LoggerConfiguration()
+//     .ReadFrom.Configuration(builder.Configuration)
+//     .Enrich.FromLogContext()
+//     .WriteTo.Console()
+//     .CreateLogger();
 
-builder.Host.UseSerilog();
+// builder.Host.UseSerilog();
+
+builder.Host.AddSerilogApi();
 
 // 2. Injeção de Dependência (Chama o seu projeto ITB.IoC)
 // Isso já registra Banco, Repositórios, Serviços e AutoMapper
@@ -36,7 +39,9 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// --- PIPELINE DE EXECUÇÃO ---
+app.UseMiddleware<ExceptionMiddleware>();
+
+// PIPELINE
 
 if (app.Environment.IsDevelopment())
 {
@@ -49,5 +54,7 @@ app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 
 app.MapControllers();
+
+app.UseAuthorization();
 
 app.Run();

@@ -13,6 +13,8 @@ using ITB.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace ITB.IoC;
 
@@ -49,6 +51,10 @@ public static class DependencyInjection
         services.AddScoped<IHandler<CriarFabricanteCommand>, LogFabricanteHandler>();
         #endregion
 
+        #region Log Genérico
+        services.AddScoped(typeof(IHandler<>), typeof(LogComandoGenericoHandler<>));
+        #endregion
+
         #region AutoMapper
         services.AddAutoMapper(cfg => 
         {
@@ -56,6 +62,19 @@ public static class DependencyInjection
         }, typeof(MappingProfile).Assembly);
         #endregion
 
+        
+
         return services;
+    }
+
+    public static void AddSerilogApi(this IHostBuilder host)
+    {
+        host.UseSerilog((context, configuration)=>
+        {
+            configuration
+                .WriteTo.Console()
+                .WriteTo.File("logs/log-.txt",rollingInterval: RollingInterval.Day)
+                .ReadFrom.Configuration(context.Configuration);
+        });
     }
 }
