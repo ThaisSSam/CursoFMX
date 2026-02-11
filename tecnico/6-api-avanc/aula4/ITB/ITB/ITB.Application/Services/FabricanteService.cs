@@ -9,11 +9,13 @@ namespace ITB.Application.Services;
 public class FabricanteService : IFabricanteService
 {
     private readonly IFabricanteRepository _repository;
+    private readonly IProdutoRepository _produtoRepository;
     private readonly IMapper _mapper;
 
-    public FabricanteService(IFabricanteRepository repository, IMapper mapper)
+    public FabricanteService(IFabricanteRepository repository,IProdutoRepository produtoRepository, IMapper mapper)
     {
         _repository = repository;
+        _produtoRepository = produtoRepository;
         _mapper = mapper;
     }
 
@@ -53,6 +55,13 @@ public class FabricanteService : IFabricanteService
 
     public async Task<bool> RemoverAsync(int id)
     {
+        var temProdutos = await _produtoRepository.QualquerProdutoComFabricante(id);
+        
+        if (temProdutos)
+        {
+            throw new Exception("Não é possível excluir um fabricante que possui produtos cadastrados.");
+        }
+
         return await _repository.RemoverAsync(id);
     }
 }

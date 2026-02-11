@@ -14,10 +14,10 @@ public class FabricanteController : ControllerBase
     private readonly IFabricanteService _service;
     private readonly IMessageBus _bus;
 
-    public FabricanteController(IFabricanteService service)
+    public FabricanteController(IFabricanteService service, IMessageBus bus)
     {
         _service = service;
-        _bus = _bus;
+        _bus = bus;
     }
 
     [HttpGet]
@@ -39,13 +39,6 @@ public class FabricanteController : ControllerBase
     }
 
     [HttpPost]
-    // public async Task<ActionResult<FabricanteReadDto>> Post([FromBody] FabricanteCreateDto dto)
-    // {
-    //     var novoFabricante = await _service.AdicionarAsync(dto);
-        
-    //     // Retorna o status 201 (Created) e o link para o GetById
-    //     return CreatedAtAction(nameof(GetById), new { id = novoFabricante.Id }, novoFabricante);
-    // }
     public async Task<IActionResult> Post([FromBody] CriarFabricanteCommand command)
     {
         await _bus.EnviarComando(command);

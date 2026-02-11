@@ -4,7 +4,7 @@ using ITB.Domain.Core.Messages;
 
 namespace ITB.Application.Handlers;
 
-public class LogConsoleHandler: IHandler<CriarFabricanteCommand>
+public class LogFabricanteHandler: IHandler<CriarFabricanteCommand>
 {
     public Task Handle (CriarFabricanteCommand comando)
     {

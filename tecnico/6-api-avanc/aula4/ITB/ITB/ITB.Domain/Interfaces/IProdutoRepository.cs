@@ -12,6 +12,7 @@ public interface IProdutoRepository
     Task<Produto> AdicionarAsync(Produto produto);
     Task<bool> AtualizarAsync(Produto produto);
     Task<bool> DeletarAsync(Produto produto);
+    Task<bool> QualquerProdutoComFabricante(int fabricanteId);
 }
 
 // Códigos pro terminal para fazer migration

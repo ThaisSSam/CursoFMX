@@ -49,4 +49,9 @@ public class ProdutoRepository : IProdutoRepository
         _context.Produtos.Remove(produto);
         return await _context.SaveChangesAsync() > 0;
     }
+
+    public async Task<bool> QualquerProdutoComFabricante(int fabricanteId)
+    {
+        return await _context.Produtos.AnyAsync(p => p.fabricanteId == fabricanteId);
+    }
 }
