@@ -384,3 +384,7 @@ Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving 
    at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
    at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
    at ITB.API.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in c:\ITB\CursoFMX\tecnico\6-api-avanc\aula4\ITB\ITB\ITB.API\Middleware\ExceptionMiddleware.cs:line 21
+2026-02-11 22:12:31.498 -03:00 [WRN] Failed to determine the https port for redirect.
+2026-02-11 22:12:31.750 -03:00 [WRN] You do not have a valid license key for the Lucky Penny software AutoMapper. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-02-11 22:12:32.648 -03:00 [ERR] An error occurred while saving the entity changes. See the inner exception for details.
+2026-02-11 22:12:46.807 -03:00 [ERR] An error occurred while saving the entity changes. See the inner exception for details.
