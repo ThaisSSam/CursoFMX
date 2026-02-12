@@ -22,7 +22,7 @@ public class ExceptionMiddleware
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Erro não tratado detectado");
+            _logger.LogError(ex.Message, "Erro não tratado detectado");
             await HandleExceptionAsync(context, ex);
         }
     }
@@ -31,13 +31,21 @@ public class ExceptionMiddleware
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = 500;
 
+        string mensagemCurta = "Algo deu errado internamente";
+
+        if (exception.InnerException is Npgsql.PostgresException postgresEx && postgresEx.SqlState == "22001")
+        {
+            mensagemCurta = "Erro: O valor enviado é muito longo para o campo (máximo 14 caracteres).";
+        }
+        else if (exception.Message.Contains("22001"))
+        {
+            mensagemCurta = "Erro: valor é muito longo para tipo character varying(14)";
+        }
         var response = new
         {
-            Error = "Algo deu errado internamente",
-            // Message = exception.Message,
-            Message = "Mensagem alterada para não ficar grande", 
-            Timestamp = DateTime.Now,
-            innerException= "menor",
+            Error = "FALHA CRÍTICA",
+            Message = mensagemCurta, 
+            Timestamp = DateTime.Now
         };
         return context.Response.WriteAsync(JsonSerializer.Serialize(response));
     }
