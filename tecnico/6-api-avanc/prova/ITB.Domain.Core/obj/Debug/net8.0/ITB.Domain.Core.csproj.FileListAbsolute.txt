@@ -1,0 +1,12 @@
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain.Core\bin\Debug\net8.0\ITB.Domain.Core.deps.json
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain.Core\bin\Debug\net8.0\ITB.Domain.Core.dll
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain.Core\bin\Debug\net8.0\ITB.Domain.Core.pdb
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain.Core\obj\Debug\net8.0\ITB.Domain.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain.Core\obj\Debug\net8.0\ITB.Domain.Core.AssemblyInfoInputs.cache
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain.Core\obj\Debug\net8.0\ITB.Domain.Core.AssemblyInfo.cs
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain.Core\obj\Debug\net8.0\ITB.Domain.Core.csproj.CoreCompileInputs.cache
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain.Core\obj\Debug\net8.0\ITB.Domain.Core.sourcelink.json
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain.Core\obj\Debug\net8.0\ITB.Domain.Core.dll
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain.Core\obj\Debug\net8.0\refint\ITB.Domain.Core.dll
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain.Core\obj\Debug\net8.0\ITB.Domain.Core.pdb
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain.Core\obj\Debug\net8.0\ref\ITB.Domain.Core.dll

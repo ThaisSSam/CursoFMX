@@ -1,0 +1,74 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "ITB.Infrastructure/1.0.0": {
+        "dependencies": {
+          "ITB.Application": "1.0.0",
+          "ITB.Domain": "1.0.0",
+          "ITB.Domain.Core": "1.0.0"
+        },
+        "runtime": {
+          "ITB.Infrastructure.dll": {}
+        }
+      },
+      "ITB.Application/1.0.0": {
+        "dependencies": {
+          "ITB.Domain": "1.0.0",
+          "ITB.Domain.Core": "1.0.0"
+        },
+        "runtime": {
+          "ITB.Application.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "ITB.Domain/1.0.0": {
+        "dependencies": {
+          "ITB.Domain.Core": "1.0.0"
+        },
+        "runtime": {
+          "ITB.Domain.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "ITB.Domain.Core/1.0.0": {
+        "runtime": {
+          "ITB.Domain.Core.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ITB.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ITB.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ITB.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ITB.Domain.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
