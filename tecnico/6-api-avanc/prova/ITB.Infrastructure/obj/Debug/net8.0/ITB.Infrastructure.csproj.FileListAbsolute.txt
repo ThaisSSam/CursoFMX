@@ -18,3 +18,25 @@ C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructu
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\obj\Debug\net8.0\refint\ITB.Infrastructure.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\obj\Debug\net8.0\ITB.Infrastructure.pdb
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\obj\Debug\net8.0\ref\ITB.Infrastructure.dll
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\bin\Debug\net8.0\ITB.Infrastructure.deps.json
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\bin\Debug\net8.0\ITB.Infrastructure.runtimeconfig.json
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\bin\Debug\net8.0\ITB.Infrastructure.dll
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\bin\Debug\net8.0\ITB.Infrastructure.pdb
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\bin\Debug\net8.0\ITB.Application.dll
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\bin\Debug\net8.0\ITB.Domain.Core.dll
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\bin\Debug\net8.0\ITB.Domain.dll
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\bin\Debug\net8.0\ITB.Domain.pdb
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\bin\Debug\net8.0\ITB.Application.pdb
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\bin\Debug\net8.0\ITB.Domain.Core.pdb
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\obj\Debug\net8.0\ITB.Infrastructure.csproj.AssemblyReference.cache
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\obj\Debug\net8.0\ITB.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\obj\Debug\net8.0\ITB.Infrastructure.AssemblyInfoInputs.cache
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\obj\Debug\net8.0\ITB.Infrastructure.AssemblyInfo.cs
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\obj\Debug\net8.0\ITB.Infrastructure.csproj.CoreCompileInputs.cache
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\obj\Debug\net8.0\ITB.Infrastructure.sourcelink.json
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\obj\Debug\net8.0\ITB.Infr.B2895950.Up2Date
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\obj\Debug\net8.0\ITB.Infrastructure.dll
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\obj\Debug\net8.0\refint\ITB.Infrastructure.dll
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\obj\Debug\net8.0\ITB.Infrastructure.pdb
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\obj\Debug\net8.0\ITB.Infrastructure.genruntimeconfig.cache
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\obj\Debug\net8.0\ref\ITB.Infrastructure.dll

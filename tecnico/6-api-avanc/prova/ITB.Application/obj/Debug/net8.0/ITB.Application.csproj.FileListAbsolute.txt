@@ -16,3 +16,21 @@ C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\obj\Debug\net8.0\refint\ITB.Application.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\obj\Debug\net8.0\ITB.Application.pdb
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\obj\Debug\net8.0\ref\ITB.Application.dll
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\bin\Debug\net8.0\ITB.Application.deps.json
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\bin\Debug\net8.0\ITB.Application.dll
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\bin\Debug\net8.0\ITB.Application.pdb
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\bin\Debug\net8.0\ITB.Domain.Core.dll
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\bin\Debug\net8.0\ITB.Domain.dll
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\bin\Debug\net8.0\ITB.Domain.pdb
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\bin\Debug\net8.0\ITB.Domain.Core.pdb
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\obj\Debug\net8.0\ITB.Application.csproj.AssemblyReference.cache
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\obj\Debug\net8.0\ITB.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\obj\Debug\net8.0\ITB.Application.AssemblyInfoInputs.cache
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\obj\Debug\net8.0\ITB.Application.AssemblyInfo.cs
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\obj\Debug\net8.0\ITB.Application.csproj.CoreCompileInputs.cache
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\obj\Debug\net8.0\ITB.Application.sourcelink.json
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\obj\Debug\net8.0\ITB.Appl.40F7D109.Up2Date
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\obj\Debug\net8.0\ITB.Application.dll
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\obj\Debug\net8.0\refint\ITB.Application.dll
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\obj\Debug\net8.0\ITB.Application.pdb
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\obj\Debug\net8.0\ref\ITB.Application.dll

@@ -20,3 +20,25 @@ C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.IoC\obj\Debu
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.IoC\obj\Debug\net8.0\refint\ITB.IoC.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.IoC\obj\Debug\net8.0\ITB.IoC.pdb
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.IoC\obj\Debug\net8.0\ref\ITB.IoC.dll
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.IoC\bin\Debug\net8.0\ITB.IoC.deps.json
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.IoC\bin\Debug\net8.0\ITB.IoC.dll
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.IoC\bin\Debug\net8.0\ITB.IoC.pdb
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.IoC\bin\Debug\net8.0\ITB.Application.dll
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.IoC\bin\Debug\net8.0\ITB.Domain.Core.dll
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.IoC\bin\Debug\net8.0\ITB.Domain.dll
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.IoC\bin\Debug\net8.0\ITB.Infrastructure.dll
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.IoC\bin\Debug\net8.0\ITB.Domain.pdb
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.IoC\bin\Debug\net8.0\ITB.Domain.Core.pdb
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.IoC\bin\Debug\net8.0\ITB.Application.pdb
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.IoC\bin\Debug\net8.0\ITB.Infrastructure.pdb
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.IoC\obj\Debug\net8.0\ITB.IoC.csproj.AssemblyReference.cache
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.IoC\obj\Debug\net8.0\ITB.IoC.GeneratedMSBuildEditorConfig.editorconfig
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.IoC\obj\Debug\net8.0\ITB.IoC.AssemblyInfoInputs.cache
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.IoC\obj\Debug\net8.0\ITB.IoC.AssemblyInfo.cs
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.IoC\obj\Debug\net8.0\ITB.IoC.csproj.CoreCompileInputs.cache
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.IoC\obj\Debug\net8.0\ITB.IoC.sourcelink.json
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.IoC\obj\Debug\net8.0\ITB.IoC.csproj.Up2Date
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.IoC\obj\Debug\net8.0\ITB.IoC.dll
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.IoC\obj\Debug\net8.0\refint\ITB.IoC.dll
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.IoC\obj\Debug\net8.0\ITB.IoC.pdb
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.IoC\obj\Debug\net8.0\ref\ITB.IoC.dll

@@ -1,5 +1,6 @@
 using System;
-using ITB.Domain.Messages.Interfaces;
+using ITB.Domain.Core.Messages.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ITB.Infrastructure.Bus;
 

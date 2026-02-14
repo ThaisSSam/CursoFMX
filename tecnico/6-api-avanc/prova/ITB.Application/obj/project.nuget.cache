@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "6E6KJaT77ts=",
+  "dgSpecHash": "LTLeQm5gx0M=",
   "success": true,
-  "projectFilePath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Application\\ITB.Application.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Application\\ITB.Application.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\thais\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.3\\microsoft.extensions.dependencyinjection.abstractions.10.0.3.nupkg.sha512",
+    "C:\\Users\\thais\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\10.0.3\\microsoft.extensions.logging.abstractions.10.0.3.nupkg.sha512",
+    "C:\\Users\\thais\\.nuget\\packages\\system.diagnostics.diagnosticsource\\10.0.3\\system.diagnostics.diagnosticsource.10.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -14,3 +14,19 @@ C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain\obj\D
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain\obj\Debug\net8.0\refint\ITB.Domain.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain\obj\Debug\net8.0\ITB.Domain.pdb
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain\obj\Debug\net8.0\ref\ITB.Domain.dll
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain\bin\Debug\net8.0\ITB.Domain.deps.json
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain\bin\Debug\net8.0\ITB.Domain.dll
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain\bin\Debug\net8.0\ITB.Domain.pdb
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain\bin\Debug\net8.0\ITB.Domain.Core.dll
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain\bin\Debug\net8.0\ITB.Domain.Core.pdb
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain\obj\Debug\net8.0\ITB.Domain.csproj.AssemblyReference.cache
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain\obj\Debug\net8.0\ITB.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain\obj\Debug\net8.0\ITB.Domain.AssemblyInfoInputs.cache
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain\obj\Debug\net8.0\ITB.Domain.AssemblyInfo.cs
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain\obj\Debug\net8.0\ITB.Domain.csproj.CoreCompileInputs.cache
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain\obj\Debug\net8.0\ITB.Domain.sourcelink.json
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain\obj\Debug\net8.0\ITB.Domain.csproj.Up2Date
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain\obj\Debug\net8.0\ITB.Domain.dll
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain\obj\Debug\net8.0\refint\ITB.Domain.dll
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain\obj\Debug\net8.0\ITB.Domain.pdb
+C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain\obj\Debug\net8.0\ref\ITB.Domain.dll

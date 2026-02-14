@@ -1,0 +1,43 @@
+2026-02-14 13:44:54.265 -03:00 [WRN] Failed to determine the https port for redirect.
+2026-02-14 13:49:41.003 -03:00 [WRN] Failed to determine the https port for redirect.
+2026-02-14 13:49:43.152 -03:00 [ERR] 42P01: relação "Fabricantes" não existe
+
+POSITION: 41
+2026-02-14 13:50:59.029 -03:00 [WRN] Failed to determine the https port for redirect.
+2026-02-14 13:51:01.032 -03:00 [ERR] 42P01: relação "Fabricantes" não existe
+
+POSITION: 41
+2026-02-14 13:54:36.139 -03:00 [WRN] Failed to determine the https port for redirect.
+2026-02-14 13:54:38.140 -03:00 [ERR] 42703: coluna f.Id não existe
+
+POSITION: 8
+2026-02-14 13:57:52.344 -03:00 [WRN] Failed to determine the https port for redirect.
+2026-02-14 13:57:53.117 -03:00 [ERR] 42703: coluna f.Id não existe
+
+POSITION: 8
+2026-02-14 14:01:30.603 -03:00 [WRN] Failed to determine the https port for redirect.
+2026-02-14 14:01:32.626 -03:00 [ERR] 42703: coluna f.cnpj não existe
+
+POSITION: 14
+2026-02-14 14:03:25.088 -03:00 [WRN] Failed to determine the https port for redirect.
+2026-02-14 14:03:51.631 -03:00 [INF] Executando Comando: CriarFabricanteCommand | Dados Enviados: {"nome":"teste4","$type":"CriarFabricanteCommand"}
+2026-02-14 14:04:17.761 -03:00 [INF] Executando Comando: AtualizarFabricanteCommand | Dados Enviados: {"id":4,"nome":"teste4atualizado","$type":"AtualizarFabricanteCommand"}
+2026-02-14 14:04:30.976 -03:00 [INF] Executando Comando: CriarFabricanteCommand | Dados Enviados: {"nome":"teste4","$type":"CriarFabricanteCommand"}
+2026-02-14 14:04:43.676 -03:00 [INF] Executando Comando: DeletarFabricanteCommand | Dados Enviados: {"id":0,"$type":"DeletarFabricanteCommand"}
+2026-02-14 14:04:53.418 -03:00 [INF] Executando Comando: DeletarFabricanteCommand | Dados Enviados: {"id":0,"$type":"DeletarFabricanteCommand"}
+2026-02-14 14:05:03.450 -03:00 [INF] Executando Comando: DeletarFabricanteCommand | Dados Enviados: {"id":0,"$type":"DeletarFabricanteCommand"}
+2026-02-14 17:34:43.995 -03:00 [WRN] Failed to determine the https port for redirect.
+2026-02-14 17:36:07.784 -03:00 [INF] Executando Comando: CriarFabricanteCommand | Dados Enviados: {"nome":"teste","cnpj":"12345678900987","$type":"CriarFabricanteCommand"}
+2026-02-14 18:45:28.982 -03:00 [WRN] Failed to determine the https port for redirect.
+2026-02-14 18:45:53.841 -03:00 [INF] Executando Comando: CriarFabricanteCommand | Dados Enviados: {"nome":"teste","cnpj":"0987654321123","$type":"CriarFabricanteCommand"}
+2026-02-14 18:45:53.845 -03:00 [INF] Executando Comando: CriarFabricanteCommand | Dados Enviados: {"nome":"teste","cnpj":"0987654321123","$type":"CriarFabricanteCommand"}
+2026-02-14 18:50:58.319 -03:00 [WRN] Failed to determine the https port for redirect.
+2026-02-14 18:51:34.358 -03:00 [INF] Executando Comando: CriarFabricanteCommand | Dados Enviados: {"nome":"teste2","cnpj":"12345678900987","$type":"CriarFabricanteCommand"}
+2026-02-14 18:51:34.363 -03:00 [INF] Executando Comando: CriarFabricanteCommand | Dados Enviados: {"nome":"teste2","cnpj":"12345678900987","$type":"CriarFabricanteCommand"}
+2026-02-14 18:51:58.333 -03:00 [INF] Executando Comando: AtualizarFabricanteCommand | Dados Enviados: {"id":1,"nome":"teste1","cnpj":"0987654321123","$type":"AtualizarFabricanteCommand"}
+2026-02-14 18:51:58.334 -03:00 [INF] Executando Comando: AtualizarFabricanteCommand | Dados Enviados: {"id":1,"nome":"teste1","cnpj":"0987654321123","$type":"AtualizarFabricanteCommand"}
+2026-02-14 18:52:13.264 -03:00 [INF] Executando Comando: DeletarFabricanteCommand | Dados Enviados: {"id":2,"$type":"DeletarFabricanteCommand"}
+2026-02-14 18:52:13.264 -03:00 [INF] Executando Comando: DeletarFabricanteCommand | Dados Enviados: {"id":2,"$type":"DeletarFabricanteCommand"}
+2026-02-14 18:56:54.814 -03:00 [WRN] Failed to determine the https port for redirect.
+2026-02-14 18:57:28.419 -03:00 [INF] Executando Comando: AtualizarFabricanteCommand | Dados Enviados: {"Id":1,"nome":"teste","cnpj":"12345678901234","$type":"AtualizarFabricanteCommand"}
+2026-02-14 18:57:28.433 -03:00 [INF] Executando Comando: AtualizarFabricanteCommand | Dados Enviados: {"Id":1,"nome":"teste","cnpj":"12345678901234","$type":"AtualizarFabricanteCommand"}
