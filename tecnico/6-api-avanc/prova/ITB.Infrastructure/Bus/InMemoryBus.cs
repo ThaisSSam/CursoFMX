@@ -12,8 +12,7 @@ public class InMemoryBus : IMessageBus
         _serviceProvider = serviceProvider;
     }
     public async Task EnviarComando<T>(T comando) where T : ICommand
-    {
-        // Busca quem sabe resolver esse comando específico
+    {   
         var handlers = _serviceProvider.GetServices<IHandler<T>>();
         foreach (var handler in handlers)
         {

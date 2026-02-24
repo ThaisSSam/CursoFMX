@@ -20,7 +20,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseMiddleware<ExceptionMiddleware>(); // Captura erros globais 
+// app.UseMiddleware<ExceptionMiddleware>(); // Captura erros globais 
 
 app.UseHttpsRedirection();
 

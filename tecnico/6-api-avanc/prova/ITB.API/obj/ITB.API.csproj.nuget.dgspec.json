@@ -1,46 +1,39 @@
 {
   "format": 1,
   "restore": {
-    "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.API\\ITB.API.csproj": {}
+    "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.API\\ITB.API.csproj": {}
   },
   "projects": {
-    "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.API\\ITB.API.csproj": {
+    "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.API\\ITB.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.API\\ITB.API.csproj",
+        "projectUniqueName": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.API\\ITB.API.csproj",
         "projectName": "ITB.API",
-        "projectPath": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.API\\ITB.API.csproj",
-        "packagesPath": "C:\\Users\\thais\\.nuget\\packages\\",
-        "outputPath": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.API\\obj\\",
+        "projectPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.API\\ITB.API.csproj",
+        "packagesPath": "C:\\Users\\TI 07\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.API\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\thais\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\TI 07\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Application\\ITB.Application.csproj": {
-                "projectPath": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Application\\ITB.Application.csproj"
+              "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Application\\ITB.Application.csproj": {
+                "projectPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Application\\ITB.Application.csproj"
               },
-              "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Infrastructure\\ITB.Infrastructure.csproj": {
-                "projectPath": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Infrastructure\\ITB.Infrastructure.csproj"
+              "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Infrastructure\\ITB.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Infrastructure\\ITB.Infrastructure.csproj"
               },
-              "C:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.IoC\\ITB.IoC.csproj": {
-                "projectPath": "C:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.IoC\\ITB.IoC.csproj"
+              "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.IoC\\ITB.IoC.csproj": {
+                "projectPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.IoC\\ITB.IoC.csproj"
               }
             }
           }
@@ -110,40 +103,33 @@
         }
       }
     },
-    "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Application\\ITB.Application.csproj": {
+    "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Application\\ITB.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Application\\ITB.Application.csproj",
+        "projectUniqueName": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Application\\ITB.Application.csproj",
         "projectName": "ITB.Application",
-        "projectPath": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Application\\ITB.Application.csproj",
-        "packagesPath": "C:\\Users\\thais\\.nuget\\packages\\",
-        "outputPath": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Application\\obj\\",
+        "projectPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Application\\ITB.Application.csproj",
+        "packagesPath": "C:\\Users\\TI 07\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Application\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\thais\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\TI 07\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain.Core\\ITB.Domain.Core.csproj": {
-                "projectPath": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain.Core\\ITB.Domain.Core.csproj"
+              "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain.Core\\ITB.Domain.Core.csproj": {
+                "projectPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain.Core\\ITB.Domain.Core.csproj"
               },
-              "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain\\ITB.Domain.csproj": {
-                "projectPath": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain\\ITB.Domain.csproj"
+              "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain\\ITB.Domain.csproj": {
+                "projectPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain\\ITB.Domain.csproj"
               }
             }
           }
@@ -188,29 +174,22 @@
         }
       }
     },
-    "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain.Core\\ITB.Domain.Core.csproj": {
+    "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain.Core\\ITB.Domain.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain.Core\\ITB.Domain.Core.csproj",
+        "projectUniqueName": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain.Core\\ITB.Domain.Core.csproj",
         "projectName": "ITB.Domain.Core",
-        "projectPath": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain.Core\\ITB.Domain.Core.csproj",
-        "packagesPath": "C:\\Users\\thais\\.nuget\\packages\\",
-        "outputPath": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain.Core\\obj\\",
+        "projectPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain.Core\\ITB.Domain.Core.csproj",
+        "packagesPath": "C:\\Users\\TI 07\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain.Core\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\thais\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\TI 07\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -253,37 +232,30 @@
         }
       }
     },
-    "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain\\ITB.Domain.csproj": {
+    "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain\\ITB.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain\\ITB.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain\\ITB.Domain.csproj",
         "projectName": "ITB.Domain",
-        "projectPath": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain\\ITB.Domain.csproj",
-        "packagesPath": "C:\\Users\\thais\\.nuget\\packages\\",
-        "outputPath": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain\\obj\\",
+        "projectPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain\\ITB.Domain.csproj",
+        "packagesPath": "C:\\Users\\TI 07\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\thais\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\TI 07\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain.Core\\ITB.Domain.Core.csproj": {
-                "projectPath": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain.Core\\ITB.Domain.Core.csproj"
+              "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain.Core\\ITB.Domain.Core.csproj": {
+                "projectPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain.Core\\ITB.Domain.Core.csproj"
               }
             }
           }
@@ -322,43 +294,36 @@
         }
       }
     },
-    "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Infrastructure\\ITB.Infrastructure.csproj": {
+    "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Infrastructure\\ITB.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Infrastructure\\ITB.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Infrastructure\\ITB.Infrastructure.csproj",
         "projectName": "ITB.Infrastructure",
-        "projectPath": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Infrastructure\\ITB.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\thais\\.nuget\\packages\\",
-        "outputPath": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Infrastructure\\obj\\",
+        "projectPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Infrastructure\\ITB.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\TI 07\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\thais\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\TI 07\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Application\\ITB.Application.csproj": {
-                "projectPath": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Application\\ITB.Application.csproj"
+              "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Application\\ITB.Application.csproj": {
+                "projectPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Application\\ITB.Application.csproj"
               },
-              "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain.Core\\ITB.Domain.Core.csproj": {
-                "projectPath": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain.Core\\ITB.Domain.Core.csproj"
+              "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain.Core\\ITB.Domain.Core.csproj": {
+                "projectPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain.Core\\ITB.Domain.Core.csproj"
               },
-              "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain\\ITB.Domain.csproj": {
-                "projectPath": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain\\ITB.Domain.csproj"
+              "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain\\ITB.Domain.csproj": {
+                "projectPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain\\ITB.Domain.csproj"
               }
             }
           }
@@ -413,46 +378,39 @@
         }
       }
     },
-    "C:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.IoC\\ITB.IoC.csproj": {
+    "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.IoC\\ITB.IoC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.IoC\\ITB.IoC.csproj",
+        "projectUniqueName": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.IoC\\ITB.IoC.csproj",
         "projectName": "ITB.IoC",
-        "projectPath": "C:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.IoC\\ITB.IoC.csproj",
-        "packagesPath": "C:\\Users\\thais\\.nuget\\packages\\",
-        "outputPath": "C:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.IoC\\obj\\",
+        "projectPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.IoC\\ITB.IoC.csproj",
+        "packagesPath": "C:\\Users\\TI 07\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.IoC\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\thais\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\TI 07\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Application\\ITB.Application.csproj": {
-                "projectPath": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Application\\ITB.Application.csproj"
+              "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Application\\ITB.Application.csproj": {
+                "projectPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Application\\ITB.Application.csproj"
               },
-              "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain.Core\\ITB.Domain.Core.csproj": {
-                "projectPath": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain.Core\\ITB.Domain.Core.csproj"
+              "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain.Core\\ITB.Domain.Core.csproj": {
+                "projectPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain.Core\\ITB.Domain.Core.csproj"
               },
-              "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain\\ITB.Domain.csproj": {
-                "projectPath": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain\\ITB.Domain.csproj"
+              "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain\\ITB.Domain.csproj": {
+                "projectPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Domain\\ITB.Domain.csproj"
               },
-              "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Infrastructure\\ITB.Infrastructure.csproj": {
-                "projectPath": "c:\\ITB\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Infrastructure\\ITB.Infrastructure.csproj"
+              "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Infrastructure\\ITB.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Infrastructure\\ITB.Infrastructure.csproj"
               }
             }
           }

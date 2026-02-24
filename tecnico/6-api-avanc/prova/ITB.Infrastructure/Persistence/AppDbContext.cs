@@ -8,7 +8,14 @@ public class AppDbContext : DbContext
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
     }
+    public DbSet<Marca> marcas { get; set; }
+    public DbSet<Veiculo> veiculos{ get; set; }
 
-    // Adicione aqui as tabelas que você quer que o EF crie no Postgres
-    public DbSet<Fabricante> fabricantes { get; set; }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Marca>().ToTable("marcas");
+        modelBuilder.Entity<Veiculo>().ToTable("veiculos");
+    }
 }

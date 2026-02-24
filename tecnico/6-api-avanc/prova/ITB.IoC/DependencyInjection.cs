@@ -21,16 +21,18 @@ public static class DependencyInjection
             options.UseNpgsql(connectionString));
 
         // 2. Repositórios
-        services.AddScoped<ITB.Domain.Interfaces.IFabricanteRepository, ITB.Infrastructure.Repositories.FabricanteRepository>();
+        services.AddScoped<ITB.Domain.Interfaces.IMarcaRepository, ITB.Infrastructure.Repositories.MarcaRepository>();
+        services.AddScoped<ITB.Domain.Interfaces.IVeiculoRepository, ITB.Infrastructure.Repositories.VeiculoRepository>();
         // --------------------------------
 
         // 3. Barramento de Mensagens (Mediator)
         services.AddScoped<IMessageBus, InMemoryBus>();
 
-        // 4. Handlers do CRUD de Fabricante
-        services.AddScoped<IHandler<CriarFabricanteCommand>, CriarFabricanteHandler>();
-        services.AddScoped<IHandler<AtualizarFabricanteCommand>, AtualizarFabricanteHandler>();
-        services.AddScoped<IHandler<DeletarFabricanteCommand>, DeletarFabricanteHandler>();
+        // 4. Handlers do CRUD de Marca
+        services.AddScoped<IHandler<AdicionarMarcaCommand>, AdicionarMarcaHandler>();
+        services.AddScoped<IHandler<AdicionarVeiculoCommand>, AdicionarVeiculoHandler>();
+        // services.AddScoped<IHandler<AtualizarMarcaCommand>, AtualizarMarcaHandler>();
+        // services.AddScoped<IHandler<DeletarMarcaCommand>, DeletarMarcaHandler>();
 
         // 5. Handlers de Log (Opcional - se você quiser ver o log no console)
         services.AddScoped(typeof(IHandler<>), typeof(LogComandoGenericoHandler<>));
