@@ -8,10 +8,9 @@ namespace ITB.Application.Commands;
 public class AdicionarVeiculoCommand :ICommand
 {
     public string nome{get; set;} = string.Empty;
-    public string modelo{get; set;} = string.Empty;
     public string placa{get; set;} = string.Empty;
     public int ano{get; set;}
-    public int marcaId { get; set; }
+    public int modeloId { get; set; }
 
     
 }

@@ -10,7 +10,5 @@ public class Marca
 
     private readonly List<Veiculo> _veiculos = new();
 
-    public virtual IReadOnlyCollection<Veiculo> Veiculos => _veiculos.AsReadOnly();
-
     public Marca(string nome){Nome = nome;}
 }

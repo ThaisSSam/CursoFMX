@@ -14,13 +14,11 @@ public class AdicionarVeiculoHandler : IHandler<AdicionarVeiculoCommand>
 
     public async Task Handle(AdicionarVeiculoCommand command)
     {
-        var veiculo = new Veiculo(command.modelo, command.placa,command.ano, command.marcaId)
-        {         
-            Modelo=command.modelo,
-            Placa=command.placa,
-            Ano=command.ano,    
-            MarcaId = command.marcaId        
-        };
+        var veiculo = new Veiculo(
+            command.placa, 
+            command.ano, 
+            command.modeloId
+        );
         await _repository.AdicionarAsync(veiculo);
     }
 }

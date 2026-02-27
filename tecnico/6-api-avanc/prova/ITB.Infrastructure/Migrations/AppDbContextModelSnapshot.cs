@@ -38,6 +38,32 @@ namespace ITB.Infrastructure.Migrations
                     b.ToTable("marcas", (string)null);
                 });
 
+            modelBuilder.Entity("ITB.Domain.Entities.Modelo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("MarcaId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MarcaId");
+
+                    b.ToTable("Modelos", (string)null);
+                });
+
             modelBuilder.Entity("ITB.Domain.Entities.Veiculo", b =>
                 {
                     b.Property<int>("Id")
@@ -49,38 +75,47 @@ namespace ITB.Infrastructure.Migrations
                     b.Property<int>("Ano")
                         .HasColumnType("integer");
 
-                    b.Property<int>("MarcaId")
-                        .HasColumnType("integer");
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("boolean");
 
-                    b.Property<string>("Modelo")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("ModeloId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Placa")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(7)
+                        .HasColumnType("char(7)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MarcaId");
+                    b.HasIndex("ModeloId");
 
-                    b.ToTable("veiculos", (string)null);
+                    b.HasIndex("Placa")
+                        .IsUnique();
+
+                    b.ToTable("Veiculos", (string)null);
                 });
 
-            modelBuilder.Entity("ITB.Domain.Entities.Veiculo", b =>
+            modelBuilder.Entity("ITB.Domain.Entities.Modelo", b =>
                 {
                     b.HasOne("ITB.Domain.Entities.Marca", "Marca")
-                        .WithMany("Veiculos")
+                        .WithMany()
                         .HasForeignKey("MarcaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Marca");
                 });
 
-            modelBuilder.Entity("ITB.Domain.Entities.Marca", b =>
+            modelBuilder.Entity("ITB.Domain.Entities.Veiculo", b =>
                 {
-                    b.Navigation("Veiculos");
+                    b.HasOne("ITB.Domain.Entities.Modelo", "Modelo")
+                        .WithMany()
+                        .HasForeignKey("ModeloId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Modelo");
                 });
 #pragma warning restore 612, 618
         }
