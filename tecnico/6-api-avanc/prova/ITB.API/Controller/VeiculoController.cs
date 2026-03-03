@@ -63,7 +63,7 @@ public class VeiculoController : ControllerBase
     public async Task<IActionResult> Post([FromBody]AdicionarVeiculoCommand command)
     {
         await _bus.EnviarComando(command);
-        return Ok("Veículo criado");
+        return Ok(new{mensagem= "Veículo criado"});
     }
 
     [HttpPut("{id}")]

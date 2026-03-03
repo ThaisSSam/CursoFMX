@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "B+EwFGGk508=",
+  "dgSpecHash": "QPAagOzRRhg=",
   "success": true,
   "projectFilePath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.Infrastructure\\ITB.Infrastructure.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\TI 07\\.nuget\\packages\\fluentvalidation\\12.1.1\\fluentvalidation.12.1.1.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\3.3.3\\microsoft.codeanalysis.analyzers.3.3.3.nupkg.sha512",

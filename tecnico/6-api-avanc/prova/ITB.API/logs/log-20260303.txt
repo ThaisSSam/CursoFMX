@@ -1,0 +1,11 @@
+2026-03-03 07:03:54.854 -03:00 [WRN] Failed to determine the https port for redirect.
+2026-03-03 07:03:55.715 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT m."Id", m."Ativo", m."MarcaId", m."Nome", m0."Id", m0."Nome"
+FROM "Modelos" AS m
+INNER JOIN marcas AS m0 ON m."MarcaId" = m0."Id"
+WHERE m."Ativo"
+2026-03-03 07:38:37.835 -03:00 [WRN] Failed to determine the https port for redirect.
+2026-03-03 07:56:03.109 -03:00 [WRN] Failed to determine the https port for redirect.
+2026-03-03 08:02:23.024 -03:00 [WRN] Failed to determine the https port for redirect.
+2026-03-03 08:07:36.960 -03:00 [WRN] Failed to determine the https port for redirect.
+2026-03-03 08:11:21.492 -03:00 [WRN] Failed to determine the https port for redirect.

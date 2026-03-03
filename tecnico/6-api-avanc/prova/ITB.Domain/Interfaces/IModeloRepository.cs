@@ -3,11 +3,15 @@ using ITB.Domain.Entities;
 
 namespace ITB.Domain.Interfaces;
 
-public interface IModeloRepository
+public interface IModeloRepository : IRepositoryBase<Modelo>
 {
-    Task AdicionarAsync(Modelo modelo);
+    // Task AdicionarAsync(Modelo modelo);
 
-    // Task Atualizar(Modelo modelo);
-    Task<IEnumerable<Modelo>> ObterTodos();
-    Task<Modelo?> ObterPorIdAsync(int id);    
+    // // Task Atualizar(Modelo modelo);
+    // Task<IEnumerable<Modelo>> ObterTodos();
+    // Task<Modelo?> ObterPorIdAsync(int id);    
+
+    Task<bool> VerificarExistencia(int id);
+    Task<bool> PossuiVeiculosAtivos(int modeloId);
+
 }

@@ -1,11 +1,18 @@
 using ITB.IoC;
-using ITB.API.Middleware; 
+using ITB.API.Middleware;
+using ITB.API.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    // Adiciona o filtro globalmente
+    options.Filters.Add<ValidationFilter>();
+    
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Host.AddSerilogApi();  

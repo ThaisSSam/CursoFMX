@@ -1,5 +1,8 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using ITB.Application.Commands;
 using ITB.Application.Handlers;
+using ITB.Application.Validations;
 using ITB.Domain.Core.Commands;
 using ITB.Domain.Core.Messages.Interfaces; // Ajustado para sua interface do Mediator
 using ITB.Domain.Interfaces;
@@ -17,6 +20,12 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        // 1. Registra todos os validadores do Assembly de Application automaticamente
+        services.AddValidatorsFromAssemblyContaining<AdicionarVeiculoValidation>();
+
+        // 2. Habilita a validação automática para o ASP.NET
+        services.AddFluentValidationAutoValidation();
+
         // 1. Banco de Dados (PostgreSQL)
         var connectionString = configuration.GetConnectionString("DefaultConnection");
         services.AddDbContext<AppDbContext>(options =>

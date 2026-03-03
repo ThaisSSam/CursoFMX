@@ -30,7 +30,7 @@ public class ModeloController :ControllerBase
     [HttpGet]
     public async Task <IActionResult> Get()
     {
-        var modelos = await _modeloRepository.ObterTodos();
+        var modelos = await _modeloRepository.ObterTodosAsync();
 
         var modelosDTO = modelos.Select(m => new ModeloDTO{
             Id = m.Id,
