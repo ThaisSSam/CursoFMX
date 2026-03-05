@@ -25,15 +25,18 @@ namespace ITB.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("nome");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_marcas");
 
                     b.ToTable("marcas", (string)null);
                 });
@@ -42,58 +45,72 @@ namespace ITB.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Ativo")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("ativo");
 
                     b.Property<int>("MarcaId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("marca_id");
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("nome");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_modelos");
 
-                    b.HasIndex("MarcaId");
+                    b.HasIndex("MarcaId")
+                        .HasDatabaseName("ix_modelos_marca_id");
 
-                    b.ToTable("Modelos", (string)null);
+                    b.ToTable("modelos", (string)null);
                 });
 
             modelBuilder.Entity("ITB.Domain.Entities.Veiculo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Ano")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("ano");
 
                     b.Property<bool>("Ativo")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("ativo");
 
                     b.Property<int>("ModeloId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("modelo_id");
 
                     b.Property<string>("Placa")
                         .IsRequired()
                         .HasMaxLength(7)
-                        .HasColumnType("char(7)");
+                        .HasColumnType("char(7)")
+                        .HasColumnName("placa");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_veiculos");
 
-                    b.HasIndex("ModeloId");
+                    b.HasIndex("ModeloId")
+                        .HasDatabaseName("ix_veiculos_modelo_id");
 
                     b.HasIndex("Placa")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("ix_veiculos_placa");
 
-                    b.ToTable("Veiculos", (string)null);
+                    b.ToTable("veiculos", (string)null);
                 });
 
             modelBuilder.Entity("ITB.Domain.Entities.Modelo", b =>
@@ -102,7 +119,8 @@ namespace ITB.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("MarcaId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_modelos_marcas_marca_id");
 
                     b.Navigation("Marca");
                 });
@@ -113,7 +131,8 @@ namespace ITB.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("ModeloId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_veiculos_modelos_modelo_id");
 
                     b.Navigation("Modelo");
                 });

@@ -2,12 +2,14 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using ITB.Application.Commands;
 using ITB.Application.Handlers;
+using ITB.Application.Interfaces;
 using ITB.Application.Validations;
 using ITB.Domain.Core.Commands;
 using ITB.Domain.Core.Messages.Interfaces; // Ajustado para sua interface do Mediator
 using ITB.Domain.Interfaces;
 using ITB.Infrastructure.Bus;
 using ITB.Infrastructure.Persistence;
+using ITB.Infrastructure.Queries;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,6 +44,10 @@ public static class DependencyInjection
 
         // 4. Barramento de Mensagens (Mediator)
         services.AddScoped<IMessageBus, InMemoryBus>();
+
+        // Queries
+        services.AddScoped<IVeiculoQuery, VeiculoQuery>();
+        services.AddScoped<IModeloQuery, ModeloQuery>();
 
         // 5. Handlers do CRUD de Marca
         services.AddScoped<IHandler<AdicionarMarcaCommand>, AdicionarMarcaHandler>();

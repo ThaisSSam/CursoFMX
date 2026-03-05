@@ -9,7 +9,7 @@ public class ModeloMapping : IEntityTypeConfiguration<Modelo>
 {
     public void Configure(EntityTypeBuilder<Modelo> builder)
     {
-        builder.ToTable("Modelos");
+        builder.ToTable("modelos");
 
         builder.HasKey(m => m.Id);
 

@@ -1,6 +1,7 @@
 using System;
 using ITB.Application.Commands;
 using ITB.Application.Dtos;
+using ITB.Application.Interfaces;
 using ITB.Domain.Core.Commands;
 using ITB.Domain.Core.Messages.Interfaces;
 using ITB.Domain.Interfaces;
@@ -17,53 +18,70 @@ public class VeiculoController : ControllerBase
 {
     private readonly IMessageBus _bus;
 
+    private readonly IVeiculoQuery _query;
+
     private readonly AppDbContext _context;
 
     private readonly IVeiculoRepository _veiculoRepository;
 
-    public VeiculoController(IMessageBus bus, AppDbContext context, IVeiculoRepository veiculoRepository)
+    public VeiculoController(IMessageBus bus, AppDbContext context, IVeiculoRepository veiculoRepository, IVeiculoQuery query)
     {
         _bus = bus;
         _context = context;
         _veiculoRepository = veiculoRepository;
+        _query = query;
     }
 
     // LEITURA: Direto do repositório
     [HttpGet]
-    public async Task<IActionResult> Get()
+    // public async Task<IActionResult> Get()
+    // {
+    //     var veiculos = await _veiculoRepository.ObterTodos();
+
+    //     var veiculosDTO = veiculos.Select(v => new VeiculoDTO
+    //     {
+    //         Id = v.Id,            
+    //         Placa = v.Placa,
+    //         Ano = v.Ano,
+    //         Ativo = v.Ativo,
+
+    //         // Mapeamento do objeto aninhado:
+    //         // Marca = v.Marca != null ? new MarcaDTO
+    //         // {
+    //         //     Id = v.Marca.Id,
+    //         //     Nome = v.Marca.Nome,                
+    //         // } : null
+
+    //         Modelo = v.Modelo != null ? new ModeloDTO
+    //         {
+    //             Id = v.Modelo.Id, 
+    //             Nome = v.Modelo.Nome,
+    //             Ativo = v.Modelo.Ativo
+    //         } : null
+    //     });
+
+    //     return Ok(veiculosDTO);
+    // }
+
+    // Novo com o Query
+    public async Task<IActionResult> ObterTodosAsync()
     {
-        var veiculos = await _veiculoRepository.ObterTodos();
-
-        var veiculosDTO = veiculos.Select(v => new VeiculoDTO
-        {
-            Id = v.Id,            
-            Placa = v.Placa,
-            Ano = v.Ano,
-            Ativo = v.Ativo,
-
-            // Mapeamento do objeto aninhado:
-            // Marca = v.Marca != null ? new MarcaDTO
-            // {
-            //     Id = v.Marca.Id,
-            //     Nome = v.Marca.Nome,                
-            // } : null
-
-            Modelo = v.Modelo != null ? new ModeloDTO
-            {
-                Id = v.Modelo.Id, 
-                Nome = v.Modelo.Nome,
-                Ativo = v.Modelo.Ativo
-            } : null
-        });
-
-        return Ok(veiculosDTO);
+        var veiculos = await _query.ObterTodosAsync();
+        return Ok(veiculos);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody]AdicionarVeiculoCommand command)
+    // public async Task<IActionResult> Post([FromBody]AdicionarVeiculoCommand command)
+    // {
+    //     await _bus.EnviarComando(command);
+    //     return Ok(new{mensagem= "Veículo criado"});
+    // }
+
+    // Novo com o Query
+    public async Task<IActionResult> Adicionar([FromBody] AdicionarVeiculoCommand command)
     {
         await _bus.EnviarComando(command);
-        return Ok(new{mensagem= "Veículo criado"});
+        return Ok(new { mensagem = "Veículo enviado para processamento." });
     }
 
     [HttpPut("{id}")]

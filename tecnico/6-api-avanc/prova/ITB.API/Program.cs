@@ -1,8 +1,11 @@
 using ITB.IoC;
 using ITB.API.Middleware;
 using ITB.API.Filters;
+using ITB.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -12,6 +15,10 @@ builder.Services.AddControllers(options =>
     options.Filters.Add<ValidationFilter>();
     
 });
+
+builder.Services.AddDbContext<AppDbContext>(options => options
+    .UseNpgsql(connectionString) 
+    .UseSnakeCaseNamingConvention());
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

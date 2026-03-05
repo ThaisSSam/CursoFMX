@@ -9,7 +9,7 @@ public class VeiculoMapping : IEntityTypeConfiguration<Veiculo>
     public void Configure(EntityTypeBuilder<Veiculo> builder)
     {
         // Define o nome da tabela
-        builder.ToTable("Veiculos");
+        builder.ToTable("veiculos");
 
         // Chave Primária
         builder.HasKey(v => v.Id);

@@ -18,6 +18,7 @@
   <ItemGroup>
     <Folder Include="Bus\" />
     <Folder Include="Persistence\Mappings\" />
+    <Folder Include="Queries\" />
   </ItemGroup>
 
   <PropertyGroup>
