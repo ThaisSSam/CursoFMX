@@ -1,0 +1,8 @@
+2026-03-10 08:03:17.254 -03:00 [WRN] Failed to determine the https port for redirect.
+2026-03-10 08:03:18.192 -03:00 [INF] Executed DbCommand (21ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+            SELECT
+                m.id,
+                m.nome AS nome_modelo,
+                (SELECT COUNT(*) FROM veiculos v WHERE v.modelo_id = m.id) AS quantidade
+            FROM modelos m

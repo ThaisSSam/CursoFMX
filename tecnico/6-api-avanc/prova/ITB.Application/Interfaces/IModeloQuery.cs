@@ -8,4 +8,6 @@ public interface IModeloQuery
 {
     Task<IEnumerable<RelatorioModeloDTO>> ObterTodosAsync(); 
     Task<RelatorioModeloDTO?> ObterPorIdAsync(int id); 
+
+    Task<IEnumerable<ModeloDropdownDTO>> ObterModelosParaDropdown();
 }

@@ -7,4 +7,6 @@ public interface IVeiculoQuery
 { 
     Task<IEnumerable<VeiculosListagemDTO>> ObterTodosAsync(); 
     Task<VeiculosListagemDTO?> ObterPorIdAsync(int id); 
+
+    Task<IEnumerable<MarcaComVeiculosDTO>> ObterMarcasComVeiculosAsync();
 }

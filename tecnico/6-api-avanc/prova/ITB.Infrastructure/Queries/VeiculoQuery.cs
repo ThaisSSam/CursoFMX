@@ -49,4 +49,45 @@ public class VeiculoQuery : IVeiculoQuery
             ");
         return await query.FirstOrDefaultAsync();
     }
+
+    public async Task<IEnumerable<MarcaComVeiculosDTO>> ObterMarcasComVeiculosAsync()
+    {
+        // SQL Flat para buscar os dados desnormalizados
+        var query = _context.Database.SqlQuery<MarcaVeiculoFlatDTO>($@"
+            SELECT 
+                m.id AS MarcaId,
+                m.nome AS MarcaNome,
+                m.ativo AS MarcaAtivo,
+                v.id AS VeiculoId,
+                v.placa AS VeiculoPlaca,
+                v.ano AS VeiculoAno,
+                mod.nome AS ModeloNome
+            FROM marcas m
+            LEFT JOIN modelos mod ON mod.marca_id = m.id
+            LEFT JOIN veiculos v ON v.modelo_id = mod.id
+        ");
+
+        var dadosPlanos = await query.ToListAsync();
+
+        // Agrupamento em memória para montar o objeto hierárquico (Marca -> List<Veiculo>)
+        var resultadoHierarquico = dadosPlanos
+            .GroupBy(x => x.MarcaId)
+            .Select(grupo => new MarcaComVeiculosDTO
+            {
+                Id = grupo.Key,
+                Nome = grupo.First().MarcaNome,
+                Ativo = grupo.First().MarcaAtivo,
+                Veiculos = grupo
+                    .Where(x => x.VeiculoId.HasValue)
+                    .Select(x => new VeiculoSimplesDTO
+                    {
+                        Id = x.VeiculoId!.Value,
+                        Placa = x.VeiculoPlaca!,
+                        Modelo = x.ModeloNome!,
+                        Ano = x.VeiculoAno!.Value
+                    }).ToList()
+            });
+
+        return resultadoHierarquico;
+    }
 }

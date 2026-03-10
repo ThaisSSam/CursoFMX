@@ -48,6 +48,7 @@ public static class DependencyInjection
         // Queries
         services.AddScoped<IVeiculoQuery, VeiculoQuery>();
         services.AddScoped<IModeloQuery, ModeloQuery>();
+        services.AddScoped<IMarcaQuery, MarcaQuery>();
 
         // 5. Handlers do CRUD de Marca
         services.AddScoped<IHandler<AdicionarMarcaCommand>, AdicionarMarcaHandler>();
