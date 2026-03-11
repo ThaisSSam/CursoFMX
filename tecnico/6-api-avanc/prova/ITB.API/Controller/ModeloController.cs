@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace ITB.API.Controller;
-
+// 7. Por fim, o controller que vai receber as requisições e usar as queries para buscar os dados e retornar para o cliente.
 [ApiController]
 [Route("api/[controller]")]
 public class ModeloController :ControllerBase
@@ -67,5 +67,12 @@ public class ModeloController :ControllerBase
     {
         await _bus.EnviarComando(command);
         return Ok(new { mensagem = "Modelo enviado para processamento." });
+    }
+
+    [HttpGet("dropdown")]
+    public async Task<IActionResult> ObterModelosParaDropdown()
+    {
+        var modelos = await _query.ObterModelosParaDropdown();
+        return Ok(modelos);
     }
 }

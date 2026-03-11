@@ -3,7 +3,7 @@ using ITB.Domain.Entities;
 using ITB.Application.Dtos;
 
 namespace ITB.Infrastructure.Persistence;
-
+// 2. definir chaves primárias e nomes de tabelas.
 public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
@@ -11,7 +11,7 @@ public class AppDbContext : DbContext
     }
     public DbSet<Marca> marcas { get; set; }
     public DbSet<Veiculo> veiculos{ get; set; }
-    public DbSet<Modelo> modelos{ get; set; }
+    public DbSet<Modelo> Modelos { get; set; }
     public DbSet<MarcaVeiculoFlatDTO> MarcaVeiculoFlats { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,6 +31,11 @@ public class AppDbContext : DbContext
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
     }
-
-
 }
+
+// 3. Depois disso vem migration: 
+// Adicionar uma migration
+// dotnet ef migrations add NomeDaMigration
+
+// Atualizar banco 
+// dotnet ef database update

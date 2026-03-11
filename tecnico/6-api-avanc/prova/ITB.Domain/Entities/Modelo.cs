@@ -14,6 +14,8 @@ public class Modelo
     public bool Ativo { get; private set;}= true;
 
     public virtual Marca Marca { get; private set; }
+
+    public virtual ICollection<Veiculo> Veiculos { get; set; } = new List<Veiculo>();
     protected Modelo(){}
 
     public Modelo (string nome, int marcaId, bool ativo)

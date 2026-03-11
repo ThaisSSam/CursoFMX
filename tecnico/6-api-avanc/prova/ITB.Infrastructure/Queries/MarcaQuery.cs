@@ -53,25 +53,24 @@ public class MarcaQuery : IMarcaQuery
     return resultadoHierarquico;
   }
   public async Task<IEnumerable<MarcaComVeiculosDTO>> ObterMarcasComVeiculosProjecao()
-    {
-      // O EF Core vai gerar um SQL que busca APENAS essas colunas específicas.
-      // É o melhor da performance com LINQ.
+  {
       return await _context.marcas
-      .Select(m => new MarcaComVeiculosDTO
-      {
-        Id = m.Id,
-        Nome = m.Nome,
-        // Ativo = m.Ativo,
-        
-        // O EF entende que isso é um JOIN e monta a query sozinho
-        Veiculos = m.Modelos.Select(v => new VeiculoSimplesDTO
-        {
-          Id = m.Veiculos.FirstOrDefaultAsync()!.id,
-          Placa = m.Veiculos.FirstOrDefaultAsync()!.placa,
-          Ano = m.Veiculos.FirstOrDefaultAsync()!.Ano,
-          Modelo = m.Nome 
-        }).ToList()
-      }).ToListAsync();
-    }
+          .Select(m => new MarcaComVeiculosDTO
+          {
+              Id = m.Id,
+              Nome = m.Nome,
+              Ativo = m.Ativo,
+              
+              // Aqui pegamos todos os modelos da marca e "achatamos" seus veículos
+              Veiculos = m.Modelos.SelectMany(mod => mod.Veiculos.Select(v => new VeiculoSimplesDTO
+              {
+                  Id = v.Id,
+                  Placa = v.Placa,
+                  Ano = v.Ano,
+                  Modelo = mod.Nome // O nome vem do modelo pai na iteração
+              })).ToList()
+          })
+          .ToListAsync();
+  }
 
 }
