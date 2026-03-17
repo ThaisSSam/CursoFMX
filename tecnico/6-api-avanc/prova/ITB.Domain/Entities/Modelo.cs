@@ -29,7 +29,7 @@ public class Modelo
 
     private void ValidarDados(string nome, int marcaId, bool ativo)
     {
-        if( string.IsNullOrEmpty(nome) ) throw new DomainException("Nome obrigatório");
+        if( string.IsNullOrWhiteSpace(nome) ) throw new DomainException("Nome obrigatório");
 
         if (marcaId <=0) throw new DomainException("A marca é obrigatória");
 

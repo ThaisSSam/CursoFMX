@@ -10,16 +10,37 @@ public class Veiculo
     public string Placa { get; set;}
     public int Ano { get; set;}
     public int ModeloId { get; private set;}
+    public decimal Preco { get; set;}
     public bool Ativo { get; private set;}= true;
     
-    // public virtual Marca Marca { get; private set; }
+    public virtual Marca Marca { get; private set; }
     public virtual Modelo Modelo { get; private set; }
+    public byte[] VersaoLinha { get; set; } 
 
     protected Veiculo(){}
-    public Veiculo (string placa, int ano, int modeloId)
+    // public Veiculo (string placa, int ano, int modeloId)
+    // {
+    //     ValidarPlaca(placa);
+    //     ValidarDados(ano);
+    //     // if(string.IsNullOrEmpty(modelo))
+    //     // throw new DomainException("modelo é obrigatódio");
+
+    //     // if(placa.Length != 7)
+    //     // throw new DomainException("placa inválida");
+
+    //     // if(ano > DateTime.Now.Year + 1 || ano < 1900)
+    //     // throw new DomainException("Ano do veículo não compatível");
+
+    //     if (modeloId <=0) throw new DomainException("A modelo é obrigatória");
+
+    //     Placa = placa;
+    //     Ano =ano;
+    //     ModeloId = modeloId;
+    // }
+    public Veiculo(int Id, string placa)
     {
         ValidarPlaca(placa);
-        ValidarDados(ano);
+        ValidarDados(Id);
         // if(string.IsNullOrEmpty(modelo))
         // throw new DomainException("modelo é obrigatódio");
 
@@ -29,11 +50,10 @@ public class Veiculo
         // if(ano > DateTime.Now.Year + 1 || ano < 1900)
         // throw new DomainException("Ano do veículo não compatível");
 
-        if (modeloId <=0) throw new DomainException("A modelo é obrigatória");
+        if (Id <=0) throw new DomainException("A modelo é obrigatória");
 
         Placa = placa;
-        Ano =ano;
-        ModeloId = modeloId;
+        Id =Id;        
     }
 
     public void AtualizarDados(int modeloId, int ano)

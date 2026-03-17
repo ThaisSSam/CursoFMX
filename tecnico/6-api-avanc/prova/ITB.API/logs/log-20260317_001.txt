@@ -1,0 +1,94 @@
+2026-03-17 08:29:59.317 -03:00 [WRN] The foreign key property 'Modelo.MarcaId1' was created in shadow state because a conflicting property with the simple name 'MarcaId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2026-03-17 08:29:59.343 -03:00 [WRN] The foreign key property 'Veiculo.ModeloId1' was created in shadow state because a conflicting property with the simple name 'ModeloId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2026-03-17 08:29:59.429 -03:00 [WRN] The foreign key property 'Modelo.MarcaId1' was created in shadow state because a conflicting property with the simple name 'MarcaId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2026-03-17 08:29:59.430 -03:00 [WRN] The foreign key property 'Veiculo.ModeloId1' was created in shadow state because a conflicting property with the simple name 'ModeloId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2026-03-17 08:31:19.405 -03:00 [WRN] The foreign key property 'Modelo.MarcaId1' was created in shadow state because a conflicting property with the simple name 'MarcaId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2026-03-17 08:31:19.429 -03:00 [WRN] The foreign key property 'Veiculo.ModeloId1' was created in shadow state because a conflicting property with the simple name 'ModeloId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2026-03-17 08:31:19.715 -03:00 [INF] Executed DbCommand (31ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-03-17 08:31:19.727 -03:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT migration_id, product_version
+FROM "__EFMigrationsHistory"
+ORDER BY migration_id;
+2026-03-17 08:31:19.772 -03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-03-17 08:31:19.813 -03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-03-17 08:31:19.814 -03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT migration_id, product_version
+FROM "__EFMigrationsHistory"
+ORDER BY migration_id;
+2026-03-17 08:31:19.822 -03:00 [INF] Applying migration '20260317112959_AdicionarPrecoVeiculo'.
+2026-03-17 08:31:19.852 -03:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE veiculos ADD marca_id integer NOT NULL DEFAULT 0;
+2026-03-17 08:31:19.864 -03:00 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE veiculos ADD preco numeric NOT NULL DEFAULT 0.0;
+2026-03-17 08:31:19.865 -03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE veiculos ADD versao_linha bytea NOT NULL DEFAULT BYTEA E'\\x';
+2026-03-17 08:31:19.873 -03:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX ix_veiculos_marca_id ON veiculos (marca_id);
+2026-03-17 08:31:19.888 -03:00 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE veiculos ADD CONSTRAINT fk_veiculos_marcas_marca_id FOREIGN KEY (marca_id) REFERENCES marcas (id) ON DELETE CASCADE;
+2026-03-17 08:31:19.890 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "__EFMigrationsHistory" (migration_id, product_version)
+VALUES ('20260317112959_AdicionarPrecoVeiculo', '8.0.12');
+2026-03-17 08:33:08.726 -03:00 [WRN] Failed to determine the https port for redirect.
+2026-03-17 08:33:09.137 -03:00 [WRN] The foreign key property 'Modelo.MarcaId1' was created in shadow state because a conflicting property with the simple name 'MarcaId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2026-03-17 08:33:09.139 -03:00 [WRN] The foreign key property 'Veiculo.ModeloId1' was created in shadow state because a conflicting property with the simple name 'ModeloId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2026-03-17 08:33:09.526 -03:00 [INF] Executed DbCommand (40ms) [Parameters=[@__nomeMarca_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT m2.nome AS "nomeMarca", t1.nome AS "Modelo", t0.ano AS "Ano", t0.preco AS "PrecoAtualizado"
+FROM marcas AS m
+INNER JOIN (
+    SELECT m0.id, m0.marca_id1
+    FROM modelos AS m0
+    WHERE m0.ativo
+) AS t ON m.id = t.marca_id1
+INNER JOIN (
+    SELECT v.ano, v.modelo_id, v.modelo_id1, v.preco
+    FROM veiculos AS v
+    WHERE v.ativo
+) AS t0 ON t.id = t0.modelo_id1
+INNER JOIN (
+    SELECT m1.id, m1.marca_id, m1.nome
+    FROM modelos AS m1
+    WHERE m1.ativo
+) AS t1 ON t0.modelo_id = t1.id
+INNER JOIN marcas AS m2 ON t1.marca_id = m2.id
+WHERE m.nome = @__nomeMarca_0 AND t0.ano <= 2020
+2026-03-17 08:34:02.013 -03:00 [ERR] An unhandled exception has occurred while executing the request.
+ITB.Domain.Core.Exceptions.DomainException: Ano inválido
+   at ITB.Domain.Entities.Veiculo.ValidarDados(Int32 ano) in C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain\Entities\Veiculo.cs:line 107
+   at ITB.Domain.Entities.Veiculo..ctor(Int32 Id, String placa) in C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain\Entities\Veiculo.cs:line 43
+   at ITB.Application.Handlers.AdicionarVeiculoHandler.Handle(AdicionarVeiculoCommand comando) in C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\Handlers\AdicionarVeiculoHandler.cs:line 36
+   at ITB.Infrastructure.Bus.InMemoryBus.EnviarComando[T](T comando) in C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\Bus\InMemoryBus.cs:line 31
+   at ITB.API.Controller.VeiculoController.Adicionar(AdicionarVeiculoCommand command) in C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\Controller\VeiculoController.cs:line 83
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)

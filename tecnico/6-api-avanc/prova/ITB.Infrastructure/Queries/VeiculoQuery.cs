@@ -52,16 +52,15 @@ public class VeiculoQuery : IVeiculoQuery
 
     public async Task<IEnumerable<MarcaComVeiculosDTO>> ObterMarcasComVeiculosAsync()
     {
-        // SQL Flat para buscar os dados desnormalizados
         var query = _context.Database.SqlQuery<MarcaVeiculoFlatDTO>($@"
             SELECT 
-                m.id AS MarcaId,
-                m.nome AS MarcaNome,
-                m.ativo AS MarcaAtivo,
-                v.id AS VeiculoId,
-                v.placa AS VeiculoPlaca,
-                v.ano AS VeiculoAno,
-                mod.nome AS ModeloNome
+                m.id AS ""MarcaId"",
+                m.nome AS ""MarcaNome"",
+                m.ativo AS ""MarcaAtivo"",
+                v.id AS ""VeiculoId"",
+                v.placa AS ""VeiculoPlaca"",
+                v.ano AS ""VeiculoAno"",
+                mod.nome AS ""ModeloNome""
             FROM marcas m
             LEFT JOIN modelos mod ON mod.marca_id = m.id
             LEFT JOIN veiculos v ON v.modelo_id = mod.id
@@ -69,14 +68,14 @@ public class VeiculoQuery : IVeiculoQuery
 
         var dadosPlanos = await query.ToListAsync();
 
-        // Agrupamento em memória para montar o objeto hierárquico (Marca -> List<Veiculo>)
         var resultadoHierarquico = dadosPlanos
             .GroupBy(x => x.MarcaId)
-            .Select(grupo => new MarcaComVeiculosDTO
+            .Select(grupo => new MarcaComVeiculosDTO 
             {
                 Id = grupo.Key,
-                Nome = grupo.First().MarcaNome,
+                Nome = grupo.First().MarcaNome, 
                 Ativo = grupo.First().MarcaAtivo,
+                
                 Veiculos = grupo
                     .Where(x => x.VeiculoId.HasValue)
                     .Select(x => new VeiculoSimplesDTO
@@ -89,5 +88,53 @@ public class VeiculoQuery : IVeiculoQuery
             });
 
         return resultadoHierarquico;
+    }
+
+    public async Task<IEnumerable<DezUltimosVeiculosDTO>> DezUltimosComVeiculosAsync()
+    {        
+        var query = _context.Database.SqlQuery<MarcaVeiculoFlatDTO>($@" 
+                SELECT 
+                    v.id AS ""VeiculoId"", 
+                    v.placa AS ""VeiculoPlaca"", 
+                    v.ano AS ""VeiculoAno"", 
+                    mar.nome AS ""MarcaNome"",
+                    mar.id AS ""MarcaId"",
+                    mar.ativo AS ""MarcaAtivo"",
+                    m.nome AS ""ModeloNome""
+                FROM veiculos v 
+                INNER JOIN modelos m ON v.modelo_id = m.id 
+                INNER JOIN marcas mar ON m.marca_id = mar.id 
+                ORDER BY v.ano DESC 
+                LIMIT 10
+            ");
+
+        var dados = await query.ToListAsync();
+
+        return dados.Select(v => new DezUltimosVeiculosDTO
+        {
+            NomeCompleto = $"{v.MarcaNome} - {v.VeiculoPlaca}",
+            Ano = v.VeiculoAno ?? 0
+        }).ToList();
+    }
+    
+    public async Task<IEnumerable<VeiculoRelatorioDTO>> AplicarDescontoAsync(string nomeMarca)
+    {
+        var relatorio = await _context.marcas
+            .Where(m => m.Nome == nomeMarca)
+            // SelectMany "achata"> 1 Marca para N Modelos
+            .SelectMany(m => m.Modelos)
+            // SelectMany > N Modelos para N Veículos
+            .SelectMany(mod => mod.Veiculos)
+            .Where(v => v.Ano <= 2020)
+            .Select(v => new VeiculoRelatorioDTO
+            {
+                nomeMarca = v.Modelo.Marca.Nome,
+                Modelo = v.Modelo.Nome,
+                Ano = v.Ano,
+                PrecoAtualizado = v.Preco
+            })
+            .ToListAsync();
+
+        return relatorio;
     }
 }

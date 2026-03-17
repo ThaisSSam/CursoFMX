@@ -1,0 +1,58 @@
+2026-03-12 08:38:10.714 -03:00 [WRN] Failed to determine the https port for redirect.
+2026-03-12 08:38:11.167 -03:00 [WRN] The foreign key property 'Modelo.MarcaId1' was created in shadow state because a conflicting property with the simple name 'MarcaId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2026-03-12 08:38:11.168 -03:00 [WRN] The foreign key property 'Veiculo.ModeloId1' was created in shadow state because a conflicting property with the simple name 'ModeloId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2026-03-12 08:38:11.592 -03:00 [INF] Executed DbCommand (19ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ 
+                SELECT  
+                    v.id,  
+                    v.placa,  
+                    v.ano, 
+                    m.nome AS modelo,      
+                    mar.nome AS marca      
+                FROM veiculos v 
+                INNER JOIN modelos m ON v.modelo_id = m.id 
+                INNER JOIN marcas mar ON m.marca_id = mar.id
+2026-03-12 08:38:44.119 -03:00 [ERR] An unhandled exception has occurred while executing the request.
+ITB.Domain.Core.Exceptions.DomainException: Ano inválido
+   at ITB.Domain.Entities.Veiculo.ValidarDados(Int32 ano) in C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain\Entities\Veiculo.cs:line 105
+   at ITB.Domain.Entities.Veiculo..ctor(Int32 Id, String placa) in C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain\Entities\Veiculo.cs:line 41
+   at ITB.Application.Handlers.AdicionarVeiculoHandler.Handle(AdicionarVeiculoCommand comando) in C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\Handlers\AdicionarVeiculoHandler.cs:line 32
+   at ITB.Infrastructure.Bus.InMemoryBus.EnviarComando[T](T comando) in C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\Bus\InMemoryBus.cs:line 31
+   at ITB.API.Controller.VeiculoController.Adicionar(AdicionarVeiculoCommand command) in C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\Controller\VeiculoController.cs:line 83
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-03-12 08:38:56.059 -03:00 [ERR] An unhandled exception has occurred while executing the request.
+ITB.Domain.Core.Exceptions.DomainException: Ano inválido
+   at ITB.Domain.Entities.Veiculo.ValidarDados(Int32 ano) in C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain\Entities\Veiculo.cs:line 105
+   at ITB.Domain.Entities.Veiculo..ctor(Int32 Id, String placa) in C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Domain\Entities\Veiculo.cs:line 41
+   at ITB.Application.Handlers.AdicionarVeiculoHandler.Handle(AdicionarVeiculoCommand comando) in C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\Handlers\AdicionarVeiculoHandler.cs:line 32
+   at ITB.Infrastructure.Bus.InMemoryBus.EnviarComando[T](T comando) in C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\Bus\InMemoryBus.cs:line 31
+   at ITB.API.Controller.VeiculoController.Adicionar(AdicionarVeiculoCommand command) in C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\Controller\VeiculoController.cs:line 83
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)

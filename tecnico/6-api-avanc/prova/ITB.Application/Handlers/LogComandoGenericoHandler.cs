@@ -14,12 +14,18 @@ public class LogComandoGenericoHandler<T> : IHandler<T> where T : ICommand
         _logger = logger;
     }
 
-    public async Task Handle(T comando)
+    // public async Task Handle(T comando)
+    // {
+    //     _logger.LogInformation("Executando Comando: {CommandName} | Dados Enviados: {@Data}",
+    //         typeof(T).Name, 
+    //         comando);
+    //     await Task.CompletedTask;
+    // }
+    public Task<CommandResult> Handle(T comando)
     {
-        _logger.LogInformation("Executando Comando: {CommandName} | Dados Enviados: {@Data}",
-            typeof(T).Name, 
-            comando);
-        await Task.CompletedTask;
+        _logger.LogInformation("mensagem", typeof(T).Name, comando);
+        var resultado = new CommandResult(sucesso: true, mensagem:"mensagem");
+        return Task.FromResult(resultado);
     }
-    
+
 }

@@ -39,4 +39,9 @@ public class ModeloQuery : IModeloQuery
         ");
         return await query.FirstOrDefaultAsync();
     }
+
+    public Task<IEnumerable<ModeloDropdownDTO>> ObterModelosParaDropdown()
+    {
+        throw new NotImplementedException();
+    }
 }

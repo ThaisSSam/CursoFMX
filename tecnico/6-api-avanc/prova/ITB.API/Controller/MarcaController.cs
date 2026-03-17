@@ -38,10 +38,20 @@ public class MarcaController :ControllerBase
         return Ok(marcas);
     } 
 
+    // [HttpPost]
+    // public async Task<IActionResult>Post([FromBody] AdicionarMarcaCommand command)
+    // {
+    //     await _bus.EnviarComando(command);
+    //     return Ok("Marca criada");
+    // }
     [HttpPost]
     public async Task<IActionResult>Post([FromBody] AdicionarMarcaCommand command)
     {
-        await _bus.EnviarComando(command);
-        return Ok("Marca criada");
+        var resultado = await _bus.EnviarComando(command);    
+        if (!resultado.Sucesso)
+        {
+            return BadRequest(resultado);
+        }
+        return Ok(resultado);
     }
 }

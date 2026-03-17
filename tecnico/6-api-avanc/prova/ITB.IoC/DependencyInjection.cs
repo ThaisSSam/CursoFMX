@@ -55,7 +55,7 @@ public static class DependencyInjection
         services.AddScoped<IHandler<AdicionarVeiculoCommand>, AdicionarVeiculoHandler>();
         
         services.AddScoped<IHandler<AtualizarVeiculoCommand>, AtualizarVeiculoHandler>();
-        services.AddScoped<IHandler<DesativarVeiculoCommand>, DesativarVeiculoHandler>();
+        // services.AddScoped<IHandler<DesativarVeiculoCommand>, DesativarVeiculoHandler>();
         services.AddScoped<IHandler<AdicionarModeloCommand>, AdicionarModeloHandler>();
         // services.AddScoped<IHandler<AtualizarMarcaCommand>, AtualizarMarcaHandler>();
         // services.AddScoped<IHandler<DeletarMarcaCommand>, DeletarMarcaHandler>();

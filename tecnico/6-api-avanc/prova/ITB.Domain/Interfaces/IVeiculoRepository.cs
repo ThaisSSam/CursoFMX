@@ -10,5 +10,5 @@ public interface IVeiculoRepository
     Task<IEnumerable<Veiculo>> ObterTodos();
     Task<Veiculo?> ObterPorId(int id);
     Task<bool> PlacaJaExiste(string placa, int veiculoIdIgnorado);
-    
+    Task AplicarDescontoAsync(string marca);
 }

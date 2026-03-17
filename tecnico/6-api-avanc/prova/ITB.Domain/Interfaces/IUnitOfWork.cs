@@ -4,5 +4,7 @@ namespace ITB.Domain.Interfaces;
 
 public interface IUnitOfWork
 {
-    Task<bool> Commit();
+    IEnumerable<object> marcas { get; set; }
+
+    Task<bool> CommitAsync();
 }

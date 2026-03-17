@@ -100,5 +100,21 @@ public class VeiculoController : ControllerBase
 
         await _bus.EnviarComando(command);
         return Ok(new { mensagem = "Veículo desativado com sucesso." });
+    }   
+
+    [HttpGet("dez-ultimos")]
+    [ProducesResponseType(typeof(IEnumerable<DezUltimosVeiculosDTO>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetDezUltimos()
+    {
+        var resultado = await _query.DezUltimosComVeiculosAsync();
+        return Ok(resultado);
+    }
+
+    [HttpGet("desconto")]
+    [ProducesResponseType(typeof(IEnumerable<VeiculoRelatorioDTO>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetDesconto([FromQuery] string marcaNome)
+    {
+        var resultado = await _query.AplicarDescontoAsync(marcaNome);
+        return Ok(resultado);
     }
 }

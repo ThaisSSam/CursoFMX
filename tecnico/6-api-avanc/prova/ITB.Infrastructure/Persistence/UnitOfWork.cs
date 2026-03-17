@@ -12,10 +12,11 @@ public class UnitOfWork : IUnitOfWork
         _context = context;
     }
 
-    public async Task<bool> Commit()
+    public async Task<bool> CommitAsync()
     {
         // SaveChangesAsync retorna o n° de linhas afetadas no banco
         // Se for maior que 0 o commit funcionou
         return await _context.SaveChangesAsync()> 0;
     }
+
 }

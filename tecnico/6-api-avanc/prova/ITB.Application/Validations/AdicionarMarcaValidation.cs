@@ -8,7 +8,7 @@ public class AdicionarMarcaValidation : AbstractValidator<AdicionarMarcaCommand>
 {
     public AdicionarMarcaValidation()
     {
-        RuleFor(Validations => Validations.nome)
+        RuleFor(Validations => Validations.Nome)
             .NotEmpty().WithMessage("Nome é de preenchimento obrigatório");
     }
 }

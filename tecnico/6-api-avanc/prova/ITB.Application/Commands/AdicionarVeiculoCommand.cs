@@ -7,6 +7,7 @@ namespace ITB.Application.Commands;
 
 public class AdicionarVeiculoCommand :ICommand
 {
+    public int id { get; set; }
     public string nome{get; set;} = string.Empty;
     public string placa{get; set;} = string.Empty;
     public int ano{get; set;}

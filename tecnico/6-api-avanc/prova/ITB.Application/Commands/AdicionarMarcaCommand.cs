@@ -6,5 +6,5 @@ namespace ITB.Application.Commands;
 
 public class AdicionarMarcaCommand: ICommand
 {
-    public string nome { get; set; } = string.Empty;
+    public string Nome { get; set; } = string.Empty;
 }

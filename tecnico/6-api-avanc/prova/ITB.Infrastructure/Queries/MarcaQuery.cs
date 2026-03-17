@@ -20,13 +20,13 @@ public class MarcaQuery : IMarcaQuery
   {
     var query = _context.Database.SqlQuery<MarcaVeiculoFlatDTO>($@"
       SELECT 
-      m.id AS marca_id,
-      m.nome AS marca_nome,
-      m.ativo AS marca_ativo,
-      v.id AS veiculo_id,
-      v.placa AS veiculo_placa,
-      v.ano AS veiculo_ano,
-      mod.nome AS modelo_nome
+      m.id AS ""MarcaId"",
+      m.nome AS ""MarcaNome"",
+      m.ativo AS ""MarcaAtivo"",
+      v.id AS ""VeiculoId"",
+      v.placa AS ""VeiculoPlaca"",
+      v.ano AS ""VeiculoAno"",
+      mod.nome AS ""ModeloNome""
       FROM marcas m
       LEFT JOIN modelos mod ON mod.marca_id = m.id
       LEFT JOIN veiculos v ON v.modelo_id = mod.id
@@ -36,12 +36,9 @@ public class MarcaQuery : IMarcaQuery
 
       var resultadoHierarquico = dadosPlanos .GroupBy(x => x.MarcaId).Select(grupo => new MarcaComVeiculosDTO {
         Id = grupo.Key,
-        // Pegamos os dados do primeiro item do grupo (dados da marca são repetidos)
         Nome = grupo.First().MarcaNome, 
         Ativo = grupo.First().MarcaAtivo,
         
-        // 4. Projetamos a lista de filhos
-        // Filtramos onde VeiculoId != null (ignora marcas sem carros)
         Veiculos = grupo.Where(x => x.VeiculoId.HasValue).Select(x => new VeiculoSimplesDTO
         {
           Id = x.VeiculoId!.Value,
@@ -60,14 +57,13 @@ public class MarcaQuery : IMarcaQuery
               Id = m.Id,
               Nome = m.Nome,
               Ativo = m.Ativo,
-              
-              // Aqui pegamos todos os modelos da marca e "achatamos" seus veículos
+                            
               Veiculos = m.Modelos.SelectMany(mod => mod.Veiculos.Select(v => new VeiculoSimplesDTO
               {
                   Id = v.Id,
                   Placa = v.Placa,
                   Ano = v.Ano,
-                  Modelo = mod.Nome // O nome vem do modelo pai na iteração
+                  Modelo = mod.Nome 
               })).ToList()
           })
           .ToListAsync();

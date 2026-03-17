@@ -4,5 +4,6 @@ namespace ITB.Domain.Core.Messages.Interfaces;
 
 public interface IMessageBus 
 {
-    Task EnviarComando<T>(T comando) where T : ICommand;
+    // Task EnviarComando<T>(T comando) where T : ICommand;
+    Task<CommandResult> EnviarComando<T>(T comando) where T : ICommand;  
 }

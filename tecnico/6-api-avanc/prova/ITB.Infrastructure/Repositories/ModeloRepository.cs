@@ -36,7 +36,7 @@ public class ModeloRepository : RepositoryBase<Modelo>,IModeloRepository
     // Fazer public override
 
     public async Task<bool> VerificarExistencia(int id) =>
-        await _context.modelos.AnyAsync(m => m.Id == id);
+        await _context.Modelos.AnyAsync(m => m.Id == id);
     public async Task<bool> PossuiVeiculosAtivos(int modeloId)
     {
         return await _context.veiculos

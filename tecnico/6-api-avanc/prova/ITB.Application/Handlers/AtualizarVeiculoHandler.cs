@@ -1,6 +1,7 @@
 using System;
 using ITB.Domain.Core.Commands;
 using ITB.Domain.Core.Exceptions;
+using ITB.Domain.Core.Messages;
 using ITB.Domain.Core.Messages.Interfaces;
 using ITB.Domain.Interfaces;
 
@@ -20,7 +21,7 @@ public class AtualizarVeiculoHandler : IHandler<AtualizarVeiculoCommand>
         _uow = uow;
     }
 
-    public async Task Handle(AtualizarVeiculoCommand command)
+    public async Task<CommandResult> Handle(AtualizarVeiculoCommand command)
     {
         var veiculo = await _veiculoRepository.ObterPorId(command.Id);
         if (veiculo == null) throw new DomainException("Veículo não encontrado.");
@@ -44,10 +45,16 @@ public class AtualizarVeiculoHandler : IHandler<AtualizarVeiculoCommand>
         // 3. Persistência
         // await _veiculoRepository.Atualizar(veiculo);  
         
-        if(!await _uow.Commit())
+        if(!await _uow.CommitAsync())
         {
             // Se o EF Core não conseguir salvar (ex: banco caiu, timeout), o sistema avisa!
             throw new DomainException("Ocorreu um erro ao salvar as alterações no banco de dados.");
         }
+
+        return new CommandResult(
+            sucesso: true,
+            mensagem: "Veículo atualizado",
+            dados: new {id = command.Id, placa = command.Placa, modelo = command.ModeloId }
+        );
     }
 }
