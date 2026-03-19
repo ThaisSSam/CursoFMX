@@ -70,12 +70,12 @@ public class VeiculoQuery : IVeiculoQuery
 
         var resultadoHierarquico = dadosPlanos
             .GroupBy(x => x.MarcaId)
-            .Select(grupo => new MarcaComVeiculosDTO 
+            .Select(grupo => new MarcaComVeiculosDTO
             {
                 Id = grupo.Key,
-                Nome = grupo.First().MarcaNome, 
+                Nome = grupo.First().MarcaNome,
                 Ativo = grupo.First().MarcaAtivo,
-                
+
                 Veiculos = grupo
                     .Where(x => x.VeiculoId.HasValue)
                     .Select(x => new VeiculoSimplesDTO
@@ -91,7 +91,7 @@ public class VeiculoQuery : IVeiculoQuery
     }
 
     public async Task<IEnumerable<DezUltimosVeiculosDTO>> DezUltimosComVeiculosAsync()
-    {        
+    {
         var query = _context.Database.SqlQuery<MarcaVeiculoFlatDTO>($@" 
                 SELECT 
                     v.id AS ""VeiculoId"", 
@@ -116,7 +116,7 @@ public class VeiculoQuery : IVeiculoQuery
             Ano = v.VeiculoAno ?? 0
         }).ToList();
     }
-    
+
     public async Task<IEnumerable<VeiculoRelatorioDTO>> AplicarDescontoAsync(string nomeMarca)
     {
         var relatorio = await _context.marcas
@@ -137,4 +137,71 @@ public class VeiculoQuery : IVeiculoQuery
 
         return relatorio;
     }
+
+    // MISSÃO 1 - PASSO A
+    public async Task<PaginacaoOffsetResponse<VeiculoRelatorioDTO>> ObterVeiculosOffsetAsync(int numeroPagina, int tamanhoPagina)
+    {
+        var query = _context.veiculos.AsNoTracking();
+
+        var totalRegistros = await query.CountAsync();
+        var pular = (numeroPagina - 1) * tamanhoPagina;
+
+        var dados = await query
+            .OrderBy(v => v.Id) // Importante: Sempre ordene
+            .Skip(pular)
+            .Take(tamanhoPagina)
+            .Select(v => new VeiculoRelatorioDTO 
+            { 
+                Id = v.Id,
+                Placa = v.Placa, 
+                PrecoAtualizado = v.Preco 
+            })
+            .ToListAsync();
+
+        return new PaginacaoOffsetResponse<VeiculoRelatorioDTO>
+        {
+            Dados = dados,
+            PaginaAtual = numeroPagina,
+            TotalRegistros = totalRegistros,
+            TotalPaginas = (int)Math.Ceiling(totalRegistros / (double)tamanhoPagina)
+        };
+    }
+
+    // MISSÃO 1 - PASSO B
+    public async Task<PaginacaoResponse<VeiculoRelatorioDTO>> ObterVeiculosKeysetAsync(int? ultimoIdDaPagina, int tamanhoPagina)
+    {
+        var query = _context.veiculos.AsNoTracking();
+
+        // Filtra direto pelo ID, aproveitando o índice primário
+        if (ultimoIdDaPagina.HasValue)
+        {
+            query = query.Where(v => v.Id > ultimoIdDaPagina.Value);
+        }
+
+        // Busca 1 registro a mais para saber se "TemMaisPaginas" sem precisar de um Count(*)
+        var dados = await query
+            .OrderBy(v => v.Id)
+            .Take(tamanhoPagina + 1)
+            .Select(v => new VeiculoRelatorioDTO
+            {
+                Id = v.Id,
+                Placa = v.Placa,
+                PrecoAtualizado = v.Preco
+            })
+            .ToListAsync();
+
+        var response = new PaginacaoResponse<VeiculoRelatorioDTO>();
+        
+        response.TemMaisPaginas = dados.Count > tamanhoPagina;
+        
+        if (response.TemMaisPaginas)
+        {
+            dados.RemoveAt(dados.Count - 1); // Remove o registro extra
+        }
+
+        response.Dados = dados;
+        response.ProximoCursor = dados.LastOrDefault()?.Id;
+
+        return response;
+    } 
 }

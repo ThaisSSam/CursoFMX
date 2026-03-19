@@ -11,5 +11,13 @@ public class VeiculoRelatorioDTO
 
     public int Ano { get; set;}
 
+    public string Placa { get; set;} = string.Empty;
+
+    public int Id { get; set;}
+
     public decimal PrecoAtualizado { get; set;}
+
+    public int numeroPagina { get; set;}
+
+    public int tamanhoPagina { get; set;}
 }

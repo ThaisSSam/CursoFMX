@@ -17,7 +17,7 @@ namespace ITB.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.12")
+                .HasAnnotation("ProductVersion", "8.0.25")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -160,10 +160,11 @@ namespace ITB.Infrastructure.Migrations
                         .HasColumnType("numeric")
                         .HasColumnName("preco");
 
-                    b.Property<byte[]>("VersaoLinha")
-                        .IsRequired()
-                        .HasColumnType("bytea")
-                        .HasColumnName("versao_linha");
+                    b.Property<uint>("VersaoLinha")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("xid")
+                        .HasColumnName("xmin");
 
                     b.HasKey("Id")
                         .HasName("pk_veiculos");

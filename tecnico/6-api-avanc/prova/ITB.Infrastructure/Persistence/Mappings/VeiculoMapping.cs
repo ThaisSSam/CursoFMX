@@ -48,5 +48,8 @@ public class VeiculoMapping : IEntityTypeConfiguration<Veiculo>
             .OnDelete(DeleteBehavior.Restrict);
         
         builder.HasQueryFilter(x => x.Ativo);
+    
+        builder.Property(v => v.VersaoLinha)
+        .IsRowVersion(); // Isso configura o campo para controle de concorrência
     }
 }

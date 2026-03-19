@@ -10,6 +10,7 @@ using ITB.Domain.Interfaces;
 using ITB.Infrastructure.Bus;
 using ITB.Infrastructure.Persistence;
 using ITB.Infrastructure.Queries;
+using ITB.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -59,6 +60,7 @@ public static class DependencyInjection
         services.AddScoped<IHandler<AdicionarModeloCommand>, AdicionarModeloHandler>();
         // services.AddScoped<IHandler<AtualizarMarcaCommand>, AtualizarMarcaHandler>();
         // services.AddScoped<IHandler<DeletarMarcaCommand>, DeletarMarcaHandler>();
+        
 
         // 6. Handlers de Log (Opcional - se você quiser ver o log no console)
         services.AddScoped(typeof(IHandler<>), typeof(LogComandoGenericoHandler<>));

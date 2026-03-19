@@ -117,4 +117,21 @@ public class VeiculoController : ControllerBase
         var resultado = await _query.AplicarDescontoAsync(marcaNome);
         return Ok(resultado);
     }
+
+    // MISSÃO 1 - Passo A
+    [HttpGet("paginacao-offset")]
+    public async Task<IActionResult> GetPaginacaoOffset([FromQuery] int pagina = 1, [FromQuery] int tamanho = 20)
+    {
+        // O retorno agora contém Dados, PaginaAtual, TotalRegistros e TotalPaginas
+        var resultado = await _query.ObterVeiculosOffsetAsync(pagina, tamanho);
+        return Ok(resultado);
+    }
+
+    [HttpGet("paginacao-keyset")]
+    public async Task<IActionResult> GetPaginacaoKeyset([FromQuery] int? ultimoId, [FromQuery] int tamanho = 20)
+    {
+        // O retorno contém Dados, TemMaisPaginas e ProximoCursor
+        var resultado = await _query.ObterVeiculosKeysetAsync(ultimoId, tamanho);
+        return Ok(resultado);
+    }
 }

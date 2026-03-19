@@ -14,4 +14,7 @@ public interface IVeiculoQuery
     Task<IEnumerable<DezUltimosVeiculosDTO>> DezUltimosComVeiculosAsync();
 
     Task<IEnumerable<VeiculoRelatorioDTO>> AplicarDescontoAsync(string nomeMarca);
+
+    Task<PaginacaoOffsetResponse<VeiculoRelatorioDTO>> ObterVeiculosOffsetAsync(int numeroPagina, int tamanhoPagina);
+    Task<PaginacaoResponse<VeiculoRelatorioDTO>> ObterVeiculosKeysetAsync(int? ultimoIdDaPagina, int tamanhoPagina);  
 }

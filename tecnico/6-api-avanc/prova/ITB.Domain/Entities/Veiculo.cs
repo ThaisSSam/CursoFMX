@@ -15,7 +15,8 @@ public class Veiculo
     
     public virtual Marca Marca { get; private set; }
     public virtual Modelo Modelo { get; private set; }
-    public byte[] VersaoLinha { get; set; } 
+
+    public uint VersaoLinha { get; set; } 
 
     protected Veiculo(){}
     // public Veiculo (string placa, int ano, int modeloId)

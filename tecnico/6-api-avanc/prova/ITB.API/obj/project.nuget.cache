@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Esi/yJBdJbM=",
+  "dgSpecHash": "BHZFSsMI824=",
   "success": true,
   "projectFilePath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.API\\ITB.API.csproj",
   "expectedPackageFiles": [
@@ -16,9 +16,9 @@
     "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.codeanalysis.csharp\\4.5.0\\microsoft.codeanalysis.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.codeanalysis.csharp.workspaces\\4.5.0\\microsoft.codeanalysis.csharp.workspaces.4.5.0.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.codeanalysis.workspaces.common\\4.5.0\\microsoft.codeanalysis.workspaces.common.4.5.0.nupkg.sha512",
-    "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.12\\microsoft.entityframeworkcore.8.0.12.nupkg.sha512",
-    "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.12\\microsoft.entityframeworkcore.abstractions.8.0.12.nupkg.sha512",
-    "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\8.0.12\\microsoft.entityframeworkcore.analyzers.8.0.12.nupkg.sha512",
+    "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.25\\microsoft.entityframeworkcore.8.0.25.nupkg.sha512",
+    "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.25\\microsoft.entityframeworkcore.abstractions.8.0.25.nupkg.sha512",
+    "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\8.0.25\\microsoft.entityframeworkcore.analyzers.8.0.25.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.entityframeworkcore.design\\8.0.12\\microsoft.entityframeworkcore.design.8.0.12.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\8.0.12\\microsoft.entityframeworkcore.relational.8.0.12.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\8.0.12\\microsoft.entityframeworkcore.tools.8.0.12.nupkg.sha512",

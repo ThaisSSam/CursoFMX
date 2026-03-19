@@ -4,6 +4,8 @@ using ITB.Domain.Core.Exceptions;
 using ITB.Domain.Core.Messages;
 using ITB.Domain.Core.Messages.Interfaces;
 using ITB.Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace ITB.Application.Handlers;
 
@@ -45,16 +47,27 @@ public class AtualizarVeiculoHandler : IHandler<AtualizarVeiculoCommand>
         // 3. Persistência
         // await _veiculoRepository.Atualizar(veiculo);  
         
-        if(!await _uow.CommitAsync())
+        // if(!await _uow.CommitAsync())
+        // {
+        //     // Se o EF Core não conseguir salvar (ex: banco caiu, timeout), o sistema avisa!
+        //     throw new DomainException("Ocorreu um erro ao salvar as alterações no banco de dados.");
+        // }
+
+        // return new CommandResult(
+        //     sucesso: true,
+        //     mensagem: "Veículo atualizado",
+        //     dados: new {id = command.Id, placa = command.Placa, modelo = command.ModeloId }
+        // );
+        try
         {
-            // Se o EF Core não conseguir salvar (ex: banco caiu, timeout), o sistema avisa!
-            throw new DomainException("Ocorreu um erro ao salvar as alterações no banco de dados.");
+            await _uow.CommitAsync();
+            return new CommandResult(true, "Veículo atualizado!");
+        }
+            catch (DbUpdateConcurrencyException)
+        {
+        // O pulo do gato do Arquiteto: Interceptamos a colisão!
+            return new CommandResult(false, "Este veículo foi modificado por outro usuário enquanto você o editava. Recarregue a página.");
         }
 
-        return new CommandResult(
-            sucesso: true,
-            mensagem: "Veículo atualizado",
-            dados: new {id = command.Id, placa = command.Placa, modelo = command.ModeloId }
-        );
     }
 }
