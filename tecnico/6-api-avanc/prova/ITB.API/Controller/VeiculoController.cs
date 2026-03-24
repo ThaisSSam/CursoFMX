@@ -1,4 +1,5 @@
 using System;
+using ITB.API.Filters;
 using ITB.Application.Commands;
 using ITB.Application.Dtos;
 using ITB.Application.Interfaces;
@@ -7,6 +8,7 @@ using ITB.Domain.Core.Messages.Interfaces;
 using ITB.Domain.Interfaces;
 using ITB.Infrastructure.Persistence;
 using ITB.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +16,7 @@ namespace ITB.API.Controller;
 
 [ApiController]
 [Route("api/[controller]")]
+
 public class VeiculoController : ControllerBase
 {
     private readonly IMessageBus _bus;
@@ -64,6 +67,7 @@ public class VeiculoController : ControllerBase
     // }
 
     // Novo com o Query
+    [AllowAnonymous]
     public async Task<IActionResult> ObterTodosAsync()
     {
         var veiculos = await _query.ObterTodosAsync();
@@ -133,5 +137,12 @@ public class VeiculoController : ControllerBase
         // O retorno contém Dados, TemMaisPaginas e ProximoCursor
         var resultado = await _query.ObterVeiculosKeysetAsync(ultimoId, tamanho);
         return Ok(resultado);
+    }
+
+    [HttpGet("check")]
+    public async Task<IConfiguration> GetCheck()
+    {
+        
+        return Ok("Api online");
     }
 }

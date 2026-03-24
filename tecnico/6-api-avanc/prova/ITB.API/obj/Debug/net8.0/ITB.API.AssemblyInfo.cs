@@ -10,10 +10,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("05bb3bb8-228c-4f99-a3a4-5ac2145899c3")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("ITB.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3329c3b3774882ab8f83d7dbaba2651b94031292")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9ad57f48f7f49beca98c3748501320b1754bcdd1")]
 [assembly: System.Reflection.AssemblyProductAttribute("ITB.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ITB.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

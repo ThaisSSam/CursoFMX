@@ -30,7 +30,7 @@ public static class DependencyInjection
         services.AddFluentValidationAutoValidation();
 
         // 1. Banco de Dados (PostgreSQL)
-        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        var connectionString = configuration.GetConnectionString("ConexaoPadrao");
         services.AddDbContext<AppDbContext>(options =>
             options.UseNpgsql(connectionString));
 
