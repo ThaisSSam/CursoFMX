@@ -39,6 +39,7 @@ alunos.filter((item) => item.curso.nome.toLocaleLowerCase() === 'inglês').forEa
     console.log("Curso: ", aluno.curso.nome);
     console.log("Matriculado: ", aluno.matriculado);
 });
-// // Para compilar
+// Para compilar
+// npm i
 // npx tsc
 // node ./dist/index.js

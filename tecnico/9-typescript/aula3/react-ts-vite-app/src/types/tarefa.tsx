@@ -1,0 +1,1 @@
+export type Tarefa= {id: string, title:string};
