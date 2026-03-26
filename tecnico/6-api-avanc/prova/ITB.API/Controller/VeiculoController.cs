@@ -10,13 +10,15 @@ using ITB.Infrastructure.Persistence;
 using ITB.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 
 namespace ITB.API.Controller;
 
 [ApiController]
 [Route("api/[controller]")]
-
+// [EnableRateLimiting("PoliticaPadrao")]
 public class VeiculoController : ControllerBase
 {
     private readonly IMessageBus _bus;
@@ -36,7 +38,7 @@ public class VeiculoController : ControllerBase
     }
 
     // LEITURA: Direto do repositório
-    [HttpGet]
+    // [HttpGet]
     // public async Task<IActionResult> Get()
     // {
     //     var veiculos = await _veiculoRepository.ObterTodos();
@@ -67,14 +69,41 @@ public class VeiculoController : ControllerBase
     // }
 
     // Novo com o Query
+    // [AllowAnonymous]
+    // [OutputCache(Duration =30)]
+    // public async Task<IActionResult> ObterTodosAsync()
+    // {
+    //     var veiculos = await _query.ObterTodosAsync();
+    //     return Ok(veiculos);
+    // }
+
+    [HttpGet]
     [AllowAnonymous]
-    public async Task<IActionResult> ObterTodosAsync()
+    [OutputCache(Duration = 30)]
+    public async Task<IActionResult> Get()
     {
-        var veiculos = await _query.ObterTodosAsync();
-        return Ok(veiculos);
+        // PROVA 1: O Terminal
+        // Se o cache funcionar, essa frase NÃO PODE aparecer nas próximas chamadas.
+        Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] => Fui no Banco de Dados buscar os veículos!");
+
+        // PROVA 2: A Performance (Simulando uma query pesada)
+        // Vamos atrasar o código em 3 segundos de propósito.
+        await Task.Delay(5000);
+
+        var veiculos = await _query.ObterTodosAsync(); // Sua busca real no banco
+
+        // PROVA 3: O Relógio Congelado no JSON
+        // Vamos envelopar a resposta para mostrar a hora exata em que o JSON foi montado.
+        return Ok(new
+        {
+            CacheGeradoEm = DateTime.Now.ToString("HH:mm:ss"), // Esse valor vai congelar!
+            TotalVeiculos = veiculos.Count(), // (Opcional) Ajuste conforme sua lista
+            Dados = veiculos
+        });
     }
 
     [HttpPost]
+    [EnableRateLimiting("PoliticaPorIp")]
     // public async Task<IActionResult> Post([FromBody]AdicionarVeiculoCommand command)
     // {
     //     await _bus.EnviarComando(command);
@@ -108,6 +137,7 @@ public class VeiculoController : ControllerBase
 
     [HttpGet("dez-ultimos")]
     [ProducesResponseType(typeof(IEnumerable<DezUltimosVeiculosDTO>), StatusCodes.Status200OK)]
+    
     public async Task<IActionResult> GetDezUltimos()
     {
         var resultado = await _query.DezUltimosComVeiculosAsync();
@@ -115,6 +145,7 @@ public class VeiculoController : ControllerBase
     }
 
     [HttpGet("desconto")]
+    [OutputCache(Duration = 30)]
     [ProducesResponseType(typeof(IEnumerable<VeiculoRelatorioDTO>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetDesconto([FromQuery] string marcaNome)
     {
@@ -124,14 +155,17 @@ public class VeiculoController : ControllerBase
 
     // MISSÃO 1 - Passo A
     [HttpGet("paginacao-offset")]
+    [OutputCache(Duration =30)]
     public async Task<IActionResult> GetPaginacaoOffset([FromQuery] int pagina = 1, [FromQuery] int tamanho = 20)
     {
         // O retorno agora contém Dados, PaginaAtual, TotalRegistros e TotalPaginas
         var resultado = await _query.ObterVeiculosOffsetAsync(pagina, tamanho);
-        return Ok(resultado);
+        await Task.Delay(5000);
+        return Ok(resultado);    
     }
 
     [HttpGet("paginacao-keyset")]
+    [EnableRateLimiting("PadraoPorIp")]
     public async Task<IActionResult> GetPaginacaoKeyset([FromQuery] int? ultimoId, [FromQuery] int tamanho = 20)
     {
         // O retorno contém Dados, TemMaisPaginas e ProximoCursor
@@ -139,10 +173,9 @@ public class VeiculoController : ControllerBase
         return Ok(resultado);
     }
 
-    [HttpGet("check")]
-    public async Task<IConfiguration> GetCheck()
-    {
-        
-        return Ok("Api online");
-    }
+    // [HttpGet("check")]
+    // public async Task<IConfiguration> GetCheck()
+    // {        
+    //     // return Ok("Api online");
+    // }
 }

@@ -34,6 +34,9 @@ public static class DependencyInjection
         services.AddDbContext<AppDbContext>(options =>
             options.UseNpgsql(connectionString));
 
+        // Registrando o Health Check atrelado ao DbContext 
+        services.AddHealthChecks().AddDbContextCheck<AppDbContext>("BancoDeDados_Postgres");
+
         // 2. Repositórios
         services.AddScoped<ITB.Domain.Interfaces.IMarcaRepository, ITB.Infrastructure.Repositories.MarcaRepository>();
         services.AddScoped<ITB.Domain.Interfaces.IVeiculoRepository, ITB.Infrastructure.Repositories.VeiculoRepository>();
@@ -61,7 +64,6 @@ public static class DependencyInjection
         // services.AddScoped<IHandler<AtualizarMarcaCommand>, AtualizarMarcaHandler>();
         // services.AddScoped<IHandler<DeletarMarcaCommand>, DeletarMarcaHandler>();
         
-
         // 6. Handlers de Log (Opcional - se você quiser ver o log no console)
         services.AddScoped(typeof(IHandler<>), typeof(LogComandoGenericoHandler<>));
 

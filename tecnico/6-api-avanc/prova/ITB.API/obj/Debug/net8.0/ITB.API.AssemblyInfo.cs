@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ITB.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9ad57f48f7f49beca98c3748501320b1754bcdd1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9fca27af05ecf04ece885afab9a64be111ca5a02")]
 [assembly: System.Reflection.AssemblyProductAttribute("ITB.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ITB.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

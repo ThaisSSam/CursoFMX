@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "eJMfFFHTUUE=",
+  "dgSpecHash": "eKsW8yALqQQ=",
   "success": true,
   "projectFilePath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.IoC\\ITB.IoC.csproj",
   "expectedPackageFiles": [
@@ -21,6 +21,9 @@
     "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.3\\microsoft.extensions.dependencyinjection.abstractions.10.0.3.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.extensions.dependencymodel\\10.0.0\\microsoft.extensions.dependencymodel.10.0.0.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.extensions.diagnostics.abstractions\\10.0.0\\microsoft.extensions.diagnostics.abstractions.10.0.0.nupkg.sha512",
+    "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.extensions.diagnostics.healthchecks\\8.0.0\\microsoft.extensions.diagnostics.healthchecks.8.0.0.nupkg.sha512",
+    "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.extensions.diagnostics.healthchecks.abstractions\\8.0.0\\microsoft.extensions.diagnostics.healthchecks.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.extensions.diagnostics.healthchecks.entityframeworkcore\\8.0.0\\microsoft.extensions.diagnostics.healthchecks.entityframeworkcore.8.0.0.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\10.0.0\\microsoft.extensions.fileproviders.abstractions.10.0.0.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.extensions.hosting.abstractions\\10.0.0\\microsoft.extensions.hosting.abstractions.10.0.0.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.extensions.logging\\10.0.0\\microsoft.extensions.logging.10.0.0.nupkg.sha512",

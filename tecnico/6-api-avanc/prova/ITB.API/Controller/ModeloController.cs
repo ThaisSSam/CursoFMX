@@ -7,6 +7,7 @@ using ITB.Domain.Entities;
 using ITB.Domain.Interfaces;
 using ITB.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace ITB.API.Controller;
@@ -50,6 +51,7 @@ public class ModeloController :ControllerBase
     // }
 
     // Novo com o Query
+
     public async Task<IActionResult> ObterTodosAsync()
     {
         var modelos = await _query.ObterTodosAsync();

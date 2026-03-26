@@ -4,6 +4,9 @@ using ITB.API.Filters;
 using ITB.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.RateLimiting;
+using ITB.API.Extensions;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -70,6 +73,26 @@ builder.Services.AddCors(options =>
   });
 });
 
+// builder.Services.AddRateLimiter(options =>
+// {
+//   // Criamos uma regra chamada "CatracaPadrao" 
+//   options.AddFixedWindowLimiter("CatracaPadrao", regras =>
+//   {
+//     regras.PermitLimit = 5; // Limite de 5 acessos 
+//     regras.Window = TimeSpan.FromSeconds(10); // A cada 10 segundos 
+//     regras.QueueProcessingOrder =
+// System.Threading.RateLimiting.QueueProcessingOrder.OldestFirst;
+//     regras.QueueLimit = 0; // Se passar de 5, não cria fila de espera. Rejeita na hora! 
+//   });
+
+//   // Customizando a mensagem de erro (Opcional, mas recomendado) 
+//   options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+// });
+
+builder.Services.AddApiPoliticalLimiting();
+
+builder.Services.AddOutputCache();
+
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>(); // Captura erros globais 
@@ -88,20 +111,78 @@ var summaries = new[]
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
+app.UseHttpsRedirection();
+
 app.UseCors("PoliticaRestrita");
 
+app.UseOutputCache();
+
+app.UseRouting();
+
+app.UseRateLimiter();
+
+app.UseAuthorization();
+
 app.MapControllers();
+
+// Define a rota (endereço) onde o teste ficará disponível e abre as configurações customizadas
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+  // Intercepta a resposta original do .NET para podermos formatar do nosso jeito.
+  // Recebe o 'context' (a requisição web) e o 'report' (o laudo médico gerado pelo .NET).
+  ResponseWriter = async (context, report) =>
+  {
+    // Avisa ao navegador que o texto que vamos devolver é um formato JSON.
+    context.Response.ContentType = "application/json";
+
+    // Cria um objeto anônimo (sob medida) para desenhar a estrutura exata do nosso JSON.
+    var resposta = new
+    {
+      // Pega o status geral de tudo (ex: se 1 teste falhar, o geral fica "Unhealthy").
+      StatusGeral = report.Status.ToString(),
+
+      // Marca o tempo total que a API demorou para fazer todos os testes.
+      TempoDeResposta = report.TotalDuration,
+
+      // Entra na lista de testes individuais (Entries) e transforma cada um (Select) num sub-bloco.
+      Dependencias = report.Entries.Select(e => new
+      {
+        // Pega o "apelido" que demos ao teste lá na configuração (ex: "BancoDeDados_Postgres").
+        Nome = e.Key,
+
+        // Pega o status específico somente desse item testado.
+        Status = e.Value.Status.ToString(),
+
+        // --- INÍCIO DA REGRA DA MENSAGEM ---
+
+        // Faz uma pergunta de verificação (Operador Ternário): O status deste item é 'Healthy' (Saudável)?
+        Msg = e.Value.Status == Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy
+          // Se a resposta for SIM, imprime a mensagem de sucesso definida por nós.
+          ? "API e BANCO Online"
+
+          // Se a resposta for NÃO, ele tenta pegar o erro original (Exception). 
+          // Se a Exception for nula (??), tenta pegar a descrição do Entity Framework.
+          // Se a descrição também for nula (??), usa a mensagem padrão de falha.
+          : (e.Value.Exception?.Message ?? e.Value.Description ?? "Falha ao conectar na dependência.")
+      }) // Fim do mapeamento das dependências
+    }; // Fim do objeto 'resposta'
+
+    // Escreve fisicamente o nosso objeto 'resposta' na tela do cliente como um JSON válido.
+    await context.Response.WriteAsJsonAsync(resposta);
+  }
+});
+
 
 app.MapGet("/weatherforecast", () =>
 {
   var forecast = Enumerable.Range(1, 5).Select(index =>
-      new WeatherForecast
-      (
-          DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-          Random.Shared.Next(-20, 55),
-          summaries[Random.Shared.Next(summaries.Length)]
-      ))
-      .ToArray();
+    new WeatherForecast
+    (
+      DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+      Random.Shared.Next(-20, 55),
+      summaries[Random.Shared.Next(summaries.Length)]
+    ))
+    .ToArray();
   return forecast;
 })
 .WithName("GetWeatherForecast")
