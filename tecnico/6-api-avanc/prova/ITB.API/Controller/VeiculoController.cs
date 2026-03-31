@@ -18,6 +18,7 @@ namespace ITB.API.Controller;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 // [EnableRateLimiting("PoliticaPadrao")]
 public class VeiculoController : ControllerBase
 {
@@ -127,6 +128,7 @@ public class VeiculoController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles ="Gerente")]
     public async Task<IActionResult> Delete(int id)
     {
         var command = new DesativarVeiculoCommand { Id = id };

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "eKsW8yALqQQ=",
+  "dgSpecHash": "mNOheMfobhE=",
   "success": true,
   "projectFilePath": "C:\\Users\\TI 07\\Desktop\\Thais\\CursoFMX\\tecnico\\6-api-avanc\\prova\\ITB.IoC\\ITB.IoC.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\TI 07\\.nuget\\packages\\fluentvalidation\\12.1.1\\fluentvalidation.12.1.1.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.3.1\\fluentvalidation.aspnetcore.11.3.1.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\12.1.1\\fluentvalidation.dependencyinjectionextensions.12.1.1.nupkg.sha512",
+    "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\8.0.10\\microsoft.aspnetcore.authentication.jwtbearer.8.0.10.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.25\\microsoft.entityframeworkcore.8.0.25.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.25\\microsoft.entityframeworkcore.abstractions.8.0.25.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\8.0.25\\microsoft.entityframeworkcore.analyzers.8.0.25.nupkg.sha512",
@@ -30,6 +31,12 @@
     "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\10.0.3\\microsoft.extensions.logging.abstractions.10.0.3.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.extensions.options\\10.0.0\\microsoft.extensions.options.10.0.0.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.extensions.primitives\\10.0.0\\microsoft.extensions.primitives.10.0.0.nupkg.sha512",
+    "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.identitymodel.abstractions\\7.1.2\\microsoft.identitymodel.abstractions.7.1.2.nupkg.sha512",
+    "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\7.1.2\\microsoft.identitymodel.jsonwebtokens.7.1.2.nupkg.sha512",
+    "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.identitymodel.logging\\7.1.2\\microsoft.identitymodel.logging.7.1.2.nupkg.sha512",
+    "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.identitymodel.protocols\\7.1.2\\microsoft.identitymodel.protocols.7.1.2.nupkg.sha512",
+    "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.identitymodel.protocols.openidconnect\\7.1.2\\microsoft.identitymodel.protocols.openidconnect.7.1.2.nupkg.sha512",
+    "C:\\Users\\TI 07\\.nuget\\packages\\microsoft.identitymodel.tokens\\7.1.2\\microsoft.identitymodel.tokens.7.1.2.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\npgsql\\8.0.5\\npgsql.8.0.5.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\8.0.10\\npgsql.entityframeworkcore.postgresql.8.0.10.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\serilog\\4.3.0\\serilog.4.3.0.nupkg.sha512",
@@ -42,6 +49,7 @@
     "C:\\Users\\TI 07\\.nuget\\packages\\serilog.sinks.debug\\3.0.0\\serilog.sinks.debug.3.0.0.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\serilog.sinks.file\\7.0.0\\serilog.sinks.file.7.0.0.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\system.diagnostics.diagnosticsource\\10.0.3\\system.diagnostics.diagnosticsource.10.0.3.nupkg.sha512",
+    "C:\\Users\\TI 07\\.nuget\\packages\\system.identitymodel.tokens.jwt\\7.1.2\\system.identitymodel.tokens.jwt.7.1.2.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\system.io.pipelines\\10.0.0\\system.io.pipelines.10.0.0.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\system.text.encodings.web\\10.0.0\\system.text.encodings.web.10.0.0.nupkg.sha512",
     "C:\\Users\\TI 07\\.nuget\\packages\\system.text.json\\10.0.0\\system.text.json.10.0.0.nupkg.sha512"

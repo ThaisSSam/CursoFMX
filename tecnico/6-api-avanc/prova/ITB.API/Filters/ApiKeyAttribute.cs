@@ -9,36 +9,60 @@ namespace ITB.API.Filters;
 public class ApiKeyAttribute : Attribute, IAsyncActionFilter
 {
     private const string ApiKeyHeaderName = "X-API-KEY";
-    public async Task OnActionExecutionAsync(ActionExecutingContext context,
-    ActionExecutionDelegate next)
-    {
-        // Verifica se o método da classe possui o atributo AllowAnonymous
-        var permiteAnonimos = context.ActionDescriptor.EndpointMetadata.Any(em => em.GetType() == typeof(AllowAnonymousAttribute));
-        if (permiteAnonimos)
-        {
-            await next();
-            return;
-        }
+    // public async Task OnActionExecutionAsync(ActionExecutingContext context,
+    // ActionExecutionDelegate next)
+    // {
+    //     // Verifica se o método da classe possui o atributo AllowAnonymous
+    //     var permiteAnonimos = context.ActionDescriptor.EndpointMetadata.Any(em => em.GetType() == typeof(AllowAnonymousAttribute));
+    //     if (permiteAnonimos)
+    //     {
+    //         await next();
+    //         return;
+    //     }
 
-        // 1. Verifica se a chave veio no cabeçalho 
+    //     // 1. Verifica se a chave veio no cabeçalho 
+    //     if (!context.HttpContext.Request.Headers.TryGetValue(ApiKeyHeaderName, out var extractedApiKey))
+    //     {
+    //         context.Result = new UnauthorizedObjectResult("API Key não informada no cabeçalho.");
+    //         return;
+    //     }
+
+    //     // 2. Pega a Chave Verdadeira salva no User Secrets 
+    //     var configuration = context.HttpContext.RequestServices.GetRequiredService<IConfiguration>();
+    //     var apiKeyVerdadeira = configuration.GetValue<string>("Seguranca:MinhaApiKey");
+
+    //     // 3. Compara as chaves 
+    //     if (!apiKeyVerdadeira.Equals(extractedApiKey))
+    //     {
+    //         context.Result = new UnauthorizedObjectResult("API Key inválida. Acesso negado.");
+    //         return;
+    //     }
+
+    //     // Tudo certo! Deixa a requisição seguir para o Controller. 
+    //     await next();
+    // }
+
+    public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+    {
+        // 2. Tenta ler o Header da requisição
         if (!context.HttpContext.Request.Headers.TryGetValue(ApiKeyHeaderName, out var extractedApiKey))
         {
-            context.Result = new UnauthorizedObjectResult("API Key não informada no cabeçalho.");
+            context.Result = new UnauthorizedObjectResult(new { mensagem = "API Key não fornecida!" });
             return;
         }
 
-        // 2. Pega a Chave Verdadeira salva no User Secrets 
+        // 3. Como não usamos Injeção no construtor, pegamos o Configuration direto do HttpContext
         var configuration = context.HttpContext.RequestServices.GetRequiredService<IConfiguration>();
-        var apiKeyVerdadeira = configuration.GetValue<string>("Seguranca:MinhaApiKey");
+        var apiKey = configuration.GetValue<string>("Seguranca:MinhaApiKey");
 
-        // 3. Compara as chaves 
-        if (!apiKeyVerdadeira.Equals(extractedApiKey))
+        // 4. Valida se a chave bate com o User Secrets/appsettings
+        if (!apiKey!.Equals(extractedApiKey))
         {
-            context.Result = new UnauthorizedObjectResult("API Key inválida. Acesso negado.");
+            context.Result = new UnauthorizedObjectResult(new { mensagem = "API Key inválida!" });
             return;
         }
 
-        // Tudo certo! Deixa a requisição seguir para o Controller. 
+        // 5. Se passou por tudo, deixa a requisição seguir para a Controller
         await next();
     }
 }

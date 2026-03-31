@@ -1,0 +1,41 @@
+2026-03-31 09:52:26.996 -03:00 [WRN] The foreign key property 'Modelo.MarcaId1' was created in shadow state because a conflicting property with the simple name 'MarcaId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2026-03-31 09:52:27.016 -03:00 [WRN] The foreign key property 'Veiculo.ModeloId1' was created in shadow state because a conflicting property with the simple name 'ModeloId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2026-03-31 09:52:27.084 -03:00 [WRN] The foreign key property 'Modelo.MarcaId1' was created in shadow state because a conflicting property with the simple name 'MarcaId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2026-03-31 09:52:27.085 -03:00 [WRN] The foreign key property 'Veiculo.ModeloId1' was created in shadow state because a conflicting property with the simple name 'ModeloId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2026-03-31 09:52:33.939 -03:00 [WRN] The foreign key property 'Modelo.MarcaId1' was created in shadow state because a conflicting property with the simple name 'MarcaId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2026-03-31 09:52:33.957 -03:00 [WRN] The foreign key property 'Veiculo.ModeloId1' was created in shadow state because a conflicting property with the simple name 'ModeloId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2026-03-31 09:52:34.169 -03:00 [INF] Executed DbCommand (20ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-03-31 09:52:34.177 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT migration_id, product_version
+FROM "__EFMigrationsHistory"
+ORDER BY migration_id;
+2026-03-31 09:52:34.223 -03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-03-31 09:52:34.261 -03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2026-03-31 09:52:34.262 -03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT migration_id, product_version
+FROM "__EFMigrationsHistory"
+ORDER BY migration_id;
+2026-03-31 09:52:34.269 -03:00 [INF] Applying migration '20260331125227_CriarUsuarios'.
+2026-03-31 09:52:34.286 -03:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "__EFMigrationsHistory" (migration_id, product_version)
+VALUES ('20260331125227_CriarUsuarios', '8.0.25');
+2026-03-31 09:54:17.595 -03:00 [WRN] The foreign key property 'Modelo.MarcaId1' was created in shadow state because a conflicting property with the simple name 'MarcaId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2026-03-31 09:54:17.611 -03:00 [WRN] The foreign key property 'Veiculo.ModeloId1' was created in shadow state because a conflicting property with the simple name 'ModeloId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.

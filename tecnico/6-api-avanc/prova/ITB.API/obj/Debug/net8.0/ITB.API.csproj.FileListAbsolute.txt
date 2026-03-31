@@ -153,6 +153,7 @@ C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debu
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debug\net8.0\FluentValidation.AspNetCore.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debug\net8.0\FluentValidation.DependencyInjectionExtensions.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debug\net8.0\Humanizer.dll
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debug\net8.0\Microsoft.AspNetCore.OpenApi.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
@@ -178,6 +179,12 @@ C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debu
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debug\net8.0\Microsoft.OpenApi.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debug\net8.0\Mono.TextTemplating.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debug\net8.0\Npgsql.dll
@@ -201,6 +208,7 @@ C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debu
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debug\net8.0\System.Composition.Runtime.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debug\net8.0\System.Composition.TypedParts.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debug\net8.0\System.IO.Pipelines.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debug\net8.0\System.Text.Encodings.Web.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.API\bin\Debug\net8.0\System.Text.Json.dll

@@ -121,6 +121,41 @@ namespace ITB.Infrastructure.Migrations
                     b.ToTable("modelos", (string)null);
                 });
 
+            modelBuilder.Entity("ITB.Domain.Entities.Usuario", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
+
+                    b.Property<string>("email")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("email");
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<string>("perfil")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("perfil");
+
+                    b.Property<string>("senha")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("senha");
+
+                    b.HasKey("id")
+                        .HasName("pk_usuarios");
+
+                    b.ToTable("usuarios", (string)null);
+                });
+
             modelBuilder.Entity("ITB.Domain.Entities.Veiculo", b =>
                 {
                     b.Property<int>("Id")
@@ -164,7 +199,7 @@ namespace ITB.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("xid")
-                        .HasColumnName("xmin");
+                        .HasColumnName("versao_linha");
 
                     b.HasKey("Id")
                         .HasName("pk_veiculos");

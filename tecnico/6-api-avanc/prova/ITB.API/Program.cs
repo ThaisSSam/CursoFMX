@@ -25,36 +25,93 @@ builder.Services.AddDbContext<AppDbContext>(options => options
     .UseNpgsql(connectionString)
     .UseSnakeCaseNamingConvention());
 
+builder.Services.AddJwtAuthentication(builder.Configuration); // PERMITE LER O TOKEN DENTRO DE HANDLERS/SERVICES (Veremos no Passo 6) builder.Services.AddHttpContextAccessor(); 
+
 builder.Services.AddEndpointsApiExplorer();
+// builder.Services.AddSwaggerGen(c =>
+// {
+//   c.SwaggerDoc("v1", new OpenApiInfo { Title = "API Concessionária", Version = "v1" });
+
+//   // Avisa o Swagger que existe um Header exigido 
+//   c.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme
+//   {
+//     Description = "Insira a sua API Key secreta no campo abaixo.",
+//     Name = "X-API-KEY", // Tem que ser exatamente o mesmo nome do filtro! 
+//     In = ParameterLocation.Header,
+//     Type = SecuritySchemeType.ApiKey,
+//     Scheme = "ApiKeyScheme"
+//   });
+
+//   // Aplica a exigência globalmente na interface 
+//   c.AddSecurityRequirement(new OpenApiSecurityRequirement
+//     {
+//       {
+//         new OpenApiSecurityScheme
+//         {
+//           Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "ApiKey" },
+//           Scheme = "oauth2",
+//           Name = "ApiKey",
+//           In = ParameterLocation.Header,
+//         },
+//         new List<string>()
+//       }
+//     });
+// });
+
+// 4. Configuração Avançada do Swagger (Múltiplas Camadas de Segurança)
+// 4. Configuração Avançada do Swagger (Múltiplas Camadas de Segurança)
 builder.Services.AddSwaggerGen(c =>
 {
-  c.SwaggerDoc("v1", new OpenApiInfo { Title = "API Concessionária", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "API Concessionária", Version = "v1" });
 
-  // Avisa o Swagger que existe um Header exigido 
-  c.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme
-  {
-    Description = "Insira a sua API Key secreta no campo abaixo.",
-    Name = "X-API-KEY", // Tem que ser exatamente o mesmo nome do filtro! 
-    In = ParameterLocation.Header,
-    Type = SecuritySchemeType.ApiKey,
-    Scheme = "ApiKeyScheme"
-  });
-
-  // Aplica a exigência globalmente na interface 
-  c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    // 🔐 CADEADO 1: A API Key (Proteção do Aplicativo)
+    c.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme
     {
-      {
-        new OpenApiSecurityScheme
+        Description = "Insira a sua API Key do App Oficial.",
+        Name = "X-API-KEY", // ATENÇÃO: Tem que ser o mesmo nome que o seu filtro espera ler!
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "ApiKeyScheme"
+    });
+
+    // 🔐 CADEADO 2: O JWT (Proteção do Usuário)
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "Cole APENAS o seu token JWT aqui (o Swagger colocará o 'Bearer ' automaticamente).",
+
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT"
+    });
+
+    // 🎯 APLICAÇÃO: Diz para o Swagger enviar os DOIS cabeçalhos em todas as requisições
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        // Exigência 1: Mandar o X-API-KEY
         {
-          Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "ApiKey" },
-          Scheme = "oauth2",
-          Name = "ApiKey",
-          In = ParameterLocation.Header,
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "ApiKey" },
+                Scheme = "oauth2",
+                Name = "ApiKey",
+                In = ParameterLocation.Header
+            },
+            Array.Empty<string>()
         },
-        new List<string>()
-      }
+        // Exigência 2: Mandar o Authorization (Bearer)
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" },
+                Scheme = "oauth2",
+                Name = "Bearer",
+                In = ParameterLocation.Header
+            },
+            Array.Empty<string>()
+        }
     });
 });
+
 
 builder.Host.AddSerilogApi();
 builder.Services.AddInfrastructure(builder.Configuration);
@@ -115,15 +172,21 @@ app.UseHttpsRedirection();
 
 app.UseCors("PoliticaRestrita");
 
-app.UseOutputCache();
-
 app.UseRouting();
+
+// 1º O Porteiro: Lê a pulseira e descobre QUEM é você (Autenticação) 
+app.UseAuthentication();  
+
+// 2º A Catraca: Lê o seu cargo e decide se você PODE ENTRAR na sala (Autorização) 
+app.UseAuthorization();
+
+app.UseOutputCache();
 
 app.UseRateLimiter();
 
-app.UseAuthorization();
-
-app.MapControllers();
+// Sem autorização tem que colocar o alow anonimous no método que quer sem autorização
+// app.MapControllers();
+app.MapControllers().RequireAuthorization();
 
 // Define a rota (endereço) onde o teste ficará disponível e abre as configurações customizadas
 app.MapHealthChecks("/health", new HealthCheckOptions
