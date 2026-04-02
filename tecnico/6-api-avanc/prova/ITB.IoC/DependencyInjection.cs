@@ -11,6 +11,7 @@ using ITB.Infrastructure.Bus;
 using ITB.Infrastructure.Persistence;
 using ITB.Infrastructure.Queries;
 using ITB.Infrastructure.Repositories;
+using ITB.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -69,6 +70,14 @@ public static class DependencyInjection
 
         // 7. Log Genérico (Open Generics) - O "toque de mestre" do seu outro projeto
         services.AddScoped(typeof(IHandler<>), typeof(LogComandoGenericoHandler<>));
+
+        // Etapa 2: Registra o serviço de geração de Token
+        services.AddScoped<ITokenService, TokenService>();
+
+        // Etapa 3: Registra o Handler de Login seguindo o seu padrão IHandler
+        services.AddScoped<IHandler<RealizarLoginCommand>, RealizarLoginHandler>();
+
+        services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
         return services;
     }
