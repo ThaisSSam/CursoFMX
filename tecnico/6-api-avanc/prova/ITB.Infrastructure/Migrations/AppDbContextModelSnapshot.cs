@@ -138,7 +138,7 @@ namespace ITB.Infrastructure.Migrations
                     b.Property<string>("name")
                         .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("name");
+                        .HasColumnName("nome");
 
                     b.Property<string>("perfil")
                         .IsRequired()
@@ -194,6 +194,16 @@ namespace ITB.Infrastructure.Migrations
                     b.Property<decimal>("Preco")
                         .HasColumnType("numeric")
                         .HasColumnName("preco");
+
+                    b.Property<decimal>("PrecoCusto")
+                        .HasPrecision(12, 2)
+                        .HasColumnType("numeric(12,2)")
+                        .HasColumnName("preco_custo");
+
+                    b.Property<decimal>("PrecoVenda")
+                        .HasPrecision(12, 2)
+                        .HasColumnType("numeric(12,2)")
+                        .HasColumnName("preco_venda");
 
                     b.Property<uint>("VersaoLinha")
                         .IsConcurrencyToken()

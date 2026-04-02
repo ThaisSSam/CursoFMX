@@ -9,4 +9,7 @@ public class VeiculoDTO
     public int Ano { get; set; }
     public bool Ativo { get; set; }
     public ModeloDTO? Modelo { get; set; }
+
+    public decimal precoCusto { get; set; }
+    public decimal precoVenda { get; set; }
 }

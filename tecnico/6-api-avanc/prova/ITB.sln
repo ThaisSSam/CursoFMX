@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITB.IoC", "ITB.IoC\ITB.IoC.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITB.API", "ITB.API\ITB.API.csproj", "{A4E29296-0682-4B78-BC5F-BC9CE09AD47F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITB.CrossCutting", "ITB.CrossCutting\ITB.CrossCutting.csproj", "{B2A43721-F735-4645-BA03-A6FD83662805}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +50,9 @@ Global
 		{A4E29296-0682-4B78-BC5F-BC9CE09AD47F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4E29296-0682-4B78-BC5F-BC9CE09AD47F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4E29296-0682-4B78-BC5F-BC9CE09AD47F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2A43721-F735-4645-BA03-A6FD83662805}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2A43721-F735-4645-BA03-A6FD83662805}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2A43721-F735-4645-BA03-A6FD83662805}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2A43721-F735-4645-BA03-A6FD83662805}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

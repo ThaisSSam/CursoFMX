@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ITB.Domain.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1a0e55bfdf61960690656293079cc77c66e9f3ff")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+da3664655eca5db91079b9fed03da5454f0f0f0e")]
 [assembly: System.Reflection.AssemblyProductAttribute("ITB.Domain.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ITB.Domain.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

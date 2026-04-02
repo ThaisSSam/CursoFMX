@@ -1,0 +1,13 @@
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.CrossCutting\bin\Debug\net8.0\ITB.CrossCutting.deps.json
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.CrossCutting\bin\Debug\net8.0\ITB.CrossCutting.dll
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.CrossCutting\bin\Debug\net8.0\ITB.CrossCutting.pdb
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.CrossCutting\obj\Debug\net8.0\ITB.CrossCutting.csproj.AssemblyReference.cache
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.CrossCutting\obj\Debug\net8.0\ITB.CrossCutting.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.CrossCutting\obj\Debug\net8.0\ITB.CrossCutting.AssemblyInfoInputs.cache
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.CrossCutting\obj\Debug\net8.0\ITB.CrossCutting.AssemblyInfo.cs
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.CrossCutting\obj\Debug\net8.0\ITB.CrossCutting.csproj.CoreCompileInputs.cache
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.CrossCutting\obj\Debug\net8.0\ITB.CrossCutting.sourcelink.json
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.CrossCutting\obj\Debug\net8.0\ITB.CrossCutting.dll
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.CrossCutting\obj\Debug\net8.0\refint\ITB.CrossCutting.dll
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.CrossCutting\obj\Debug\net8.0\ITB.CrossCutting.pdb
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.CrossCutting\obj\Debug\net8.0\ref\ITB.CrossCutting.dll

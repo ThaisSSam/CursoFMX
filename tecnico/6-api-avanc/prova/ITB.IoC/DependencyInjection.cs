@@ -5,7 +5,7 @@ using ITB.Application.Handlers;
 using ITB.Application.Interfaces;
 using ITB.Application.Validations;
 using ITB.Domain.Core.Commands;
-using ITB.Domain.Core.Messages.Interfaces; // Ajustado para sua interface do Mediator
+using ITB.Domain.Core.Messages.Interfaces;
 using ITB.Domain.Interfaces;
 using ITB.Infrastructure.Bus;
 using ITB.Infrastructure.Persistence;
@@ -24,60 +24,52 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        // 1. Registra todos os validadores do Assembly de Application automaticamente
+        // 1. Fluent Validation
         services.AddValidatorsFromAssemblyContaining<AdicionarVeiculoValidation>();
-
-        // 2. Habilita a validação automática para o ASP.NET
         services.AddFluentValidationAutoValidation();
 
-        // 1. Banco de Dados (PostgreSQL)
-        var connectionString = configuration.GetConnectionString("ConexaoPadrao");
+        // 2. Banco de Dados (PostgreSQL)
+        // Ajustado para 'DefaultConnection' conforme seu appsettings.json
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
         services.AddDbContext<AppDbContext>(options =>
             options.UseNpgsql(connectionString));
 
-        // Registrando o Health Check atrelado ao DbContext 
         services.AddHealthChecks().AddDbContextCheck<AppDbContext>("BancoDeDados_Postgres");
 
-        // 2. Repositórios
-        services.AddScoped<ITB.Domain.Interfaces.IMarcaRepository, ITB.Infrastructure.Repositories.MarcaRepository>();
-        services.AddScoped<ITB.Domain.Interfaces.IVeiculoRepository, ITB.Infrastructure.Repositories.VeiculoRepository>();
-        services.AddScoped<ITB.Domain.Interfaces.IModeloRepository, ITB.Infrastructure.Repositories.ModeloRepository>();
-        // --------------------------------
-
-        // 3. Registramos o Unit of Work com tempo de vida SCOPED (A mesma duração do DbContext e da requisição HTTP)
+        // 3. Repositórios
+        services.AddScoped<IMarcaRepository, MarcaRepository>();
+        services.AddScoped<IVeiculoRepository, VeiculoRepository>();
+        services.AddScoped<IModeloRepository, ModeloRepository>();
+        services.AddScoped<IUsuarioRepository, UsuarioRepository>(); // Repositório para o Login
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-        // 4. Barramento de Mensagens (Mediator)
+        // 4. Barramento de Mensagens (Mediator Pattern)
         services.AddScoped<IMessageBus, InMemoryBus>();
 
-        // Queries
+        // 5. Queries (Leitura)
         services.AddScoped<IVeiculoQuery, VeiculoQuery>();
         services.AddScoped<IModeloQuery, ModeloQuery>();
         services.AddScoped<IMarcaQuery, MarcaQuery>();
 
-        // 5. Handlers do CRUD de Marca
-        services.AddScoped<IHandler<AdicionarMarcaCommand>, AdicionarMarcaHandler>();
-        services.AddScoped<IHandler<AdicionarVeiculoCommand>, AdicionarVeiculoHandler>();
-        
-        services.AddScoped<IHandler<AtualizarVeiculoCommand>, AtualizarVeiculoHandler>();
-        // services.AddScoped<IHandler<DesativarVeiculoCommand>, DesativarVeiculoHandler>();
-        services.AddScoped<IHandler<AdicionarModeloCommand>, AdicionarModeloHandler>();
-        // services.AddScoped<IHandler<AtualizarMarcaCommand>, AtualizarMarcaHandler>();
-        // services.AddScoped<IHandler<DeletarMarcaCommand>, DeletarMarcaHandler>();
-        
-        // 6. Handlers de Log (Opcional - se você quiser ver o log no console)
-        services.AddScoped(typeof(IHandler<>), typeof(LogComandoGenericoHandler<>));
-
-        // 7. Log Genérico (Open Generics) - O "toque de mestre" do seu outro projeto
-        services.AddScoped(typeof(IHandler<>), typeof(LogComandoGenericoHandler<>));
-
-        // Etapa 2: Registra o serviço de geração de Token
+        // 6. Serviços de Infraestrutura
         services.AddScoped<ITokenService, TokenService>();
 
-        // Etapa 3: Registra o Handler de Login seguindo o seu padrão IHandler
+        // 7. Handlers (Comandos/Lógica de Negócio)
+        // Registro dos Handlers seguindo a interface IHandler
         services.AddScoped<IHandler<RealizarLoginCommand>, RealizarLoginHandler>();
+        services.AddScoped<IHandler<AdicionarMarcaCommand>, AdicionarMarcaHandler>();
+        services.AddScoped<IHandler<AdicionarVeiculoCommand>, AdicionarVeiculoHandler>();
+        services.AddScoped<IHandler<AtualizarVeiculoCommand>, AtualizarVeiculoHandler>();
+        services.AddScoped<IHandler<AdicionarModeloCommand>, AdicionarModeloHandler>();
+        services.AddScoped<ExportarVeiculosExcelQueryHandler>();
 
-        services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+        // 8. Registro específico para a Controller (Caso ela peça a classe concreta)
+        services.AddScoped<RealizarLoginHandler>();
+
+        // 9. Handlers Genéricos (Logs e Decorators)
+        services.AddScoped(typeof(IHandler<>), typeof(LogComandoGenericoHandler<>));
+
+        services.AddHttpContextAccessor();
 
         return services;
     }

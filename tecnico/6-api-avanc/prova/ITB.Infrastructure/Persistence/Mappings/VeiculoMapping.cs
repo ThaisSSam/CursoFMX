@@ -51,5 +51,15 @@ public class VeiculoMapping : IEntityTypeConfiguration<Veiculo>
     
         builder.Property(v => v.VersaoLinha)
         .IsRowVersion(); // Isso configura o campo para controle de concorrência
+
+        // --- INÍCIO DAS NOVAS PROPRIEDADES FINANCEIRAS --- 
+        builder.Property(v => v.PrecoCusto) 
+            .IsRequired() 
+            .HasPrecision(12, 2); // 12 dígitos no total, sendo 2 casas decimais 
+
+        builder.Property(v => v.PrecoVenda) 
+            .IsRequired() 
+            .HasPrecision(12, 2); 
+        // --- FIM DAS NOVAS PROPRIEDADES ---
     }
 }

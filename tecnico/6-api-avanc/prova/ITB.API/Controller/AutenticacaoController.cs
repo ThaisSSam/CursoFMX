@@ -2,7 +2,8 @@ using ITB.Application.Commands;
 using ITB.API.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ITB.Domain.Core.Messages.Interfaces; // Namespace do seu barramento atual
+using ITB.Domain.Core.Messages.Interfaces;
+using ITB.Application.Handlers; // Namespace do seu barramento atual
 
 namespace ITB.API.Controllers;
 
@@ -10,30 +11,39 @@ namespace ITB.API.Controllers;
 [Route("api/[controller]")]
 public class AutenticacaoController : ControllerBase
 {
-    private readonly IMessageBus _bus;
+    private readonly RealizarLoginHandler _handler; 
 
-    // Injeção do barramento customizado que você já possui no projeto
-    public AutenticacaoController(IMessageBus bus)
+    public AutenticacaoController(RealizarLoginHandler handler)
     {
-        _bus = bus;
+        _handler = handler;
     }
 
     [HttpPost("login")]
-    [AllowAnonymous] // Aberto para quem ainda não tem Token
-    [ApiKey] // Protegido pela chave do App
+    [AllowAnonymous] 
     public async Task<IActionResult> Login([FromBody] RealizarLoginCommand command)
     {
-        // 1. Envia o comando para o seu Handler (RealizarLoginHandler)
-        var resultado = await _bus.EnviarComando(command);
+        // O retorno agora é tipado como CommandResult
+        var resultado = await _handler.Handle(command);
 
-        // 2. Verifica se o login foi bem-sucedido no banco
-        if (resultado.Sucesso)
+        // 1. Verifica se a operação falhou no Handler
+        if (!resultado.Sucesso)
         {
-            // 3. Retorna o Token (que o Handler guardou na propriedade Dados)
-            return Ok(new { Token = resultado.Dados });
+            return Unauthorized(new { mensagem = resultado.Mensagem });
         }
 
-        // Caso contrário, retorna erro de credenciais
-        return Unauthorized(new { mensagem = resultado.Mensagem });
+        // 2. Extrai o token da propriedade 'Dados'
+        // Fazemos o cast para string pois 'Dados' é do tipo object?
+        var token = resultado.Dados?.ToString();
+
+        if (string.IsNullOrEmpty(token))
+        {
+            return Unauthorized(new { mensagem = "Erro ao gerar o acesso." });
+        }
+
+        return Ok(new 
+        { 
+            Token = token,
+            Mensagem = resultado.Mensagem
+        });
     }
 }

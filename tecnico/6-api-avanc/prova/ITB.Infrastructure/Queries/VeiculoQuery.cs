@@ -15,24 +15,26 @@ public class VeiculoQuery : IVeiculoQuery
         _context = context;
     }
 
-    public async Task<IEnumerable<VeiculosListagemDTO>> ObterTodosAsync()
-    {
-        // SQL Otimizado: Traz apenas colunas necessárias e já faz os JOINs 
-        // O EF Core 8 mapeia o resultado para o DTO baseado nos nomes das colunas (Alias) 
+    // public async Task<IEnumerable<VeiculosListagemDTO>> ObterTodosAsync()
+    // {
+    //     // SQL Otimizado: Traz apenas colunas necessárias e já faz os JOINs 
+    //     // O EF Core 8 mapeia o resultado para o DTO baseado nos nomes das colunas (Alias) 
 
-        var query = _context.Database.SqlQuery<VeiculosListagemDTO>($@" 
-                SELECT  
-                    v.id,  
-                    v.placa,  
-                    v.ano, 
-                    m.nome AS modelo,      
-                    mar.nome AS marca      
-                FROM veiculos v 
-                INNER JOIN modelos m ON v.modelo_id = m.id 
-                INNER JOIN marcas mar ON m.marca_id = mar.id 
-            ");
-        return await query.ToListAsync();
-    }
+    //     var query = _context.Database.SqlQuery<VeiculosListagemDTO>($@" 
+    //             SELECT  
+    //                 v.id,  
+    //                 v.placa,  
+    //                 v.ano,
+    //                 v.preco_custo,
+    //                 v.preco_venda,
+    //                 m.nome AS modelo,      
+    //                 mar.nome AS marca      
+    //             FROM veiculos v 
+    //             INNER JOIN modelos m ON v.modelo_id = m.id 
+    //             INNER JOIN marcas mar ON m.marca_id = mar.id 
+    //         ");
+    //     return await query.ToListAsync();
+    // }
     public async Task<VeiculosListagemDTO?> ObterPorIdAsync(int id)
     {
         var query = _context.Database.SqlQuery<VeiculosListagemDTO>($@" 
@@ -40,6 +42,8 @@ public class VeiculoQuery : IVeiculoQuery
                     v.id,  
                     v.placa,  
                     v.ano, 
+                    v.preco_custo,
+                    v.preco_venda,
                     m.nome AS modelo,      
                     mar.nome AS marca      
                 FROM veiculos v 
@@ -48,6 +52,24 @@ public class VeiculoQuery : IVeiculoQuery
                     WHERE v.id = {id} 
             ");
         return await query.FirstOrDefaultAsync();
+    }
+    public async Task<IEnumerable<VeiculosListagemDTO>> ObterTodosAsync()
+    {
+        var query = await _context.veiculos
+            .AsNoTracking() // Essencial no CQRS: diz ao EF para não rastrear as entidades na memória, deixando a consulta muito mais rápida
+            .Select(v => new VeiculosListagemDTO
+            {
+                Id = v.Id,
+                // Modelo = v.Modelo,
+                Placa = v.Placa,
+                Ano = v.Ano,
+                Marca = v.Marca.Nome, // O EF Core faz o INNER JOIN automaticamente aqui!
+                PrecoCusto = v.PrecoCusto,
+                PrecoVenda = v.PrecoVenda
+            })
+            .ToListAsync();
+
+        return query;
     }
 
     public async Task<IEnumerable<MarcaComVeiculosDTO>> ObterMarcasComVeiculosAsync()
@@ -204,4 +226,24 @@ public class VeiculoQuery : IVeiculoQuery
 
         return response;
     } 
+
+    public async Task<IEnumerable<VeiculoExportacaoExcelDto>> ObterTodosParaExportacaoAsync()
+    {
+        var query = await _context.veiculos
+            .AsNoTracking() // Essencial no CQRS: diz ao EF para não rastrear as entidades na memória, deixando a consulta muito mais rápida
+            .Select(v => new VeiculoExportacaoExcelDto
+            {
+                Id = v.Id,
+                // Modelo = v.Modelo,
+                Placa = v.Placa,
+                Ano = v.Ano,
+                Marca = v.Marca.Nome, // O EF Core faz o INNER JOIN automaticamente aqui!
+                PrecoCusto = v.PrecoCusto,
+                PrecoVenda = v.PrecoVenda,
+                Lucro = v.Lucro
+            })
+            .ToListAsync();
+
+        return query;
+    }
 }

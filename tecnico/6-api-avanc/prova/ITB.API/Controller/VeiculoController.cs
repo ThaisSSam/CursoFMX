@@ -1,8 +1,11 @@
 using System;
+using System.Security.Claims;
 using ITB.API.Filters;
 using ITB.Application.Commands;
 using ITB.Application.Dtos;
+using ITB.Application.Handlers;
 using ITB.Application.Interfaces;
+using ITB.Application.Queries;
 using ITB.Domain.Core.Commands;
 using ITB.Domain.Core.Messages.Interfaces;
 using ITB.Domain.Interfaces;
@@ -22,6 +25,7 @@ namespace ITB.API.Controller;
 // [EnableRateLimiting("PoliticaPadrao")]
 public class VeiculoController : ControllerBase
 {
+    private readonly ExportarVeiculosExcelQueryHandler _handler;
     private readonly IMessageBus _bus;
 
     private readonly IVeiculoQuery _query;
@@ -30,13 +34,28 @@ public class VeiculoController : ControllerBase
 
     private readonly IVeiculoRepository _veiculoRepository;
 
-    public VeiculoController(IMessageBus bus, AppDbContext context, IVeiculoRepository veiculoRepository, IVeiculoQuery query)
+    public VeiculoController(IMessageBus bus, AppDbContext context, IVeiculoRepository veiculoRepository, IVeiculoQuery query, ExportarVeiculosExcelQueryHandler exportarExcel)
     {
         _bus = bus;
         _context = context;
         _veiculoRepository = veiculoRepository;
         _query = query;
+        _handler = exportarExcel;
     }
+
+    [HttpGet("exportar-excel")]
+    public async Task<IActionResult> ExportarExcel()
+    {
+        var cargo = User.FindFirstValue(ClaimTypes.Role) ?? "Cliente";
+
+        var query = new ExportarVeiculosExcelQuery { CargoUsuarioLogado = cargo };
+
+        var arquivoDto = await _handler.Handle(query);
+
+        // O método File() pega nossos bytes e empacota no formato exato que o HTTP exige para downloads.
+        return File(arquivoDto.Conteudo, arquivoDto.ContentType, arquivoDto.NomeArquivo);
+    }
+
 
     // LEITURA: Direto do repositório
     // [HttpGet]

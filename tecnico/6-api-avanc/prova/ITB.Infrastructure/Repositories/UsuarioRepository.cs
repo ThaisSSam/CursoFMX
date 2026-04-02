@@ -10,7 +10,7 @@ public class UsuarioRepository : IUsuarioRepository
     private readonly AppDbContext _context;
     public UsuarioRepository(AppDbContext context) => _context = context;
 
-    public async Task<Usuario?> ObterPorEmailESenha(string email, string senha)
+    public async Task<Usuario?> ObterPorEmailESenhaAsync(string email, string senha)
     {
         return await _context.Usuarios
             .FirstOrDefaultAsync(u => u.email == email && u.senha == senha);

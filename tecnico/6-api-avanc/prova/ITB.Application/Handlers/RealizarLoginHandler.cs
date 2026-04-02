@@ -21,7 +21,7 @@ public class RealizarLoginHandler : IHandler<RealizarLoginCommand>
 
     public async Task<CommandResult> Handle(RealizarLoginCommand request)
     {
-        var usuario = await _usuarioRepository.ObterPorEmailESenha(request.Email, request.Senha);
+        var usuario = await _usuarioRepository.ObterPorEmailESenhaAsync(request.Email, request.Senha);
 
         if (usuario == null)
             return new CommandResult(false, "Usuário ou senha incorretos.", null);
