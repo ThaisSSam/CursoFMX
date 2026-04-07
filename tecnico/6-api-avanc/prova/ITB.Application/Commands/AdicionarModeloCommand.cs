@@ -10,4 +10,6 @@ public class AdicionarModeloCommand : ICommand
     public int marcaId { get; set;}
 
     public bool ativo{ get; set;} = true;
+
+    public int IdGerado { get; set; }
 }

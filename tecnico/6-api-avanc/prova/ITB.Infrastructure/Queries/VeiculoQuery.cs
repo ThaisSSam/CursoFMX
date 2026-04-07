@@ -240,7 +240,7 @@ public class VeiculoQuery : IVeiculoQuery
                 Marca = v.Marca.Nome, // O EF Core faz o INNER JOIN automaticamente aqui!
                 PrecoCusto = v.PrecoCusto,
                 PrecoVenda = v.PrecoVenda,
-                Lucro = v.Lucro
+                Lucro = v.PrecoVenda - v.PrecoCusto,
             })
             .ToListAsync();
 

@@ -13,4 +13,5 @@ public interface IMarcaRepository : IRepositoryBase<Marca>
 
     Task<bool> VerificarExistencia(int id);
     Task<bool> PossuiModelosAtivos(int marcaId);
+  Task<bool> VerificarExistencia(object marcaId);
 }

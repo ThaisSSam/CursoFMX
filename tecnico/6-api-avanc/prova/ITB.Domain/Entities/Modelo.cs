@@ -33,7 +33,7 @@ public class Modelo
 
         if (marcaId <=0) throw new DomainException("A marca é obrigatória");
 
-        if(!ativo == null) throw new DomainException("Ativo obrigatório");
+        // if(!ativo == null) throw new DomainException("Ativo obrigatório");
     }
 
     public void AlterarMarca(int novaMarcaId,bool novaMarcaExiste)

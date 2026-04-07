@@ -1,8 +1,11 @@
 using System;
+using ITB.API.Controller.Base;
 using ITB.Application.Commands;
 using ITB.Application.Dtos;
+using ITB.Application.Handlers;
 using ITB.Application.Interfaces;
 using ITB.Domain.Core.Messages.Interfaces;
+using ITB.Domain.Core.Notifications;
 using ITB.Domain.Entities;
 using ITB.Domain.Interfaces;
 using ITB.Infrastructure.Persistence;
@@ -14,21 +17,25 @@ namespace ITB.API.Controller;
 // 7. Por fim, o controller que vai receber as requisições e usar as queries para buscar os dados e retornar para o cliente.
 [ApiController]
 [Route("api/[controller]")]
-public class ModeloController :ControllerBase
+public class ModeloController : BaseController
 {
-    private readonly IMessageBus _bus;
-    private readonly IModeloQuery _query;
-
+    private readonly IMessageBus _bus;    
     private readonly AppDbContext _context;
 
     private readonly IModeloRepository _modeloRepository;
 
-    public ModeloController(IMessageBus bus, AppDbContext context, IModeloRepository modeloRepository, IModeloQuery query)
+    private readonly IModeloQuery _query;
+    private readonly AdicionarModeloHandler _handler;
+
+    private readonly IDomainNotificationHandler<DomainNotification> _notifications;
+
+    public ModeloController(
+        IModeloQuery query, 
+        AdicionarModeloHandler handler,
+        IDomainNotificationHandler<DomainNotification> notifications) : base(notifications) 
     {
-        _bus = bus;
-        _context = context;
-        _modeloRepository = modeloRepository;
         _query = query;
+        _handler = handler;
     }
 
     [HttpGet]
@@ -58,17 +65,23 @@ public class ModeloController :ControllerBase
         return Ok(modelos);
     }
 
-    [HttpPost]
+    // [HttpPost]
     // public async Task<IActionResult> Post([FromBody] AdicionarModeloCommand command)
     // {
     //     await _bus.EnviarComando(command);
     //     return Ok("Modelo criado");
     // }
     // Novo com o Query
-    public async Task<IActionResult> Adicionar([FromBody] AdicionarModeloCommand command)
+    [HttpPost]
+    public async Task<IActionResult> Post([FromBody] AdicionarModeloCommand command)
     {
-        await _bus.EnviarComando(command);
-        return Ok(new { mensagem = "Modelo enviado para processamento." });
+        // 1. Executa a lógica
+        await _handler.Handle(command);
+
+        // 2. Usa o método mágico da sua BaseController!
+        // Se houver erro, o método Response já retorna BadRequest automaticamente.
+        // Se estiver ok, ele retorna o ID gerado.
+        return await Response(new { id = command.IdGerado });
     }
 
     [HttpGet("dropdown")]

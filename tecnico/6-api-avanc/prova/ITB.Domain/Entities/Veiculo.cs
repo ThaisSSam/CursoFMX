@@ -5,21 +5,22 @@ namespace ITB.Domain.Entities;
 
 public class Veiculo
 {
-  public int Id { get; set; }
-  public string Placa { get; set; }
-  public int Ano { get; set; }
-  public int ModeloId { get; private set; }
-  public decimal Preco { get; set; }
-  public bool Ativo { get; private set; } = true;
+    public int Id { get; set; }
+    public string Placa { get; set; }
+    public int Ano { get; set; }
+    
+    // 1. Garanta que o EF consiga gravar os IDs diretamente
+    public int ModeloId { get; set; } 
+    public int MarcaId { get; set; } 
 
-  // Adicionar marcaId
-  public decimal PrecoCusto { get; set; }
+    public decimal Preco { get; set; }
+    public bool Ativo { get; private set; } = true;
+    public decimal PrecoCusto { get; set; }
+    public decimal PrecoVenda { get; set; }
 
-  public decimal PrecoVenda { get; set; }
-
-  // Propriedades de Navegação (EF Core)
-  public virtual Marca Marca { get; private set; }
-  public virtual Modelo Modelo { get; private set; }
+    // Propriedades de Navegação
+    public virtual Marca Marca { get; private set; }
+    public virtual Modelo Modelo { get; private set; }
 
   // Token de Concorrência (xmin do Postgres mapeado no Contexto)
   public uint VersaoLinha { get; set; }
@@ -28,7 +29,7 @@ public class Veiculo
   protected Veiculo() { }
 
   // Construtor Principal: Usado pelo AdicionarVeiculoHandler
-  public Veiculo(string placa, int ano, int modeloId, decimal precoCusto, decimal precoVenda)
+  public Veiculo(string placa, int ano, int modeloId, decimal precoCusto, decimal precoVenda, int marcaId)
   {
     ValidarPlaca(placa);
     ValidarDados(ano);
@@ -43,6 +44,17 @@ public class Veiculo
     Placa = placa;
     Ano = ano;
     ModeloId = modeloId;
+    PrecoCusto = precoCusto;
+    PrecoVenda = precoVenda;
+    MarcaId = marcaId;
+  }
+
+  public Veiculo(int modeloId, string placa, int ano, int marcaId, decimal precoCusto, decimal precoVenda)
+  {
+    ModeloId = modeloId;
+    Placa = placa;
+    Ano = ano;
+    MarcaId = marcaId;
     PrecoCusto = precoCusto;
     PrecoVenda = precoVenda;
   }
