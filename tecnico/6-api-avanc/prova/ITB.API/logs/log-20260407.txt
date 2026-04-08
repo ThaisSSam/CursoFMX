@@ -389,3 +389,10 @@ SELECT v.id AS "Id", v.placa AS "Placa", v.ano AS "Ano", m.nome AS "Marca", v.pr
 FROM veiculos AS v
 INNER JOIN marcas AS m ON v.marca_id = m.id
 WHERE v.ativo
+2026-04-07 09:00:11.033 -03:00 [WRN] The foreign key property 'Modelo.MarcaId1' was created in shadow state because a conflicting property with the simple name 'MarcaId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2026-04-07 09:00:11.049 -03:00 [WRN] The foreign key property 'Veiculo.ModeloId1' was created in shadow state because a conflicting property with the simple name 'ModeloId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2026-04-07 09:00:11.339 -03:00 [INF] Executed DbCommand (23ms) [Parameters=[@__email_0='?', @__senha_1='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u.id, u.email, u.nome, u.perfil, u.senha
+FROM usuarios AS u
+WHERE u.email = @__email_0 AND u.senha = @__senha_1
+LIMIT 1
