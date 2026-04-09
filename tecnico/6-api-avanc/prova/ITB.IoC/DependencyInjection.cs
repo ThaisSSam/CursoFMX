@@ -6,6 +6,7 @@ using ITB.Application.Interfaces;
 using ITB.Application.Validations;
 using ITB.Domain.Core.Commands;
 using ITB.Domain.Core.Messages.Interfaces;
+using ITB.Domain.Core.Notifications;
 using ITB.Domain.Interfaces;
 using ITB.Infrastructure.Bus;
 using ITB.Infrastructure.Persistence;
@@ -61,6 +62,7 @@ public static class DependencyInjection
         services.AddScoped<IHandler<AdicionarVeiculoCommand>, AdicionarVeiculoHandler>();
         services.AddScoped<IHandler<AtualizarVeiculoCommand>, AtualizarVeiculoHandler>();
         services.AddScoped<IHandler<AdicionarModeloCommand>, AdicionarModeloHandler>();
+        services.AddScoped<AdicionarModeloHandler>();
         services.AddScoped<ExportarVeiculosExcelQueryHandler>();
 
         // 8. Registro específico para a Controller (Caso ela peça a classe concreta)
@@ -68,6 +70,11 @@ public static class DependencyInjection
 
         // 9. Handlers Genéricos (Logs e Decorators)
         services.AddScoped(typeof(IHandler<>), typeof(LogComandoGenericoHandler<>));
+
+        // AddScoped é crucial! Ele cria um bloco de notas independente para cada usuário que chama a API. 
+        // Se usássemos Singleton, o usuário João veria os erros da Maria! 
+        services.
+        AddScoped<IDomainNotificationHandler<DomainNotification>, DomainNotificationHandler>();
 
         services.AddHttpContextAccessor();
 

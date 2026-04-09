@@ -1,41 +1,59 @@
 using System;
+using System.Threading.Tasks;
 using ITB.Application.Commands;
-using ITB.Domain.Core.Messages;
-using ITB.Domain.Core.Messages.Interfaces;
+using ITB.Domain.Core.Notifications;
 using ITB.Domain.Entities;
 using ITB.Domain.Interfaces;
+using ITB.Domain.Core.Messages.Interfaces;
 
 namespace ITB.Application.Handlers;
 
 public class AdicionarModeloHandler : IHandler<AdicionarModeloCommand>
 {
     private readonly IModeloRepository _modeloRepository;
+    private readonly IMarcaRepository _marcaRepository;
     private readonly IUnitOfWork _uow;
-    // public AdicionarModeloHandler(IModeloRepository modeloRepository) => _modeloRepository = modeloRepository; 
+    private readonly IDomainNotificationHandler<DomainNotification> _notifications;
 
-    public AdicionarModeloHandler(IUnitOfWork uow) => _uow = uow;
-
-    // public async Task Handle(AdicionarModeloCommand command)
-    // {
-    //     var modelo = new Modelo(
-    //         command.nome,
-    //         command.modeloId,
-    //         command.ativo
-    //     );
-
-    //     await _repository.AdicionarAsync(modelo);
-    // }
-
-    public async Task<CommandResult> Handle(AdicionarModeloCommand comando)
+    public AdicionarModeloHandler(
+        IModeloRepository modeloRepository, 
+        IMarcaRepository marcaRepository,
+        IUnitOfWork uow,
+        IDomainNotificationHandler<DomainNotification> notifications)
     {
-        var novaModelo = new Modelo(comando.nome, comando.marcaId, comando.ativo);
-        _modeloRepository.AdicionarAsync(novaModelo);
-        await _uow.CommitAsync();
+        _modeloRepository = modeloRepository;
+        _marcaRepository = marcaRepository;
+        _uow = uow;
+        _notifications = notifications;
+    }
 
-        return new CommandResult(
-            sucesso: true,
-            mensagem: "Modelo cadastrada com sucesso!",
-            dados: new {id = novaModelo.Id}
-        );
+    public async Task Handle(AdicionarModeloCommand comando)
+    {
+        // 1. Validação de Regra de Negócio: A Marca existe?
+        var marcaExiste = await _marcaRepository.VerificarExistencia(comando.marcaId);
+        
+        if (!marcaExiste)
+        {
+            // Anotamos o erro no "bloco de notas" e paramos
+            await _notifications.Handle(new DomainNotification("MarcaId", "A marca informada para este modelo não existe."));
+            return; 
+        }
+
+        // 2. Criação da Entidade de Domínio
+        // Certifique-se que o construtor do Modelo aceita (nome, marcaId, ativo)
+        var novoModelo = new Modelo(comando.nome, comando.marcaId, comando.ativo);
+
+        // 3. Persistência
+        await _modeloRepository.AdicionarAsync(novoModelo);
+
+        // 4. Commit e Verificação
+        if (!await _uow.CommitAsync())
+        {
+            await _notifications.Handle(new DomainNotification("BancoDeDados", "Erro ao persistir o novo modelo."));
+            return;
+        }
+
+        // 5. Retorno do ID gerado para o Command (para a Controller ler)
+        comando.IdGerado = novoModelo.Id;
     }
 }

@@ -3,6 +3,7 @@ using ITB.Domain.Core.Commands;
 using ITB.Domain.Core.Exceptions;
 using ITB.Domain.Core.Messages;
 using ITB.Domain.Core.Messages.Interfaces;
+using ITB.Domain.Core.Notifications;
 using ITB.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,14 +17,17 @@ public class AtualizarVeiculoHandler : IHandler<AtualizarVeiculoCommand>
 
     private readonly IUnitOfWork _uow;
 
-    public AtualizarVeiculoHandler(IVeiculoRepository veiculoRepository, IModeloRepository modeloRepository, IUnitOfWork uow)
+    private readonly IDomainNotificationHandler<DomainNotification> _notifications;
+
+    public AtualizarVeiculoHandler(IVeiculoRepository veiculoRepository, IModeloRepository modeloRepository, IUnitOfWork uow, IDomainNotificationHandler<DomainNotification> notifications)
     {
         _veiculoRepository = veiculoRepository;
         _modeloRepository = modeloRepository;
         _uow = uow;
+        _notifications = notifications;
     }
 
-    public async Task<CommandResult> Handle(AtualizarVeiculoCommand command)
+    public async Task Handle(AtualizarVeiculoCommand command)
     {
         var veiculo = await _veiculoRepository.ObterPorId(command.Id);
         if (veiculo == null) throw new DomainException("Veículo não encontrado.");
@@ -61,12 +65,14 @@ public class AtualizarVeiculoHandler : IHandler<AtualizarVeiculoCommand>
         try
         {
             await _uow.CommitAsync();
-            return new CommandResult(true, "Veículo atualizado!");
+            await _notifications.Handle(new DomainNotification("BancoDeDados", "Ocorreu um erro ao salvar as alterações."));
+            return;
+
         }
             catch (DbUpdateConcurrencyException)
         {
         // O pulo do gato do Arquiteto: Interceptamos a colisão!
-            return new CommandResult(false, "Este veículo foi modificado por outro usuário enquanto você o editava. Recarregue a página.");
+            return;
         }
 
     }
