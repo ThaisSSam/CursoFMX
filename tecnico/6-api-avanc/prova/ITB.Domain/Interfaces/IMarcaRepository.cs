@@ -1,17 +1,11 @@
 using System;
+using System.Threading.Tasks;
 using ITB.Domain.Entities;
 
 namespace ITB.Domain.Interfaces;
 
 public interface IMarcaRepository : IRepositoryBase<Marca>
 {
-    // Task<List<Marca>?>ObterTodosAsync();
-
-    // Task<Marca?> ObterPorIdAsync(int id);
-
-    // Task AdicionarAsync(Marca novaMarca);
-
-    Task<bool> VerificarExistencia(int id);
+    Task<bool> VerificarExistencia(int id); // Mantenha apenas este
     Task<bool> PossuiModelosAtivos(int marcaId);
-  Task<bool> VerificarExistencia(object marcaId);
 }

@@ -1,4 +1,4 @@
-using System;
+using System.Threading.Tasks;
 using ITB.Domain.Entities;
 using ITB.Domain.Interfaces;
 using ITB.Infrastructure.Persistence;
@@ -6,36 +6,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ITB.Infrastructure.Repositories;
 
-public class MarcaRepository : RepositoryBase<Marca>,IMarcaRepository
+public class MarcaRepository : RepositoryBase<Marca>, IMarcaRepository
 {
-    private readonly AppDbContext _context;
+    public MarcaRepository(AppDbContext context) : base(context) { }
 
-    public MarcaRepository(AppDbContext context) : base(context)
+    public async Task<bool> VerificarExistencia(int id)
     {
-        _context = context;
+        // Verifique se o nome da tabela no seu AppDbContext é 'marcas' ou 'Marcas'
+        return await _context.marcas.AnyAsync(x => x.Id == id);
     }
 
-    // public async Task AdicionarAsync(Marca novaMarca)
-    // {
-    //     await _context.marcas.AddAsync(novaMarca);
-    //     await _context.SaveChangesAsync();
-    // }
-
-    // public async Task<List<Marca>?> ObterTodosAsync()
-    // {
-    //     return await _context.marcas.ToListAsync();
-    // }
-
-    // public async Task<Marca?> ObterPorIdAsync(int id)
-    // {
-    //     return await _context.marcas.FindAsync(id);
-    // }
-    public async Task<bool> VerificarExistencia(int id) =>
-        await _context.marcas.AnyAsync(m => m.Id == id);
+    // Você também precisa implementar este, senão dará erro de novo:
     public async Task<bool> PossuiModelosAtivos(int marcaId)
     {
-        return await _context.veiculos
-            .AnyAsync(v => v.ModeloId == marcaId && v.Ativo);
+        // Exemplo de lógica simples, ajuste conforme sua regra
+        return await _context.Modelos.AnyAsync(m => m.MarcaId == marcaId);
     }
-
 }

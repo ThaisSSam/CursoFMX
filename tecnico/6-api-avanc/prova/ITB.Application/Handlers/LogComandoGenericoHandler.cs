@@ -21,11 +21,11 @@ public class LogComandoGenericoHandler<T> : IHandler<T> where T : ICommand
     //         comando);
     //     await Task.CompletedTask;
     // }
-    public Task<CommandResult> Handle(T comando)
+    // Altere para:
+    public async System.Threading.Tasks.Task Handle(T comando)
     {
-        _logger.LogInformation("mensagem", typeof(T).Name, comando);
-        var resultado = new CommandResult(sucesso: true, mensagem:"mensagem");
-        return Task.FromResult(resultado);
+        _logger.LogInformation("Executando Comando: {CommandName}", typeof(T).Name);
+        await System.Threading.Tasks.Task.CompletedTask;
     }
 
 }

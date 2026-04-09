@@ -24,22 +24,16 @@ public class InMemoryBus : IMessageBus
     {   
         var handlers = _serviceProvider.GetServices<IHandler<T>>();
 
-        CommandResult? resultadoFinal = null;
+        if (handlers == null || !handlers.Any())
+        {
+            return new CommandResult(false, "Nenhum manipulador encontrado.");
+        }
 
         foreach (var handler in handlers)
-        {
-            var resultadoAtual = await handler.Handle(comando);
-
-            if(resultadoAtual != null && !resultadoAtual.Sucesso)
-            {
-                return resultadoAtual;
-            }
-
-            if(resultadoFinal == null || (resultadoAtual != null && resultadoAtual.Dados != null))
-            {
-                resultadoFinal = resultadoAtual;
-            }
+        {    
+            await handler.Handle(comando);
         }
-        return resultadoFinal ?? new CommandResult(false, "Nenhum manipulador (handler) encontrado para este comando.");
+
+        return new CommandResult(true, "Comando processado com sucesso!", null);
     }
 }

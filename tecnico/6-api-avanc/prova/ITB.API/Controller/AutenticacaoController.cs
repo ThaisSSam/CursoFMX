@@ -11,7 +11,7 @@ namespace ITB.API.Controllers;
 [Route("api/[controller]")]
 public class AutenticacaoController : ControllerBase
 {
-    private readonly RealizarLoginHandler _handler; 
+    private readonly RealizarLoginHandler _handler;
 
     public AutenticacaoController(RealizarLoginHandler handler)
     {
@@ -19,31 +19,19 @@ public class AutenticacaoController : ControllerBase
     }
 
     [HttpPost("login")]
-    [AllowAnonymous] 
-    public async Task<IActionResult> Login([FromBody] RealizarLoginCommand command)
+    public async Task<IActionResult> Login([FromBody] RealizarLoginCommand comando)
     {
-        // O retorno agora é tipado como CommandResult
-        var resultado = await _handler.Handle(command);
+        // 1. Use o _handler que você injetou no construtor!
+        // O método agora se chama Handle e não EnviarComando
+        await _handler.Handle(comando);
 
-        // 1. Verifica se a operação falhou no Handler
-        if (!resultado.Sucesso)
+        // 2. Verifica se o Token foi injetado no comando pelo Handler
+        if (string.IsNullOrEmpty(comando.TokenGerado))
         {
-            return Unauthorized(new { mensagem = resultado.Mensagem });
+            return Unauthorized(new { mensagem = "Usuário ou senha incorretos." });
         }
 
-        // 2. Extrai o token da propriedade 'Dados'
-        // Fazemos o cast para string pois 'Dados' é do tipo object?
-        var token = resultado.Dados?.ToString();
-
-        if (string.IsNullOrEmpty(token))
-        {
-            return Unauthorized(new { mensagem = "Erro ao gerar o acesso." });
-        }
-
-        return Ok(new 
-        { 
-            Token = token,
-            Mensagem = resultado.Mensagem
-        });
+        // 3. Retorna o token para o React
+        return Ok(new { token = comando.TokenGerado });
     }
 }

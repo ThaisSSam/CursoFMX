@@ -19,8 +19,10 @@ C:\ITB\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\obj\Debug\net8.0\ref\I
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\bin\Debug\net8.0\ITB.Application.deps.json
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\bin\Debug\net8.0\ITB.Application.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\bin\Debug\net8.0\ITB.Application.pdb
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\bin\Debug\net8.0\ITB.CrossCutting.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\bin\Debug\net8.0\ITB.Domain.Core.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\bin\Debug\net8.0\ITB.Domain.dll
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\bin\Debug\net8.0\ITB.CrossCutting.pdb
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\bin\Debug\net8.0\ITB.Domain.pdb
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\bin\Debug\net8.0\ITB.Domain.Core.pdb
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\obj\Debug\net8.0\ITB.Application.csproj.AssemblyReference.cache
@@ -34,5 +36,3 @@ C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\obj\Debug\net8.0\refint\ITB.Application.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\obj\Debug\net8.0\ITB.Application.pdb
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\obj\Debug\net8.0\ref\ITB.Application.dll
-C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\bin\Debug\net8.0\ITB.CrossCutting.dll
-C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Application\bin\Debug\net8.0\ITB.CrossCutting.pdb
