@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ITB.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1e10ce24e9d137fd6578ab13fd2a970e5bbe3d6a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7ac24b572da50fec1fb90ec7b8d4023022ee29c2")]
 [assembly: System.Reflection.AssemblyProductAttribute("ITB.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ITB.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

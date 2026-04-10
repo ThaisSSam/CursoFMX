@@ -28,16 +28,11 @@ public class AdicionarMarcaHandler : IHandler<AdicionarMarcaCommand>
     //     await _repository.AdicionarAsync(marca);
     // }
 
-    public async Task<CommandResult> Handle(AdicionarMarcaCommand comando)
+    // Altere a linha do método para:
+    public async System.Threading.Tasks.Task Handle(AdicionarMarcaCommand comando)
     {
         var novaMarca = new Marca(comando.Nome);
-        _marcaRepository.AdicionarAsync(novaMarca);
+        await _marcaRepository.AdicionarAsync(novaMarca);
         await _uow.CommitAsync();
-
-        return new CommandResult(
-            sucesso: true,
-            mensagem: "Marca cadastrada com sucesso!",
-            dados: new {id = novaMarca.Id}
-        );
     }
 }

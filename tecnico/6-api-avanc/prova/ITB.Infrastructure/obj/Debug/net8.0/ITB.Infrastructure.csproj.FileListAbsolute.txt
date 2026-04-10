@@ -25,11 +25,13 @@ C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructu
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\bin\Debug\net8.0\ITB.Infrastructure.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\bin\Debug\net8.0\ITB.Infrastructure.pdb
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\bin\Debug\net8.0\ITB.Application.dll
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\bin\Debug\net8.0\ITB.CrossCutting.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\bin\Debug\net8.0\ITB.Domain.Core.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\bin\Debug\net8.0\ITB.Domain.dll
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\bin\Debug\net8.0\ITB.Domain.pdb
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\bin\Debug\net8.0\ITB.Application.pdb
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\bin\Debug\net8.0\ITB.Domain.Core.pdb
+C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\bin\Debug\net8.0\ITB.CrossCutting.pdb
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\obj\Debug\net8.0\ITB.Infrastructure.csproj.AssemblyReference.cache
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\obj\Debug\net8.0\ITB.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\obj\Debug\net8.0\ITB.Infrastructure.AssemblyInfoInputs.cache
@@ -42,5 +44,3 @@ C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructu
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\obj\Debug\net8.0\ITB.Infrastructure.pdb
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\obj\Debug\net8.0\ITB.Infrastructure.genruntimeconfig.cache
 C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\obj\Debug\net8.0\ref\ITB.Infrastructure.dll
-C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\bin\Debug\net8.0\ITB.CrossCutting.dll
-C:\Users\TI 07\Desktop\Thais\CursoFMX\tecnico\6-api-avanc\prova\ITB.Infrastructure\bin\Debug\net8.0\ITB.CrossCutting.pdb

@@ -21,10 +21,10 @@ public Usuario(string nome, string email, string senha, string perfil)
     {
         ValidarDados(nome, email, senha, perfil);
 
-        nome = nome;
-        email = email;
-        senha = senha;
-        perfil = perfil;
+        this.name = nome;
+        this.email = email;
+        this.senha = senha;
+        this.perfil = perfil;
     }
 
     private void ValidarDados(string nome, string email, string senha, string perfil)
