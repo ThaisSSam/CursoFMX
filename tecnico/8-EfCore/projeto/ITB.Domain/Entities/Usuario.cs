@@ -10,7 +10,6 @@ public class Usuario
     public string Email { get; private set; } = string.Empty;
     public string SenhaHash { get; private set; } = string.Empty; 
     public string Perfil { get; private set; } = string.Empty; // "Gerente" ou "Vendedor"
-    // public int _VersaoLinha { get; private set; }  // "Gerente" ou "Vendedor"
     
     // Trava de segurança pós-reset
     public bool PrecisaTrocarSenha { get; private set; }
@@ -27,7 +26,7 @@ public class Usuario
         SetSenhaUnsafe(senhaClara); // Criptografa imediatamente!
     }
 
-    // 2. O FACTORY METHOD (A Fábrica que usa o Result Pattern) pq o construtor é privado agora
+    // 2. O FACTORY METHOD (A Fábrica que usa o Result Pattern)
     public static Result<Usuario> Criar(string nome, string email, string senhaClara, string perfil)
     {
         var erros = new List<string>();

@@ -1,40 +1,47 @@
+using ITB.Application.Handlers;
 using ITB.Domain.Core.Messages;
 using ITB.Domain.Core.Messages.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ITB.Infrastructure.Bus;
 
-public class InMemoryBus : IMessageBus
+public sealed class InMemoryBus : IMessageBus
 {
     private readonly IServiceProvider _serviceProvider;
+    private readonly IDomainNotificationHandler<DomainNotification> _notifications;
 
-    public InMemoryBus(IServiceProvider serviceProvider)
+    public InMemoryBus(IServiceProvider serviceProvider,
+        IDomainNotificationHandler<DomainNotification> notifications)
     {
         _serviceProvider = serviceProvider;
+        _notifications = notifications;
     }
 
     public async Task EnviarComando<T>(T comando) where T : ICommand
     {
-        var handlers = _serviceProvider.GetServices<IHandler<T>>();
+        var handlers = _serviceProvider.GetServices<IHandler<T>>().ToList();
+        // if(handlers.Count == 0){ 
+        //     await _notifications.Handle(new DomainNotification("Bus", $"Erro de configuração: Nenhum Handler de NEGÓCIO registrado para {typeof(T).Name}."));
+        // }
+        // FILTRO DE SUCESSO REAL:
+        // Contamos quantos handlers NÃO são o log genérico.
+        var temHandlerDeNegocio = handlers.Any(h => h.GetType().Name != typeof(LogComandoGenericoHandler<>).Name);
 
-        // CommandResult? resultadoFinal = null;
+        if (!temHandlerDeNegocio)
+        {
+            await _notifications.Handle(new DomainNotification("Bus", $"Erro de configuração: Nenhum Handler de NEGÓCIO registrado para {typeof(T).Name}."));
 
-        
+#if DEBUG
+            throw new InvalidOperationException($"[ARQUITETURA] Você esqueceu de registrar o Handler de NEGÓCIO para: {typeof(T).Name}");
+#else
+        return;
+#endif
+        }
+
         foreach (var handler in handlers)
         {
             await handler.Handle(comando);
-            // var resultadoAtual =  await handler.Handle(comando);
-            // if (resultadoAtual != null && !resultadoAtual.Sucesso)
-            // {
-            //     return resultadoAtual;
-            // }
-
-            // if (resultadoFinal == null | (resultadoAtual != null && resultadoAtual.Dados != null))
-            // {
-            //     resultadoFinal = resultadoAtual;
-            // } 
+            if (await _notifications.HasNotification()) break;
         }
-
-        //return resultadoFinal ?? new CommandResult(false, "Nenhum manipulador (handler) encontrado para este comando.");
     }
 }
