@@ -9,11 +9,10 @@ public class DomainNotificationHandler : IDomainNotificationHandler<DomainNotifi
 {
     // A lista privada que guarda os post-its na memória
     private List<DomainNotification> _notifications;
-
     public DomainNotificationHandler()
     {
-        // Sintaxe moderna do C# 12 (Collection Expression) para iniciar uma lista vazia
-        _notifications = []; 
+        // Troque [] por new List<DomainNotification>()
+        _notifications = new List<DomainNotification>();
     }
 
     public Task<IEnumerable<DomainNotification>> GetNotifications()
@@ -37,6 +36,6 @@ public class DomainNotificationHandler : IDomainNotificationHandler<DomainNotifi
     // Limpa a memória para garantir que não haja vazamentos
     public void Dispose()
     {
-        _notifications = [];
+        _notifications?.Clear();
     }
 }

@@ -23,12 +23,13 @@ public class AppDbContext : DbContext
         // 1. Mapeamento da Tabela de Usuários (Fix para Postgres Case-Sensitivity)
         modelBuilder.Entity<Usuario>(entity =>
         {
-            entity.ToTable("usuarios"); 
+            entity.ToTable("usuarios");
             entity.HasKey(u => u.id);
 
             // Mapeia as propriedades da Classe (C#) para as Colunas do Banco (Postgres)
             entity.Property(u => u.id).HasColumnName("id");
-            entity.Property(u => u.name).HasColumnName("nome");
+            // Altere esta linha no seu OnModelCreating:
+            entity.Property(u => u.name).HasColumnName("name"); // Estava "nome"
             entity.Property(u => u.email).HasColumnName("email");
             entity.Property(u => u.senha).HasColumnName("senha");
             entity.Property(u => u.perfil).HasColumnName("perfil");
@@ -48,20 +49,20 @@ public class AppDbContext : DbContext
             .OnDelete(DeleteBehavior.Restrict);
 
         // 3. Concurrency Token e Preço
-        modelBuilder.Entity<Veiculo>(entity => 
+        modelBuilder.Entity<Veiculo>(entity =>
         {
             entity.ToTable("veiculos");
-            entity.Property(v => v.VersaoLinha).HasColumnName("versao_linha");            
-            
+            entity.Property(v => v.VersaoLinha).HasColumnName("versao_linha");
+
             entity.Property(v => v.PrecoCusto).HasColumnName("preco_custo");
             entity.Property(v => v.PrecoVenda).HasColumnName("preco_venda");
         });
 
         // 4. Configurações de DTO/Views
-        modelBuilder.Entity<MarcaVeiculoFlatDTO>(entity => 
+        modelBuilder.Entity<MarcaVeiculoFlatDTO>(entity =>
         {
             entity.HasNoKey();
-            entity.ToView(null); 
+            entity.ToView(null);
         });
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);

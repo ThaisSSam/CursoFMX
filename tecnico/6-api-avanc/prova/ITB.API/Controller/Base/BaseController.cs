@@ -1,31 +1,30 @@
-using System;
 using ITB.Domain.Core.Notifications;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ITB.API.Controller.Base;
 
-public class BaseController : ControllerBase
+[ApiController]
+public abstract class BaseController : ControllerBase
 {
-  protected readonly IDomainNotificationHandler<DomainNotification> _notifications;
+    protected readonly IDomainNotificationHandler<DomainNotification> _notifications;
 
-  protected BaseController(IDomainNotificationHandler<DomainNotification> notifications)
-  {
-    _notifications = notifications;
-  }
-
-  protected async Task<bool> OperacaoValida()=>!await _notifications.HasNotification();
-
-  protected new async Task<ActionResult> Response(object? result = null)
-  {
-    if(await OperacaoValida())
+    protected BaseController(IDomainNotificationHandler<DomainNotification> notifications)
     {
-      return Ok (new ApiResponse<object>(result!, "Operação realizada"));
+        _notifications = notifications;
     }
 
-    var notificacoes = await _notifications.GetNotifications();
+    protected async Task<bool> OperacaoValida() => !await _notifications.HasNotification();
 
-    var mensagensDeErro = notificacoes.Select(nameof=>nameof.Value).ToList();
+    protected new async Task<ActionResult> Response(object? result = null)
+    {
+        if (await OperacaoValida())
+        {
+            return Ok(new ApiResponse<object>(result!, "Operação realizada com sucesso."));
+        }
 
-    return BadRequest(new ApiResponse<object>("Erros de validação encontrados", mensagensDeErro));
-  }
+        var notificacoes = await _notifications.GetNotifications();
+        var mensagensDeErro = notificacoes.Select(n => n.Value).ToList();
+
+        return BadRequest(new ApiResponse<object>("Erros de validação encontrados", mensagensDeErro));
+    }
 }

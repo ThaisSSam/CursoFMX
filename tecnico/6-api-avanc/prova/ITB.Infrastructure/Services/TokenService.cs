@@ -13,33 +13,38 @@ namespace ITB.Infrastructure.Services;
 public class TokenService : ITokenService
 {
     private readonly IConfiguration _configuration;
-
     public TokenService(IConfiguration configuration)
     {
-        _configuration = configuration;
+        _configuration = configuration; // Se faltar isso, dá Erro 500
     }
 
     public string GerarToken(Usuario usuario)
     {
-        var claims = new[]
+        var key = _configuration["JwtSettings:SecretKey"]; // Verifique se o nome no User Secrets é exatamente este
+        if (string.IsNullOrEmpty(key))
         {
-            new Claim(JwtRegisteredClaimNames.Sub, usuario.id.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, usuario.email),
-            new Claim(ClaimTypes.Name, usuario.name),
-            new Claim(ClaimTypes.Role, usuario.perfil) 
+            // Se cair aqui, o erro 500 é por falta da chave no segredo!
+            throw new Exception("Chave JWT não encontrada nas configurações.");
+        }
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var keyBytes = Encoding.ASCII.GetBytes(key);
+
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(new[]
+    {
+        // Use ?? para garantir que nunca passe null para os Claims
+        new Claim(ClaimTypes.NameIdentifier, usuario.id.ToString()),
+        new Claim(ClaimTypes.Name, usuario.name ?? "Usuario"),
+        new Claim(ClaimTypes.Email, usuario.email ?? "email@itb.com"),
+        new Claim(ClaimTypes.Role, usuario.perfil ?? "Vendedor")
+    }),
+            Expires = DateTime.UtcNow.AddMinutes(60),
+            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(keyBytes), SecurityAlgorithms.HmacSha256Signature)
         };
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:SecretKey"]!));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-        var tokenInfo = new JwtSecurityToken(
-            issuer: _configuration["JwtSettings:Issuer"],
-            audience: _configuration["JwtSettings:Audience"],
-            claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(int.Parse(_configuration["JwtSettings:ExpirationMinutes"]!)),
-            signingCredentials: creds
-        );
-
-        return new JwtSecurityTokenHandler().WriteToken(tokenInfo);
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+        return tokenHandler.WriteToken(token);
     }
 }

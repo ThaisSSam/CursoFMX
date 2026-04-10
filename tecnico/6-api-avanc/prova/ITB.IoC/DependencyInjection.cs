@@ -30,7 +30,6 @@ public static class DependencyInjection
         services.AddFluentValidationAutoValidation();
 
         // 2. Banco de Dados (PostgreSQL)
-        // Ajustado para 'DefaultConnection' conforme seu appsettings.json
         var connectionString = configuration.GetConnectionString("DefaultConnection");
         services.AddDbContext<AppDbContext>(options =>
             options.UseNpgsql(connectionString));
@@ -41,7 +40,7 @@ public static class DependencyInjection
         services.AddScoped<IMarcaRepository, MarcaRepository>();
         services.AddScoped<IVeiculoRepository, VeiculoRepository>();
         services.AddScoped<IModeloRepository, ModeloRepository>();
-        services.AddScoped<IUsuarioRepository, UsuarioRepository>(); // Repositório para o Login
+        services.AddScoped<IUsuarioRepository, UsuarioRepository>(); 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         // 4. Barramento de Mensagens (Mediator Pattern)
@@ -55,26 +54,25 @@ public static class DependencyInjection
         // 6. Serviços de Infraestrutura
         services.AddScoped<ITokenService, TokenService>();
 
-        // 7. Handlers (Comandos/Lógica de Negócio)
-        // Registro dos Handlers seguindo a interface IHandler
+        // 7. Handlers (Lógica de Negócio)
+        // Registro por Interface (Para o Bus/Mediator)
         services.AddScoped<IHandler<RealizarLoginCommand>, RealizarLoginHandler>();
         services.AddScoped<IHandler<AdicionarMarcaCommand>, AdicionarMarcaHandler>();
         services.AddScoped<IHandler<AdicionarVeiculoCommand>, AdicionarVeiculoHandler>();
         services.AddScoped<IHandler<AtualizarVeiculoCommand>, AtualizarVeiculoHandler>();
         services.AddScoped<IHandler<AdicionarModeloCommand>, AdicionarModeloHandler>();
+
+        // 8. Registro de Classes Concretas (Obrigatório para injeção direta em Controllers)
+        services.AddScoped<RealizarLoginHandler>();
         services.AddScoped<AdicionarModeloHandler>();
         services.AddScoped<ExportarVeiculosExcelQueryHandler>();
 
-        // 8. Registro específico para a Controller (Caso ela peça a classe concreta)
-        services.AddScoped<RealizarLoginHandler>();
-
-        // 9. Handlers Genéricos (Logs e Decorators)
+        // 9. Handlers Genéricos
         services.AddScoped(typeof(IHandler<>), typeof(LogComandoGenericoHandler<>));
 
-        // AddScoped é crucial! Ele cria um bloco de notas independente para cada usuário que chama a API. 
-        // Se usássemos Singleton, o usuário João veria os erros da Maria! 
-        services.
-        AddScoped<IDomainNotificationHandler<DomainNotification>, DomainNotificationHandler>();
+        // 10. O BLOCO DE NOTAS (Domain Notifications)
+        // AddScoped é crucial! Independência por requisição
+        services.AddScoped<IDomainNotificationHandler<DomainNotification>, DomainNotificationHandler>();
 
         services.AddHttpContextAccessor();
 

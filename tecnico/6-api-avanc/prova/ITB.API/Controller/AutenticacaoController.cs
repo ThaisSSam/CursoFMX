@@ -1,37 +1,40 @@
 using ITB.Application.Commands;
-using ITB.API.Filters;
+using ITB.Application.Handlers;
+using ITB.Domain.Core.Notifications;
+using ITB.API.Controller.Base;
+using ITB.Application.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ITB.Domain.Core.Messages.Interfaces;
-using ITB.Application.Handlers; // Namespace do seu barramento atual
 
 namespace ITB.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AutenticacaoController : ControllerBase
+public class AutenticacaoController : BaseController
 {
     private readonly RealizarLoginHandler _handler;
+    // Removida a declaração duplicada de _notifications que causava o erro!
 
-    public AutenticacaoController(RealizarLoginHandler handler)
+    public AutenticacaoController(
+        RealizarLoginHandler handler,
+        IDomainNotificationHandler<DomainNotification> notifications) 
+        : base(notifications)
     {
         _handler = handler;
     }
 
+    [AllowAnonymous]
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] RealizarLoginCommand comando)
+    public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
-        // 1. Use o _handler que você injetou no construtor!
-        // O método agora se chama Handle e não EnviarComando
+        var comando = new RealizarLoginCommand { Email = request.Email, Senha = request.Senha };
+        
         await _handler.Handle(comando);
 
-        // 2. Verifica se o Token foi injetado no comando pelo Handler
-        if (string.IsNullOrEmpty(comando.TokenGerado))
-        {
-            return Unauthorized(new { mensagem = "Usuário ou senha incorretos." });
-        }
+        // ATENÇÃO: Use a variável que vem da BaseController (protected)
+        var notifications = await _notifications.GetNotifications();
+        var tokenNode = notifications.FirstOrDefault(n => n.Key == "AuthToken");
 
-        // 3. Retorna o token para o React
-        return Ok(new { token = comando.TokenGerado });
+        return await Response(tokenNode != null ? new { token = tokenNode.Value } : null);
     }
 }
