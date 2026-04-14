@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Button from "./components/Button";
 import Modal from "./components/Modal";
 import Card from "./components/Card";
+import { create } from "zustand";
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -68,6 +69,8 @@ function App() {
     setIsCount (valorAnterior => valorAnterior - 1);
     setValorAnterior(count);
   }
+
+  
 
   return (
     <>
