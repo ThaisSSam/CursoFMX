@@ -5,7 +5,6 @@ using ITB.Domain.Core.Messages;
 using ITB.Domain.Core.Messages.Interfaces;
 using ITB.Domain.Core.Notifications;
 using ITB.Domain.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace ITB.Application.Handlers;
