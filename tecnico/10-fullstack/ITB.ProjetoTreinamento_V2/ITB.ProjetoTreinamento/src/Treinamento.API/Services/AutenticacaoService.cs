@@ -7,7 +7,7 @@ namespace Treinamento.Application.Services;
 
 public class AutenticacaoService
 {
-    private readonly IUsuarioRepository _usuarioRepository; // Substitua pelo seu repositório ou DbContext
+    private readonly IUsuarioRepository _usuarioRepository;
 
     public AutenticacaoService(IUsuarioRepository usuarioRepository)
     {
@@ -26,22 +26,21 @@ public class AutenticacaoService
         }
 
         // 3. Executa a lógica de autenticação dentro da Entidade de Domínio
-        // Aqui simula a verificação da senha (se você usa criptografia, injete a validação aqui)
         bool loginValido = usuario.RealizarTentativaLogin(request.Password, (senhaDigitada, senhaDoBanco) => 
         {
-            return senhaDigitada == senhaDoBanco; // Ajuste para a sua lógica de Hash de senha
+            return senhaDigitada == senhaDoBanco; 
         });
 
         // 4. Salva as mudanças no banco (persistindo o contador de erros ou zerando ele)
         await _usuarioRepository.AtualizarAsync(usuario);
 
+        // 5. Se o login falhou, extrai a MensagemErro do primeiro item da lista da sua Entity
         if (!loginValido)
         {
-            // Pega o primeiro erro gerado na validação da sua Entity<T>
             return (false, usuario.ResultadoValidacao.Erros[0].MensagemErro);
         }
 
-        // Tudo certo! (Aqui você geraria o token JWT se necessário)
+        // Tudo certo! (Pronto para gerar o token JWT ou cookies de sessão)
         return (true, string.Empty);
     }
 }

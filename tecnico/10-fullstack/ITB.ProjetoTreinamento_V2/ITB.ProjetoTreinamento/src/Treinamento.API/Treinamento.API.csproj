@@ -24,6 +24,7 @@
     <ProjectReference Include="..\Treinamento.Domain.Core\Treinamento.Domain.Core.csproj" />
     <ProjectReference Include="..\Treinamento.Domain\Treinamento.Domain.csproj" />
     <ProjectReference Include="..\Treinamento.IoC\Treinamento.IoC.csproj" />
+    <ProjectReference Include="..\Treinamento.Infrastructure\Treinamento.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
