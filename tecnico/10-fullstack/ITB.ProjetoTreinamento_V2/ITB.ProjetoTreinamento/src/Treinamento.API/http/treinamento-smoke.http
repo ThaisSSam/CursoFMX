@@ -1,0 +1,19 @@
+@BaseUrl = http://localhost:5000
+@Jwt =
+
+### Health ping (sem autenticação)
+GET {{BaseUrl}}/api/v1/health/ping
+Accept: application/json
+
+### Módulo 1: login (implementar endpoint)
+# POST {{BaseUrl}}/api/v1/auth/login
+# Content-Type: application/json
+#
+# {
+#   "login": "admin",
+#   "senha": "Admin@123"
+# }
+
+### Módulo 1: endpoint protegido (após JWT)
+# GET {{BaseUrl}}/api/v1/eu
+# Authorization: Bearer {{Jwt}}
