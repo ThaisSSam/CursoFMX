@@ -12,8 +12,12 @@ public class Usuario : Entity<Usuario>
     public string SenhaHash { get; private set; }
     public bool Ativo { get; private set; }
     public int TentativasLoginInvalidas { get; private set; }
-    public DateTime? BloqueadoAte { get; private set; }    
-    protected Usuario() : base() { }
+    public DateTime? BloqueadoAte { get; private set; }
+    protected Usuario() : base()
+    {
+        Email = string.Empty;
+        SenhaHash = string.Empty;
+    }
 
     public Usuario(string email, string senhaHash, bool ativo) : base()
     {
@@ -59,13 +63,22 @@ public class Usuario : Entity<Usuario>
         if (!senhaValida)
         {
             TentativasLoginInvalidas++;
-            
-            // ERRO
-            AdicionarErroValidacao("E-mail ou senha incorretos.");
+
+            //Se atingiu 5 erros consecutivos
+            if (TentativasLoginInvalidas >= 5)
+            {
+                BloqueadoAte = DateTime.UtcNow.AddMinutes(15);
+                AdicionarErroValidacao("Limite de tentativas excedido. Seu acesso foi temporariamente bloqueado por 15 minutos.");
+                return false;
+            }
+
+            //Mensagem genérica
+            AdicionarErroValidacao("E-mail ou senha incorretos. Verifique suas credenciais e tente novamente.");
             return false;
         }
 
         TentativasLoginInvalidas = 0; // Reseta o contador de erros
+        BloqueadoAte = null;
         return true;
     }
 }

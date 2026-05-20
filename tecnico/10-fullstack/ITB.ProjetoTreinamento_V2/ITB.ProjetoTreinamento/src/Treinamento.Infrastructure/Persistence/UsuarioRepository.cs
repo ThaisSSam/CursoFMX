@@ -26,9 +26,8 @@ public class UsuarioRepository : IUsuarioRepository
     _context.Usuarios.Update(usuario);
     await _context.SaveChangesAsync();
   }
-
-  // Método duplicado criado para satisfazer o erro de contrato CS0535 da interface
-  public async Task AtualizarAsync(Usuario usuario)
+  
+  public async Task LogarAsync(Usuario usuario)
   {
     await UpdateAsync(usuario);
   }

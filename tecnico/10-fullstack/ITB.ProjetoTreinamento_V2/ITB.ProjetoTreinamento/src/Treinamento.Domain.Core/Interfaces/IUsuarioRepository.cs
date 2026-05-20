@@ -1,9 +1,10 @@
 using System.Threading.Tasks;
+using Treinamento.Domain.Aggregates.Usuarios;
 
 namespace Treinamento.Domain.Aggregates.Usuarios;
 
 public interface IUsuarioRepository
 {
     Task<Usuario?> ObterPorEmailAsync(string email);
-    Task AtualizarAsync(Usuario usuario);
+    Task LogarAsync(Usuario usuario);
 }
