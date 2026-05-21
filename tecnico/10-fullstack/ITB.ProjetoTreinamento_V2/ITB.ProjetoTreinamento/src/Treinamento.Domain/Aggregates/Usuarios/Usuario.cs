@@ -43,14 +43,12 @@ public class Usuario : Entity<Usuario>
 
     public bool RealizarTentativaLogin(string senhaInformada, Func<string, string, bool> verificarSenhaVerdadeira)
     {
-        // Verifica se o usuário já estourou o limite de 5 tentativas consecutivas
         if (TentativasLoginInvalidas >= 5)
         {
             AdicionarErroValidacao("Limite de tentativas excedido. Seu acesso foi temporariamente bloqueado.");
             return false;
         }
 
-        // Verifica se o usuário está Inativo antes de validar a senha
         if (!Ativo)
         {
             AdicionarErroValidacao("Acesso bloqueado. Por favor, contate o administrador.");
@@ -77,7 +75,7 @@ public class Usuario : Entity<Usuario>
             return false;
         }
 
-        TentativasLoginInvalidas = 0; // Reseta o contador de erros
+        TentativasLoginInvalidas = 0;
         BloqueadoAte = null;
         return true;
     }

@@ -31,8 +31,8 @@ public class UsuarioController : ControllerBase
             Senha = request.Senha,
             LembrarAcesso = request.LembrarAcesso
         };
-    
-        var (sucesso, mensagemErro) = await _handler.ExecutarAsync(loginDto);
+
+        var (sucesso, mensagemErro, token) = await _handler.ExecutarAsync(loginDto);
 
         if (!sucesso)
         {
@@ -44,6 +44,22 @@ public class UsuarioController : ControllerBase
             return Unauthorized(new { errors = new[] { mensagemErro } });
         }
 
-        return Ok(new { message = "Login realizado com sucesso!" });
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Lax,
+            Expires = request.LembrarAcesso ? DateTime.UtcNow.AddDays(30) : null
+        };
+
+        // Injeta o token diretamente no cabeçalho de resposta do navegador
+        Response.Cookies.Append("X-Access-Token", token!, cookieOptions);
+
+        // devolve a mensagem e o token 
+        return Ok(new 
+        { 
+            message = "Login realizado com sucesso!",
+            token = token
+        });
     }
 }

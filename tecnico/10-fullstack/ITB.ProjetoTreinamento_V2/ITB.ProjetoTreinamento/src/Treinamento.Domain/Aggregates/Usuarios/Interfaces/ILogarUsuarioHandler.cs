@@ -5,5 +5,5 @@ namespace Treinamento.Domain.Core.Interfaces;
 
 public interface ILogarUsuarioHandler
 {
-    Task<(bool Sucesso, string MensagemErro)> ExecutarAsync(LoginDto request);
+    Task<(bool Sucesso, string MensagemErro, string? Token)> ExecutarAsync(LoginDto request);
 }
