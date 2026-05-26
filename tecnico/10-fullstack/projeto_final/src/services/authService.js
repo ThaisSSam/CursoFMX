@@ -1,5 +1,4 @@
-import api from './config';
-// import { toast } from '@/components/ui/use-toast'; 
+import api from './config'; 
 
 export async function fazerLoginSimples(email, senha) {
   const corpoRequest = {
@@ -22,11 +21,6 @@ export async function fazerLoginSimples(email, senha) {
       erro.message || 
       'Erro ao tentar realizar o login.';
 
-    // toast({
-    //   variant: 'destructive',
-    //   title: 'Falha no Acesso',
-    //   description: mensagemErro,
-    // });
 
     return { sucesso: false, erro: mensagemErro };
   }

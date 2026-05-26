@@ -1,591 +1,117 @@
-import React, { Suspense, lazy, useCallback, useEffect, useState } from 'react';
-import AppLoadingFallback from './components/layout/AppLoadingFallback';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Toast from './components/notifications/Toast';
-import { ToastContainer } from './components/notifications/ToastContainer';
-import { ToastProvider } from './contexts/ToastContext';
-import { CustomToastProvider } from './contexts/CustomToastContext';
-import { DatabaseUnavailableModal } from './components/modals/DatabaseUnavailableModal';
-import { ApiOfflineModal } from './components/modals/ApiOfflineModal';
-import { PrimeiroAcessoModal } from './components/modals/PrimeiroAcessoModal';
-import {
-  definirStorageAuth,
-  limparStorageAuth,
-  tokenEstaExpirado,
-  sair as sairAuth,
-  mudarContexto,
-} from './services/authService';
-import { empresaStore } from './store/empresaStore';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/Button";
+import { fazerLoginSimples } from "@/services/authService";
 
-const DashboardScreen = lazy(() => import('./screens/Dashboard'));
-const LoginScreen = lazy(() => import('./screens/Login'));
-const TelaRedefinirSenhaGestao = lazy(() => import('./screens/Login/RedefinirSenhaGestao'));
-const CadastroScreen = lazy(() => import('./screens/Cadastro'));
-const SuprimentosScreen = lazy(() => import('./screens/Suprimentos'));
-const CadastroSolicitacaoScreen = lazy(() => import('./screens/Suprimentos/Compras/Solicitacoes'));
-const ConsultasScreen = lazy(() => import('./screens/Suprimentos/Compras/Consultas'));
-const RequisicoesScreen = lazy(() => import('./screens/Suprimentos/Compras/Requisicoes'));
-const CadastrarProdutoServicoScreen = lazy(
-  () => import('./screens/Suprimentos/Compras/CadastrarProdutoServico'),
-);
-const PedidoSolicitacaoScreen = lazy(() => import('./screens/Suprimentos/Pedidos/Solicitacoes'));
-const AnaliseCentroCustoScreen = lazy(
-  () => import('./screens/Suprimentos/Pedidos/AnaliseCentroCusto'),
-);
-const AnaliseAreaTecnicaScreen = lazy(
-  () => import('./screens/Suprimentos/Pedidos/AnaliseAreaTecnica'),
-);
-const AlmoxarifadoScreen = lazy(() => import('./screens/Suprimentos/Pedidos/Almoxarifado'));
-const ComprasScreen = lazy(() => import('./screens/Suprimentos/Pedidos/Compras'));
-const PedidosScreen = lazy(() => import('./screens/Suprimentos/Compras/Pedidos'));
-const TelaConsultaCotacoesListagem = lazy(() => import('./screens/Suprimentos/Compras/Cotacoes'));
-const FluxoCotacaoGeralTela = lazy(
-  () => import('./screens/Suprimentos/Compras/Cotacoes/FluxoCotacaoGeral'),
-);
-const CadastroGruposScreen = lazy(() => import('./screens/Suprimentos/Compras/CadastroGrupos'));
-const CadastroSubgruposScreen = lazy(
-  () => import('./screens/Suprimentos/Compras/CadastroSubgrupos'),
-);
-const CadastroFamiliasScreen = lazy(() => import('./screens/Suprimentos/Compras/CadastroFamilias'));
-const AdministracaoScreen = lazy(() => import('./screens/Administracao'));
-const EmpresasFiliaisScreen = lazy(() => import('./screens/Administracao/EmpresasFiliais'));
-const EngenhariaScreen = lazy(() => import('./screens/Engenharia'));
-const ModulosFuncionalidadesScreen = lazy(
-  () => import('./screens/Administracao/ModulosFuncionalidades'),
-);
-const CriarModuloScreen = lazy(
-  () => import('./screens/Administracao/ModulosFuncionalidades/CriarModulo'),
-);
-const EditarModuloScreen = lazy(
-  () => import('./screens/Administracao/ModulosFuncionalidades/EditarModulo'),
-);
-const EditarFuncionalidadeScreen = lazy(
-  () => import('./screens/Administracao/ModulosFuncionalidades/EditarFuncionalidade'),
-);
-const PerfisScreen = lazy(() => import('./screens/Administracao/Perfis'));
-const CriarPerfilScreen = lazy(() => import('./screens/Administracao/Perfis/CriarPerfil'));
-const EditarPerfilScreen = lazy(() => import('./screens/Administracao/Perfis/EditarPerfil'));
-const VisualizarPerfilScreen = lazy(
-  () => import('./screens/Administracao/Perfis/VisualizarPerfil'),
-);
-const UsuariosScreen = lazy(() => import('./screens/Administracao/Usuarios'));
-const CadastroUsuarioScreen = lazy(
-  () => import('./screens/Administracao/Usuarios/CadastroUsuario'),
-);
-const PessoasScreen = lazy(() => import('./screens/Administracao/Pessoas'));
-const CadastroPessoaScreen = lazy(() => import('./screens/Administracao/Pessoas/CadastroPessoa'));
-const TelaSelecaoEmpresa = lazy(() => import('./screens/Login/SelecaoEmpresa'));
-const ConsultaGruposSubgruposScreen = lazy(
-  () => import('./screens/Suprimentos/Compras/ConsultaGruposSubgrupos'),
-);
-const EditarGruposScreen = lazy(
-  () => import('./screens/Suprimentos/Compras/ConsultaGruposSubgrupos/Edicao/EditarGrupo'),
-);
-const EditarSubgruposScreen = lazy(
-  () => import('./screens/Suprimentos/Compras/ConsultaGruposSubgrupos/Edicao/EditarSubgrupo'),
-);
-const EditarFamiliasScreen = lazy(
-  () => import('./screens/Suprimentos/Compras/ConsultaGruposSubgrupos/Edicao/EditarFamilia'),
-);
-const UnidadesMedidaScreen = lazy(() => import('./screens/Suprimentos/Compras/UnidadesMedida'));
-const CadastroUnidadeMedidaScreen = lazy(
-  () => import('./screens/Suprimentos/Compras/CadastroUnidadeMedida'),
-);
-const EdicaoUnidadeMedidaScreen = lazy(
-  () => import('./screens/Suprimentos/Compras/EdicaoUnidadeMedida'),
-);
-const FinanceiroScreen = lazy(() => import('./screens/Financeiro'));
-const ConsultaMoedasScreen = lazy(() => import('./screens/Financeiro/ConsultaMoedas'));
-const CadastroMoedasScreen = lazy(
-  () => import('./screens/Financeiro/ConsultaMoedas/Modals/ModalCadastro'),
-);
-const EdicaoMoedasScreen = lazy(
-  () => import('./screens/Financeiro/ConsultaMoedas/Modals/ModalEdicao'),
-);
-const ConsultaBancosScreen = lazy(() => import('./screens/Financeiro/ConsultaBancos'));
-const CadastroBancosScreen = lazy(
-  () => import('./screens/Financeiro/ConsultaBancos/Modals/ModalCadastro'),
-);
-const EdicaoBancosScreen = lazy(
-  () => import('./screens/Financeiro/ConsultaBancos/Modals/ModalEdicao'),
-);
-const OperacoesPcpScreen = lazy(() => import('./screens/OperacoesPcp'));
-const ConsultaOperacoesScreen = lazy(
-  () => import('./screens/OperacoesPcp/ConsultaOperacoesPadrao'),
-);
-const CadastroOperacoesScreen = lazy(
-  () => import('./screens/OperacoesPcp/ConsultaOperacoesPadrao/Modals/ModalCadastro'),
-);
-const EdicaoOperacoesScreen = lazy(
-  () => import('./screens/OperacoesPcp/ConsultaOperacoesPadrao/Modals/ModalEdicao'),
-);
-const ConsultaRecursosProdutivosScreen = lazy(
-  () => import('./screens/OperacoesPcp/RecursoProdutivo/ConsultaRecursosProdutivos'),
-);
-const DetalheRecursoProdutivoScreen = lazy(
-  () => import('./screens/OperacoesPcp/RecursoProdutivo/DetalheRecursoProdutivo'),
-);
-const FormularioRecursoProdutivoScreen = lazy(
-  () => import('./screens/OperacoesPcp/RecursoProdutivo/FormularioRecursoProdutivo'),
-);
-const ConsultarEstruturaScreen = lazy(
-  () => import('./screens/Engenharia/EstruturaProduto/ConsultaEstruturaProduto'),
-);
-const CriarEstruturaProdutoScreen = lazy(
-  () => import('./screens/Engenharia/EstruturaProduto/CriarEstruturaProduto'),
-);
-const EditarEstruturaProdutoScreen = lazy(
-  () => import('./screens/Engenharia/EstruturaProduto/EditarEstruturaProduto'),
-);
-const ConsultaComponentesEstruturaProdutoScreen = lazy(
-  () => import('./screens/Engenharia/EstruturaProduto/ConsultaComponentesEstruturaProduto'),
-);
-const VisualizarEstruturaProdutoScreen = lazy(
-  () => import('./screens/Engenharia/EstruturaProduto/VisualizarEstruturaProduto'),
-);
+export default function App() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [lembrarAcesso, setLembrarAcesso] = useState(false);
+  const [statusLogin, setStatusLogin] = useState("");
 
-const USAR_AUTH_MOCK = false;
+  const handleSubmeter = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatusLogin("Conectando...");
 
-interface LoginDadosComEmpresa {
-  tokenAcesso: string;
-  tokenRefresh?: string;
-  expiraEm?: string;
-  usuario?: unknown;
-  ultimaEmpresaId: number | null;
-  requiresPasswordChange?: boolean;
-}
+    const resultado = await fazerLoginSimples(email, senha);
 
-const AppRoutes = React.memo(() => {
-  const [vrToken, fnSetToken] = useState(null);
-  const [mostrarToastBemVindo, fnSetMostrarToastBemVindo] = useState(false);
-  const [empresaId, setEmpresaId] = useState<number | null>(null);
-  const [ehLoginNovo, setEhLoginNovo] = useState(false);
-  const [processandoLogin, setProcessandoLogin] = useState(false);
-  const [mostrarPrimeiroAcesso, setMostrarPrimeiroAcesso] = useState(false);
-  const [dadosLoginPrimeiroAcesso, setDadosLoginPrimeiroAcesso] =
-    useState<LoginDadosComEmpresa | null>(null);
+    if (resultado.sucesso) {
+      setStatusLogin("Logado com sucesso!");
 
-  useEffect(() => {
-    const unsubscribe = empresaStore.subscribe((state) => {
-      const novoEmpresaId = state.empresaId;
-      setEmpresaId((prevEmpresaId) => {
-        if (prevEmpresaId !== novoEmpresaId) {
-          return novoEmpresaId;
-        }
-        return prevEmpresaId;
-      });
-    });
-    const estadoInicial = empresaStore.getState().empresaId;
-    setEmpresaId(estadoInicial);
-    return unsubscribe;
-  }, []);
+      setTimeout(() => {
+        console.log("Navegando de fato para /home...");
+        navigate("/home", { replace: true });
+      }, 50);
 
-  useEffect(() => {
-    if (empresaId !== null && ehLoginNovo) {
-      setEhLoginNovo(false);
-    }
-  }, [empresaId, ehLoginNovo]);
-
-  useEffect(() => {
-    if (vrToken) {
-      const estadoAtual = empresaStore.getState().empresaId;
-      setEmpresaId(estadoAtual);
     } else {
-      setEmpresaId(null);
+      setStatusLogin(`Falhou: ${resultado.erro}`);
     }
-  }, [vrToken]);
-
-  useEffect(() => {
-    const tokenArmazenado = localStorage.getItem('auth_token');
-    if (tokenArmazenado && !tokenEstaExpirado()) {
-      fnSetToken(tokenArmazenado);
-      empresaStore.getState().inicializarDoStorage();
-      setEmpresaId(empresaStore.getState().empresaId);
-      setEhLoginNovo(false);
-    } else if (tokenArmazenado && tokenEstaExpirado()) {
-      limparStorageAuth();
-      empresaStore.getState().setEmpresaId(null);
-      empresaStore.getState().setEmpresaDados(null);
-      setEmpresaId(null);
-      setEhLoginNovo(false);
-      fnSetToken(null);
-    }
-  }, []);
-
-  useEffect(() => {
-    const deveMostrarToast = localStorage.getItem('show_welcome_toast');
-    if (deveMostrarToast === '1') {
-      fnSetMostrarToastBemVindo(true);
-      localStorage.removeItem('show_welcome_toast');
-    }
-  }, []);
-
-  useEffect(() => {
-    const tratarNaoAutorizado = () => {
-      limparStorageAuth();
-      empresaStore.getState().setEmpresaId(null);
-      empresaStore.getState().setEmpresaDados(null);
-      fnSetToken(null);
-
-      window.location.href = '/login';
-    };
-    window.addEventListener('auth:unauthorized', tratarNaoAutorizado);
-    return () => window.removeEventListener('auth:unauthorized', tratarNaoAutorizado);
-  }, []);
-
-  const fnHandleLoginSucesso = useCallback(async (dados) => {
-    if (typeof dados === 'string') {
-      localStorage.setItem('auth_token', dados);
-      localStorage.setItem('token', dados);
-      empresaStore.getState().setEmpresaId(null);
-      fnSetToken(dados);
-      setEmpresaId(null);
-      setEhLoginNovo(true);
-    } else {
-      definirStorageAuth(dados);
-
-      if (dados.requiresPasswordChange) {
-        setDadosLoginPrimeiroAcesso(dados);
-        setMostrarPrimeiroAcesso(true);
-        return;
-      }
-
-      if (dados.ultimaEmpresaId != null) {
-        setProcessandoLogin(true);
-        try {
-          const resposta = await mudarContexto(dados.ultimaEmpresaId);
-          if (resposta?.empresa) {
-            empresaStore.getState().setEmpresaDados(resposta.empresa);
-            empresaStore.getState().setEmpresaId(dados.ultimaEmpresaId);
-            setEmpresaId(dados.ultimaEmpresaId);
-            setEhLoginNovo(false);
-          } else {
-            empresaStore.getState().setEmpresaId(dados.ultimaEmpresaId);
-            setEmpresaId(dados.ultimaEmpresaId);
-            setEhLoginNovo(false);
-          }
-          fnSetToken(dados.tokenAcesso);
-          fnSetMostrarToastBemVindo(true);
-        } catch {
-          empresaStore.getState().setEmpresaId(null);
-          setEmpresaId(null);
-          setEhLoginNovo(true);
-          fnSetToken(dados.tokenAcesso);
-        } finally {
-          setProcessandoLogin(false);
-        }
-      } else {
-        empresaStore.getState().setEmpresaId(null);
-        setEmpresaId(null);
-        setEhLoginNovo(true);
-        fnSetToken(dados.tokenAcesso);
-      }
-    }
-  }, []);
-  const aoConcluirPrimeiroAcesso = useCallback(async () => {
-    const dados = dadosLoginPrimeiroAcesso;
-    setMostrarPrimeiroAcesso(false);
-    if (!dados) return;
-
-    if (dados.ultimaEmpresaId != null) {
-      setProcessandoLogin(true);
-      try {
-        const resposta = await mudarContexto(dados.ultimaEmpresaId);
-        if (resposta?.empresa) {
-          empresaStore.getState().setEmpresaDados(resposta.empresa);
-          empresaStore.getState().setEmpresaId(dados.ultimaEmpresaId);
-          setEmpresaId(dados.ultimaEmpresaId);
-          setEhLoginNovo(false);
-        } else {
-          empresaStore.getState().setEmpresaId(dados.ultimaEmpresaId);
-          setEmpresaId(dados.ultimaEmpresaId);
-          setEhLoginNovo(false);
-        }
-        fnSetToken(dados.tokenAcesso);
-        fnSetMostrarToastBemVindo(true);
-      } catch {
-        empresaStore.getState().setEmpresaId(null);
-        setEmpresaId(null);
-        setEhLoginNovo(true);
-        fnSetToken(dados.tokenAcesso);
-      } finally {
-        setProcessandoLogin(false);
-      }
-    } else {
-      empresaStore.getState().setEmpresaId(null);
-      setEmpresaId(null);
-      setEhLoginNovo(true);
-      fnSetToken(dados.tokenAcesso);
-    }
-
-    setDadosLoginPrimeiroAcesso(null);
-  }, [dadosLoginPrimeiroAcesso]);
-
-  const fnHandleSair = useCallback(async () => {
-    try {
-      await sairAuth();
-    } finally {
-      limparStorageAuth();
-      empresaStore.getState().setEmpresaId(null);
-      empresaStore.getState().setEmpresaDados(null);
-      fnSetToken(null);
-    }
-  }, []);
-
-  if (!vrToken) {
-    return (
-      <Suspense fallback={<AppLoadingFallback />}>
-        <Routes>
-          <Route path="/" element={<Navigate to="/login" replace />} />
-          <Route
-            path="/login"
-            element={
-              <LoginScreen usarAuthMock={USAR_AUTH_MOCK} onLoginSucesso={fnHandleLoginSucesso} />
-            }
-          />
-          <Route path="/redefinir-senha-gestao" element={<TelaRedefinirSenhaGestao />} />
-        </Routes>
-      </Suspense>
-    );
-  }
-
-  if (processandoLogin) {
-    return null;
-  }
-
-  const precisaSelecionarEmpresa = empresaId === null || ehLoginNovo;
-
-  if (precisaSelecionarEmpresa) {
-    return (
-      <Suspense fallback={<AppLoadingFallback />}>
-        <>
-          <TelaSelecaoEmpresa />
-          <Toast
-            title="Bem-vindo!"
-            message="Bem-vindo ao sistema!"
-            type="success"
-            show={mostrarToastBemVindo}
-            onClose={() => fnSetMostrarToastBemVindo(false)}
-            duration={5000}
-            icon={undefined}
-          />
-        </>
-      </Suspense>
-    );
-  }
+  };
 
   return (
-    <>
-      <PrimeiroAcessoModal
-        aberto={mostrarPrimeiroAcesso}
-        login={((dadosLoginPrimeiroAcesso?.usuario ?? {}) as { name?: string }).name ?? ''}
-        onSucesso={aoConcluirPrimeiroAcesso}
-      />
-      <Toast
-        title="Bem-vindo!"
-        message="Bem-vindo ao sistema!"
-        type="success"
-        show={mostrarToastBemVindo}
-        onClose={() => fnSetMostrarToastBemVindo(false)}
-        duration={5000}
-        icon={undefined}
-      />
-      <Suspense fallback={<AppLoadingFallback />}>
-        <Routes>
-          <Route path="/" element={<Navigate to="/home" replace />} />
-          <Route path="/home" element={<DashboardScreen onLogout={fnHandleSair} />} />
+    <main className="grid grid-cols-1 lg:grid-cols-5 min-h-screen">
 
-          <Route path="/engenharia" element={<EngenhariaScreen onLogout={fnHandleSair} />}>
-            {/* <Route path="consulta-estrutura-produtos" element={<ConsultaEstruturaProdScreen />} />
-          <Route path="editar-estrutura-produtos" element={<EditarEstruturaScreen />} />
-          <Route path="visualizar-estrutura-produtos" element={<VisualizarEstruturaScreen />} /> */}
-            <Route path="estruturas-produto" element={<ConsultarEstruturaScreen />} />
-            <Route path="estruturas-produto/criar" element={<CriarEstruturaProdutoScreen />} />
-            <Route
-              path="estruturas-produto/editar/:id"
-              element={<EditarEstruturaProdutoScreen />}
-            />
-            <Route
-              path="estruturas-produto/visualizar/:id"
-              element={<VisualizarEstruturaProdutoScreen />}
-            />
-            <Route
-              path="estruturas-produto/:id/componentes"
-              element={<ConsultaComponentesEstruturaProdutoScreen />}
-            />
-          </Route>
+      {/* LADO ESQUERDO */}
+      <div className="hidden lg:flex lg:col-span-3 bg-[#0b1d45] flex-col justify-center px-20 text-white">
+        <h1 className="text-4xl font-bold mb-6">
+          Gerencie seu time <br />
+          <span className="text-blue-500">com clareza.</span>
+        </h1>
+        <p className="text-gray-400 mb-12 text-lg">
+          Visualize, priorize e entregue tarefas com eficiência <br />— do backlog à conclusão.
+        </p>
 
-          <Route path="/suprimentos" element={<SuprimentosScreen onLogout={fnHandleSair} />}>
-            <Route
-              path="compras/solicitacao-produto-servico"
-              element={<CadastroSolicitacaoScreen />}
-            />
-            <Route path="compras/consulta-solicitacoes" element={<ConsultasScreen />} />
-            <Route path="compras/consulta-requisicoes" element={<RequisicoesScreen />} />
-            <Route
-              path="compras/requisicao-produtos-servicos"
-              element={<PedidoSolicitacaoScreen />}
-            />
-            <Route path="pedidos/analise-centro-custo" element={<AnaliseCentroCustoScreen />} />
-            <Route path="pedidos/analise-area-tecnica" element={<AnaliseAreaTecnicaScreen />} />
-            <Route path="pedidos/almoxarifado" element={<AlmoxarifadoScreen />} />
-            <Route path="pedidos/compras" element={<ComprasScreen />} />
-            <Route
-              path="compras/cadastrar-produto-servico"
-              element={<CadastrarProdutoServicoScreen />}
-            />
-            <Route path="compras/consulta-cadastros" element={<PedidosScreen />} />
-            <Route path="compras/consulta-cotacoes" element={<TelaConsultaCotacoesListagem />} />
-            <Route path="compras/cotacao-geral/*" element={<FluxoCotacaoGeralTela />} />
-            <Route path="compras/grupos-subgrupos" element={<ConsultaGruposSubgruposScreen />} />
-            <Route path="compras/cadastro-grupos" element={<CadastroGruposScreen />} />
-            <Route path="compras/cadastro-subgrupo" element={<CadastroSubgruposScreen />} />
-            <Route path="compras/cadastro-familias" element={<CadastroFamiliasScreen />} />
-          </Route>
-          <Route path="/suprimentos" element={<SuprimentosScreen onLogout={fnHandleSair} />} />
-          <Route
-            path="compras/solicitacao-produto-servico"
-            element={<CadastroSolicitacaoScreen />}
-          />
-          <Route path="compras/consulta-solicitacoes" element={<ConsultasScreen />} />
-          <Route path="compras/consulta-requisicoes" element={<RequisicoesScreen />} />
-          <Route
-            path="compras/requisicao-produtos-servicos"
-            element={<PedidoSolicitacaoScreen />}
-          />
-          <Route path="pedidos/analise-centro-custo" element={<AnaliseCentroCustoScreen />} />
-          <Route path="pedidos/analise-area-tecnica" element={<AnaliseAreaTecnicaScreen />} />
-          <Route path="pedidos/almoxarifado" element={<AlmoxarifadoScreen />} />
-          <Route path="pedidos/compras" element={<ComprasScreen />} />
-          <Route
-            path="compras/cadastrar-produto-servico"
-            element={<CadastrarProdutoServicoScreen />}
-          />
-          <Route path="compras/consulta-cadastros" element={<PedidosScreen />} />
-          <Route path="compras/consulta-cotacoes" element={<TelaConsultaCotacoesListagem />} />
-          <Route path="compras/cotacao-geral/*" element={<FluxoCotacaoGeralTela />} />
-          <Route path="compras/grupos-subgrupos" element={<ConsultaGruposSubgruposScreen />} />
-          <Route path="compras/cadastro-grupos" element={<CadastroGruposScreen />} />
-          <Route path="compras/editar-grupo" element={<EditarGruposScreen />} />
-          <Route path="compras/cadastro-subgrupo" element={<CadastroSubgruposScreen />} />
-          <Route path="compras/editar-subgrupo" element={<EditarSubgruposScreen />} />
-          <Route path="compras/editar-familia" element={<EditarFamiliasScreen />} />
-          <Route path="/suprimentos" element={<SuprimentosScreen onLogout={fnHandleSair} />}>
-            <Route
-              path="compras/solicitacao-produto-servico"
-              element={<CadastroSolicitacaoScreen />}
-            />
-            <Route path="compras/consulta-solicitacoes" element={<ConsultasScreen />} />
-            <Route path="compras/consulta-requisicoes" element={<RequisicoesScreen />} />
-            <Route
-              path="compras/requisicao-produtos-servicos"
-              element={<PedidoSolicitacaoScreen />}
-            />
-            <Route path="pedidos/analise-centro-custo" element={<AnaliseCentroCustoScreen />} />
-            <Route path="pedidos/analise-area-tecnica" element={<AnaliseAreaTecnicaScreen />} />
-            <Route path="pedidos/almoxarifado" element={<AlmoxarifadoScreen />} />
-            <Route path="pedidos/compras" element={<ComprasScreen />} />
-            <Route
-              path="compras/cadastrar-produto-servico"
-              element={<CadastrarProdutoServicoScreen />}
-            />
-            <Route path="compras/consulta-cadastros" element={<PedidosScreen />} />
-            <Route path="compras/consulta-cotacoes" element={<TelaConsultaCotacoesListagem />} />
-            <Route path="compras/cotacao-geral/*" element={<FluxoCotacaoGeralTela />} />
-            <Route path="compras/grupos-subgrupos" element={<ConsultaGruposSubgruposScreen />} />
-            <Route path="compras/cadastro-grupos" element={<CadastroGruposScreen />} />
-            <Route path="compras/editar-grupo" element={<EditarGruposScreen />} />
-            <Route path="compras/cadastro-subgrupo" element={<CadastroSubgruposScreen />} />
-            <Route path="compras/editar-subgrupo" element={<EditarSubgruposScreen />} />
-            <Route path="compras/editar-familia" element={<EditarFamiliasScreen />} />
+        <div className="space-y-4 max-w-sm">
+          <div className="p-4 border border-gray-700 rounded-lg bg-gray-800/50">
+            <h3 className="font-semibold">Kanban intuitivo</h3>
+            <p className="text-sm text-gray-400">Drag and drop entre colunas</p>
+          </div>
+          <div className="p-4 border border-gray-700 rounded-lg bg-gray-800/50">
+            <h3 className="font-semibold">5 modos de visualização</h3>
+            <p className="text-sm text-gray-400">Tabela, Kanban, Calendário, Timeline</p>
+          </div>
+        </div>
+      </div>
 
-            <Route path="compras/unidades-medida" element={<UnidadesMedidaScreen />} />
-            <Route
-              path="compras/cadastro-unidades-medida"
-              element={<CadastroUnidadeMedidaScreen />}
-            />
-            <Route path="compras/editar-unidades-medida" element={<EdicaoUnidadeMedidaScreen />} />
-          </Route>
+      {/* LADO DIREITO */}
+      <div className="lg:col-span-2 flex flex-col justify-center items-center bg-[#0f172a] p-8">
+        <div className="w-full max-w-xs">
+          <div className="mb-8">
+            <h2 className="text-xl font-bold text-white">Bem-vindo de volta</h2>
+            <p className="text-sm text-gray-500">Insira suas credenciais para continuar</p>
+          </div>
 
-          <Route path="/operacoespcp" element={<OperacoesPcpScreen onLogout={fnHandleSair} />}>
-            <Route path="consulta-operacoes" element={<ConsultaOperacoesScreen />} />
-            <Route path="cadastro-operacoes" element={<CadastroOperacoesScreen />} />
-            <Route path="editar-operacoes" element={<EdicaoOperacoesScreen />} />
-            <Route path="recursos-produtivos" element={<ConsultaRecursosProdutivosScreen />} />
-            <Route
-              path="recursos-produtivos/visualizar/:id"
-              element={<DetalheRecursoProdutivoScreen />}
-            />
-            <Route
-              path="recursos-produtivos/editar/:id"
-              element={<FormularioRecursoProdutivoScreen />}
-            />
-            <Route
-              path="recursos-produtivos/cadastro/:tipo"
-              element={<FormularioRecursoProdutivoScreen />}
-            />
-          </Route>
+          <form onSubmit={handleSubmeter} className="flex flex-col gap-4">
+            <div>
+              <label className="text-sm font-medium mb-1 block text-gray-500">E-mail</label>
+              <input
+                type="email"
+                className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 outline-none bg-gray-800/50 text-white"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="nome@empresa.com.br"
+                required
+              />
+            </div>
 
-          <Route path="/financeiro" element={<FinanceiroScreen onLogout={fnHandleSair} />}>
-            <Route path="consulta-moedas" element={<ConsultaMoedasScreen />} />
-            <Route path="cadastro-moeda" element={<CadastroMoedasScreen />} />
-            <Route path="editar-moeda" element={<EdicaoMoedasScreen />} />
-            <Route path="consulta-bancos" element={<ConsultaBancosScreen />} />
-            <Route path="cadastro-banco" element={<CadastroBancosScreen />} />
-            <Route path="editar-banco" element={<EdicaoBancosScreen />} />
-          </Route>
+            <div>
+              <label className="text-sm font-medium mb-1 block text-gray-500">Senha</label>
+              <input
+                type="password"
+                className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 outline-none bg-gray-800/50 text-white"
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+                required
+              />
+            </div>
 
-          <Route path="/cadastro" element={<CadastroScreen onLogout={fnHandleSair} />} />
-          <Route path="/administracao" element={<AdministracaoScreen onLogout={fnHandleSair} />}>
-            <Route path="empresas-filiais" element={<EmpresasFiliaisScreen />} />
-            <Route path="modulos-funcionalidades" element={<ModulosFuncionalidadesScreen />} />
-            <Route path="modulos-funcionalidades/criar" element={<CriarModuloScreen />} />
-            <Route path="modulos-funcionalidades/editar/:id" element={<EditarModuloScreen />} />
-            <Route
-              path="modulos-funcionalidades/funcionalidade/editar/:id"
-              element={<EditarFuncionalidadeScreen />}
-            />
-            <Route path="perfis" element={<PerfisScreen />} />
-            <Route path="perfis/criar" element={<CriarPerfilScreen />} />
-            <Route path="perfis/editar/:id" element={<EditarPerfilScreen />} />
-            <Route path="perfis/visualizar/:id" element={<VisualizarPerfilScreen />} />
-            <Route path="usuarios" element={<UsuariosScreen />} />
-            <Route path="usuarios/cadastro" element={<CadastroUsuarioScreen />} />
-            <Route path="pessoas" element={<PessoasScreen />} />
-            <Route path="pessoas/cadastro" element={<CadastroPessoaScreen />} />
-            <Route path="pessoas/cadastro/:pessoaId" element={<CadastroPessoaScreen />} />
-          </Route>
-          <Route path="*" element={<Navigate to="/home" replace />} />
-        </Routes>
-      </Suspense>
-    </>
-  );
-});
+            <div className="flex items-center justify-between text-sm">
+              <label className="flex items-center gap-2 cursor-pointer text-gray-500">
+                <input
+                  type="checkbox"
+                  checked={lembrarAcesso}
+                  onChange={(e) => setLembrarAcesso(e.target.checked)}
+                />
+                Lembrar acesso
+              </label>
+              <button
+                type="button"
+                onClick={() => navigate("/forgot-password")}
+                className="text-blue-500 hover:underline text-sm"
+              >
+                Esqueci minha senha
+              </button>
+            </div>
 
-AppRoutes.displayName = 'AppRoutes';
+            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white p-2 rounded">
+              Entrar
+            </Button>
 
-function AppContent() {
-  return (
-    <>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
-      <ToastContainer />
-
-      <DatabaseUnavailableModal />
-      <ApiOfflineModal />
-    </>
+            {statusLogin && <p className="text-center text-sm text-white mt-2">{statusLogin}</p>}
+          </form>
+        </div>
+      </div>
+    </main>
   );
 }
-
-function App() {
-  return (
-    <ToastProvider>
-      <CustomToastProvider>
-        <AppContent />
-      </CustomToastProvider>
-    </ToastProvider>
-  );
-}
-
-export default App;

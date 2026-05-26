@@ -1,103 +1,111 @@
-// @ts-nocheck
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/Button";
-import { fazerLoginSimples } from "./services/authService";
+import { fazerLoginSimples } from "@/services/authService";
 
 export default function App() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [lembrarAcesso, setLembrarAcesso] = useState("");
+  const [lembrarAcesso, setLembrarAcesso] = useState(false);
   const [statusLogin, setStatusLogin] = useState("");
 
   const handleSubmeter = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatusLogin("Conectando...");
 
-    const resultado = await fazerLoginSimples(email, senha, lembrarAcesso);
+    const resultado = await fazerLoginSimples(email, senha);
 
     if (resultado.sucesso) {
-      setStatusLogin("Logado com sucesso! Token salvo.");
+      setStatusLogin("Logado com sucesso!");
+
+      setTimeout(() => {
+        console.log("Navegando de fato para /home...");
+        navigate("/home", { replace: true });
+      }, 50);
+
     } else {
       setStatusLogin(`Falhou: ${resultado.erro}`);
     }
   };
 
   return (
-    <main className="grid grid-cols-3 min-h-screen items-center justify-end p-8">
-      <div className="flex min-h-screen flex-col items-center justify-center p-8 col-span-2">
-        <div className="flex flex-col w-70 text-center">
-          <h1>
-            Gerencie seu time <span>com clareza.</span>
-          </h1>
-          <p className="h-fit">
-            Visualize, priorize e entregue tarefas com eficiência - do backlog à
-            conclusão
-          </p>
+    <main className="grid grid-cols-1 lg:grid-cols-5 min-h-screen">
+
+      {/* LADO ESQUERDO */}
+      <div className="hidden lg:flex lg:col-span-3 bg-[#0b1d45] flex-col justify-center px-20 text-white">
+        <h1 className="text-4xl font-bold mb-6">
+          Gerencie seu time <br />
+          <span className="text-blue-500">com clareza.</span>
+        </h1>
+        <p className="text-gray-400 mb-12 text-lg">
+          Visualize, priorize e entregue tarefas com eficiência <br />— do backlog à conclusão.
+        </p>
+
+        <div className="space-y-4 max-w-sm">
+          <div className="p-4 border border-gray-700 rounded-lg bg-gray-800/50">
+            <h3 className="font-semibold">Kanban intuitivo</h3>
+            <p className="text-sm text-gray-400">Drag and drop entre colunas</p>
+          </div>
+          <div className="p-4 border border-gray-700 rounded-lg bg-gray-800/50">
+            <h3 className="font-semibold">5 modos de visualização</h3>
+            <p className="text-sm text-gray-400">Tabela, Kanban, Calendário, Timeline</p>
+          </div>
         </div>
       </div>
-      <div className="border-l p-0 col-span-1 flex flex-col w-full max-w-md bg-white rounded-lg h-screen items-center justify-center">       
-          {statusLogin && (
-            <p className="mt-4 text-sm text-center font-medium text-slate-600">
-              {statusLogin}
-            </p>
-          )}
-          <div className="flex flex-col w-80 text-start">
-            <h2 className="text-xl font-bold mb-4 text-start">
-              Bem-vindo de volta
-            </h2>
-            <p>insira suas credenciais para continuar</p>
+
+      {/* LADO DIREITO */}
+      <div className="lg:col-span-2 flex flex-col justify-center items-center bg-[#0f172a] p-8">
+        <div className="w-full max-w-xs">
+          <div className="mb-8">
+            <h2 className="text-xl font-bold text-white">Bem-vindo de volta</h2>
+            <p className="text-sm text-gray-500">Insira suas credenciais para continuar</p>
           </div>
-          <form
-            onSubmit={handleSubmeter}
-            className="flex flex-col gap-4 items-start w-80"
-          >
-            <div className="w-full">
-              <label className="text-sm font-medium block mb-1">E-mail</label>
+
+          <form onSubmit={handleSubmeter} className="flex flex-col gap-4">
+            <div>
+              <label className="text-sm font-medium mb-1 block text-gray-500">E-mail</label>
               <input
                 type="email"
-                className="w-full p-2 border rounded"
+                className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 outline-none bg-gray-800/50 text-white"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                placeholder="nome@empresa.com.br"
                 required
               />
             </div>
 
-            <div className="w-full">
-              <label className="text-sm font-medium block mb-1">Senha</label>
+            <div>
+              <label className="text-sm font-medium mb-1 block text-gray-500">Senha</label>
               <input
                 type="password"
-                className="w-full p-2 border rounded"
+                className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 outline-none bg-gray-800/50 text-white"
                 value={senha}
                 onChange={(e) => setSenha(e.target.value)}
                 required
               />
             </div>
-            <div className="flex flex-row items-center gap-2 py-1 justify-between w-80">
-              <div className="flex items-center gap-1">
+
+            <div className="flex items-center justify-between text-sm">
+              <label className="flex items-center gap-2 cursor-pointer text-gray-500">
                 <input
                   type="checkbox"
-                  id="lembrar"
-                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
                   checked={lembrarAcesso}
                   onChange={(e) => setLembrarAcesso(e.target.checked)}
                 />
-                <label
-                  htmlFor="lembrar"
-                  className="text-sm font-medium select-none cursor-pointer"
-                >
-                  Lembrar acesso
-                </label>
-              </div>
-              <div>
-                <p>Esqueci minha senha</p>
-              </div>
+                Lembrar acesso
+              </label>
+              <a href="#" className="text-blue-600 hover:underline">Esqueci minha senha</a>
             </div>
 
-            <Button type="submit" className="w-full mt-2 rounded-70">
+            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white p-2 rounded">
               Entrar
             </Button>
+
+            {statusLogin && <p className="text-center text-sm text-white mt-2">{statusLogin}</p>}
           </form>
-        </div>      
+        </div>
+      </div>
     </main>
   );
 }
