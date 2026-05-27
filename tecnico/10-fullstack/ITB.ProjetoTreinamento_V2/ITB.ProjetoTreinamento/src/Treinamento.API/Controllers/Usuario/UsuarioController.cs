@@ -56,10 +56,18 @@ public class UsuarioController : ControllerBase
         Response.Cookies.Append("X-Access-Token", token!, cookieOptions);
 
         // devolve a mensagem e o token 
-        return Ok(new 
-        { 
+        return Ok(new
+        {
             message = "Login realizado com sucesso!",
             token = token
         });
+    }
+
+    [HttpPost("logout")]
+    public IActionResult Logout()
+    {
+        Response.Cookies.Delete("X-Access-Token");
+
+        return Ok(new { message = "Sessão encerrada com sucesso!" });
     }
 }

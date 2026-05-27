@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { LayoutDashboard, CheckSquare, Calendar, FolderKanban, Users, Settings, MoreVertical, Power, Folder, ClipboardList } from 'lucide-react';
+import { LayoutDashboard, CheckSquare, Calendar, FolderKanban, Users, Settings, Power, ClipboardList } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
 
@@ -50,19 +50,14 @@ export interface SidebarProps extends React.HTMLAttributes<HTMLElement> {
   onLogout?: () => void;
 }
 
-export default function SidebarComponent({ currentPath = '/home', onNavigate }: SidebarProps) {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('token');
-    localStorage.removeItem('refresh_token');
-    localStorage.removeItem('auth_user');
-
-    navigate('/login', { replace: true });
-  };
+export default function SidebarComponent({ 
+  currentPath = '/home', 
+  onNavigate, 
+  onLogout 
+}: SidebarProps) {
+  
   return (
-    <aside className="w-64 bg-slate-900 border-r border-slate-700/70  min-h-screen flex flex-col justify-between p-4 font-sans text-white shadow-lg shadow-slate-700/40">
+    <aside className="w-64 bg-slate-900 border-r border-slate-700/70 min-h-screen flex flex-col justify-between p-4 font-sans text-white shadow-lg shadow-slate-700/40">
       <div>
         <div className="flex items-center gap-3 px-2 py-4 mb-1">
           <div className="w-9 h-9 bg-[#4531f7] rounded-xl flex items-center justify-center">
@@ -140,7 +135,7 @@ export default function SidebarComponent({ currentPath = '/home', onNavigate }: 
           </div>
         </div>
         <button 
-          onClick={handleLogout}
+          onClick={onLogout}
           type="button"
           title='Sair'
           className="text-slate-500 hover:text-slate-300 transition-colors cursor-pointer p-1 rounded-lg hover:bg-slate-800/30"

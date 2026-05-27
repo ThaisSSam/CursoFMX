@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Icon, X } from 'lucide-react';
-// import { Icon, type IconName } from '../icons';
+import { X, CheckCircle2, AlertCircle, AlertTriangle, Info } from 'lucide-react';
 
 interface CustomToastProps {
   title: string;
@@ -14,7 +13,7 @@ interface CustomToastProps {
 const CustomToast: React.FC<CustomToastProps> = React.memo(
   ({ title, message, onClose, type = 'success', duration = 10000, persistent = false }) => {
     const onCloseRef = useRef(onClose);
-    // const timerRef = useRef<NodeJS.Timeout | null>(null);
+    const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const toastDuration = duration ?? 10000;
 
@@ -22,56 +21,57 @@ const CustomToast: React.FC<CustomToastProps> = React.memo(
       onCloseRef.current = onClose;
     }, [onClose]);
 
-    // useEffect(() => {
-    //   if (timerRef.current) {
-    //     clearTimeout(timerRef.current);
-    //     timerRef.current = null;
-    //   }
+    useEffect(() => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
 
-    //   if (!persistent) {
-    //     timerRef.current = setTimeout(() => {
-    //       onCloseRef.current();
-    //     }, toastDuration);
-    //   }
+      if (!persistent) {
+        timerRef.current = setTimeout(() => {
+          onCloseRef.current();
+        }, toastDuration);
+      }
 
-    //   return () => {
-    //     if (timerRef.current) {
-    //       clearTimeout(timerRef.current);
-    //       timerRef.current = null;
-    //     }
-    //   };
-    // }, [toastDuration, persistent]);
+      return () => {
+        if (timerRef.current) {
+          clearTimeout(timerRef.current);
+          timerRef.current = null;
+        }
+      };
+    }, [toastDuration, persistent]);
+
     const getTypeStyles = () => {
       switch (type) {
         case 'success':
           return {
-            container: 'bg-accent-green-surface border-accent-green-main',
-            icon: 'bg-accent-green-main',
-            iconName: 'CheckWhite' as IconName,
+            container: 'bg-emerald-950/40 border-emerald-500/30 text-emerald-400',
+            iconBg: 'bg-emerald-500/20',
+            IconComponent: CheckCircle2,
           };
         case 'error':
           return {
-            container: 'bg-accent-red-surface border-accent-red-main',
-            icon: 'bg-accent-red-main',
-            iconName: 'ErrorCircle' as IconName,
+            container: 'bg-rose-950/40 border-rose-500/30 text-rose-400',
+            iconBg: 'bg-rose-500/20',
+            IconComponent: AlertCircle,
           };
         case 'warning':
           return {
-            container: 'bg-accent-orange-surface border-accent-orange-main',
-            icon: 'bg-accent-orange-main',
-            iconName: 'WarningPath' as IconName,
+            container: 'bg-amber-950/40 border-amber-500/30 text-amber-400',
+            iconBg: 'bg-amber-500/20',
+            IconComponent: AlertTriangle,
           };
         case 'info':
           return {
-            container: 'bg-accent-blue-surface border-accent-blue-main',
-            icon: 'bg-accent-blue-main',
-            iconName: 'Info' as IconName,
+            container: 'bg-blue-950/40 border-blue-500/30 text-blue-400',
+            iconBg: 'bg-blue-500/20',
+            IconComponent: Info,
           };
         default:
           return {
-            container: 'bg-accent-green-surface border-accent-green-main',
-            icon: 'bg-accent-green-main',
-            iconName: 'CheckWhite' as IconName,
+            container: 'bg-emerald-950/40 border-emerald-500/30 text-emerald-400',
+            iconBg: 'bg-emerald-500/20',
+            IconComponent: CheckCircle2,
           };
       }
     };
@@ -80,7 +80,6 @@ const CustomToast: React.FC<CustomToastProps> = React.memo(
 
     const processMessage = () => {
       if (!message) return { mainMessage: '', errors: [] };
-
       const messageStr = typeof message === 'string' ? message : String(message);
       const parts = messageStr.split(/\n\s*\n/);
 
@@ -88,70 +87,41 @@ const CustomToast: React.FC<CustomToastProps> = React.memo(
         const mainMessage = parts[0].trim();
         const errorsText = parts.slice(1).join('\n');
         const errors = errorsText.split('\n').filter((line) => line.trim() !== '');
-
-        return {
-          mainMessage,
-          errors,
-        };
+        return { mainMessage, errors };
       }
 
       const lines = messageStr.split('\n').filter((line) => line.trim() !== '');
-
       if (lines.length > 1) {
-        return {
-          mainMessage: lines[0],
-          errors: lines.slice(1),
-        };
+        return { mainMessage: lines[0], errors: lines.slice(1) };
       }
 
-      return {
-        mainMessage: messageStr,
-        errors: [],
-      };
+      return { mainMessage: messageStr, errors: [] };
     };
 
     const { mainMessage, errors } = processMessage();
+    const Icon = styles.IconComponent;
 
     return (
       <div
-        data-property-1={
-          type === 'success'
-            ? 'Success'
-            : type === 'error'
-              ? 'Error'
-              : type === 'warning'
-                ? 'Warning'
-                : 'Info'
-        }
-        className={`w-[600px] p-3 border ${styles.container} rounded-lg inline-flex justify-start items-start gap-4`}
-        style={{ boxShadow: '0 4px 12px 0 rgba(0, 0, 0, 0.06), 0 24px 60px 0 rgba(0, 0, 0, 0.12)' }}
-        onClick={(e) => e.stopPropagation()}
-        onMouseDown={(e) => e.stopPropagation()}
+        className={`w-[450px] p-4 border ${styles.container} rounded-xl flex justify-start items-start gap-4 backdrop-blur-md`}
+        style={{ boxShadow: '0 10px 30px -10px rgba(0, 0, 0, 0.5)' }}
       >
-        <div className="flex-1 self-stretch flex justify-start items-start gap-3">
-          <div className="pt-1 flex justify-start items-start overflow-hidden">
-            <div
-              data-danger-icon={type === 'error' ? 'true' : undefined}
-              data-success-icon={type === 'success' ? 'true' : undefined}
-              data-warning-icon={type === 'warning' ? 'true' : undefined}
-              data-info-icon={type === 'info' ? 'true' : undefined}
-              className={`w-4.5 h-4.5 p-0.5 ${styles.icon} rounded-3xl flex justify-center items-center flex-shrink-0`}
-            >
-              <Icon name={styles.iconName} size={16} />
-            </div>
+        <div className="flex-1 flex justify-start items-start gap-3">
+          <div className={`p-1.5 ${styles.iconBg} rounded-lg flex items-center justify-center flex-shrink-0`}>
+            <Icon size={18} className="currentColor" />
           </div>
-          <div className="flex-1 pb-4 inline-flex flex-col justify-start items-start gap-1">
-            <div className="justify-start text-title text-large font-medium font-['Inter']">
+          <div className="flex-1 flex flex-col justify-start items-start gap-1">
+            <div className="text-sm font-semibold text-white font-['Inter']">
               {title}
             </div>
-            <div className="self-stretch inline-flex flex-col justify-start items-start">
+            <div className="w-full flex flex-col gap-1">
               {mainMessage && (
-                <div className="self-stretch justify-start text-content text-medium font-regular font-['Inter']">
+                <div className="text-xs text-slate-300 font-normal font-['Inter']">
                   {mainMessage}
                 </div>
               )}
               {errors.length > 0 && (
-                <ul className="self-stretch list-disc list-inside text-content text-medium font-regular font-['Inter'] space-y-1 ml-2">
+                <ul className="w-full list-disc list-inside text-xs text-slate-400 font-normal font-['Inter'] space-y-1 ml-1 mt-1">
                   {errors.map((error, index) => (
                     <li key={index}>{error}</li>
                   ))}
@@ -160,19 +130,17 @@ const CustomToast: React.FC<CustomToastProps> = React.memo(
             </div>
           </div>
         </div>
-        <div className="pt-1 flex justify-start items-center gap-2.5">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              e.preventDefault();
-              onClose();
-            }}
-            aria-label="Fechar"
-            className="w-7 h-7 flex items-center justify-center hover:opacity-70 transition-opacity flex-shrink-0"
-          >
-            <X className="w-7 h-7 text-utility-60" strokeWidth={1.4} />
-          </button>
-        </div>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            onClose();
+          }}
+          aria-label="Fechar"
+          className="text-slate-500 hover:text-slate-300 transition-colors flex-shrink-0 mt-0.5"
+        >
+          <X size={16} />
+        </button>
       </div>
     );
   },

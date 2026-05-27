@@ -1,9 +1,13 @@
 import SidebarComponent from '../components/Sidebar';
 
-export default function DashboardScreen() {
+interface DashboardScreenProps {
+  onLogout: () => Promise<void> | void;
+}
+
+export default function DashboardScreen({ onLogout }: DashboardScreenProps) {
   return (
     <div className="text-white bg-slate-900 min-h-screen flex flex-row">
-      <SidebarComponent />
+      <SidebarComponent onLogout={onLogout} />
       <div className='flex flex-col w-full'>
         <header className="flex justify-between items-center border-b border-slate-700/70 pb-4 left-20 pt-5 pl-5 shadow-lg shadow-slate-700/40">
           <div>

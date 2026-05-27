@@ -32,17 +32,18 @@ public class LogarUsuarioHandler : ILogarUsuarioHandler
 
         bool loginValido = usuario.RealizarTentativaLogin(request.Senha, (senhaDigitada, senhaDoBanco) =>
         {
-            return senhaDigitada == senhaDoBanco;
+            return senhaDigitada.Trim() == senhaDoBanco.Trim();
         });
-        
-        await _usuarioRepository.LogarAsync(usuario);
-
         if (!loginValido)
         {
-            return (false, usuario.ResultadoValidacao.Erros[0].MensagemErro, null); 
-        }
 
-        //Gerar o token
+            await _usuarioRepository.LogarAsync(usuario);
+            Console.WriteLine($"[LOGIN REJEITADO] Motivo: {usuario.ResultadoValidacao.Erros[0].MensagemErro}");
+
+            return (false, usuario.ResultadoValidacao.Erros[0].MensagemErro, null);
+        }
+        await _usuarioRepository.LogarAsync(usuario);
+
         string tokenGerado = GerarJwtToken(usuario);
 
         return (true, string.Empty, tokenGerado);
@@ -51,10 +52,10 @@ public class LogarUsuarioHandler : ILogarUsuarioHandler
     private string GerarJwtToken(Usuario usuario)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        
-        var secretKey = _configuration.GetSection("JwtSettings:Secret").Value 
+
+        var secretKey = _configuration.GetSection("JwtSettings:Secret").Value
             ?? throw new InvalidOperationException("Chave secreta do JWT não configurada no User Secrets.");
-            
+
         var issuer = _configuration.GetSection("JwtSettings:Issuer").Value;
         var audience = _configuration.GetSection("JwtSettings:Audience").Value;
 
@@ -71,7 +72,7 @@ public class LogarUsuarioHandler : ILogarUsuarioHandler
             Issuer = issuer,
             Audience = audience,
             SigningCredentials = new SigningCredentials(
-                new SymmetricSecurityKey(chaveCriptografada), 
+                new SymmetricSecurityKey(chaveCriptografada),
                 SecurityAlgorithms.HmacSha256Signature
             )
         };
