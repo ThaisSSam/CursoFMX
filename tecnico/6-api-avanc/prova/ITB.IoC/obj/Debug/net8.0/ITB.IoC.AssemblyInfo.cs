@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ITB.IoC")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ac64c7a9062c4ef598a6c95694993592d034f0f8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f0d1aa297e0404f394349103e6bbca40c0909f3a")]
 [assembly: System.Reflection.AssemblyProductAttribute("ITB.IoC")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ITB.IoC")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
