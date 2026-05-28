@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Treinamento.Domain.Aggregates.Usuarios; // 👈 Este é o cara que traz o seu Usuario real!
+using Treinamento.Domain.Aggregates.Usuarios;
 using Treinamento.Domain.Core.Interfaces;
 
 namespace Treinamento.Domain.Handlers;
@@ -30,18 +30,13 @@ public class LogarUsuarioHandler : ILogarUsuarioHandler
             return (false, "E-mail ou senha incorretos. Verifique suas credenciais e tente novamente.", null);
         }
 
-        bool loginValido = usuario.RealizarTentativaLogin(request.Senha, (senhaDigitada, senhaDoBanco) =>
-        {
-            return senhaDigitada.Trim() == senhaDoBanco.Trim();
-        });
+        bool loginValido = usuario.RealizarTentativaLogin(request.Senha);
         if (!loginValido)
         {
-
             await _usuarioRepository.LogarAsync(usuario);
-            Console.WriteLine($"[LOGIN REJEITADO] Motivo: {usuario.ResultadoValidacao.Erros[0].MensagemErro}");
-
             return (false, usuario.ResultadoValidacao.Erros[0].MensagemErro, null);
         }
+        
         await _usuarioRepository.LogarAsync(usuario);
 
         string tokenGerado = GerarJwtToken(usuario);

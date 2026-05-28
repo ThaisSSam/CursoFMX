@@ -19,12 +19,20 @@ public class Usuario : Entity<Usuario>
         SenhaHash = string.Empty;
     }
 
-    public Usuario(string email, string senhaHash, bool ativo) : base()
+    public Usuario(string email, string senhaLimpa, bool ativo) : base()
     {
         Email = email;
-        SenhaHash = senhaHash;
+        SenhaHash = BCrypt.Net.BCrypt.HashPassword(senhaLimpa);
         Ativo = ativo;
         TentativasLoginInvalidas = 0;
+    }
+
+    public void AtualizarSenha(string novaSenhaLimpa)
+    {
+        if (string.IsNullOrWhiteSpace(novaSenhaLimpa) || novaSenhaLimpa.Length < 4)
+            throw new Exception("A nova senha não atende aos requisitos mínimos.");
+
+        SenhaHash = BCrypt.Net.BCrypt.HashPassword(novaSenhaLimpa);
     }
     public override bool EhValido()
     {
@@ -41,7 +49,7 @@ public class Usuario : Entity<Usuario>
         return ResultadoValidacao.Erros.Count == 0;
     }
 
-    public bool RealizarTentativaLogin(string senhaInformada, Func<string, string, bool> verificarSenhaVerdadeira)
+    public bool RealizarTentativaLogin(string senhaInformada)
     {
         if (TentativasLoginInvalidas >= 5)
         {
@@ -55,14 +63,13 @@ public class Usuario : Entity<Usuario>
             return false;
         }
 
-        // Valida E-mail e Senha
-        bool senhaValida = verificarSenhaVerdadeira(senhaInformada, SenhaHash);
+        // usa verify do BCrypt diretamente aqui dentro
+        bool senhaValida = BCrypt.Net.BCrypt.Verify(senhaInformada.Trim(), SenhaHash);
 
         if (!senhaValida)
         {
             TentativasLoginInvalidas++;
 
-            //Se atingiu 5 erros consecutivos
             if (TentativasLoginInvalidas >= 5)
             {
                 BloqueadoAte = DateTime.UtcNow.AddMinutes(15);
@@ -70,7 +77,6 @@ public class Usuario : Entity<Usuario>
                 return false;
             }
 
-            //Mensagem genérica
             AdicionarErroValidacao("E-mail ou senha incorretos. Verifique suas credenciais e tente novamente.");
             return false;
         }

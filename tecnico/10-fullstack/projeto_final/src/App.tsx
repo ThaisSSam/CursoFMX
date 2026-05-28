@@ -14,7 +14,7 @@ export default function App() {
   });
 
   const navigate = useNavigate();
-  const { toast } = useToast(); // Agora o hook funciona perfeitamente!
+  const { toast } = useToast();
 
   const handleLoginSucesso = (novoToken: string) => {
     localStorage.setItem('auth_token', novoToken);
@@ -38,15 +38,6 @@ export default function App() {
       navigate('/login', { replace: true });
     }
   };
-
-  const onUnauthorized = useEffectEvent(() => {
-    setToken(null);
-  });
-
-  useEffect(() => {
-    window.addEventListener('auth:unauthorized', onUnauthorized);
-    return () => window.removeEventListener('auth:unauthorized', onUnauthorized);
-  }, []);
 
   if (!token) {
     return (

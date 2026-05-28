@@ -52,7 +52,7 @@ public static class ApiConfig
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
-
+    
         return app;
     }
 }

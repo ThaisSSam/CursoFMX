@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Treinamento.CrossCutting.Cache;
 using Treinamento.Domain.Core.Bus;
 using Treinamento.Domain.Core.Cache;
@@ -11,6 +12,8 @@ using Treinamento.Domain.Aggregates.Usuarios;
 using Treinamento.Infrastructure.Repositories;
 using Treinamento.Domain.Handlers;
 using Treinamento.Domain.Core.Interfaces;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Treinamento.IoC;
 
@@ -35,8 +38,25 @@ public static class DependencyInjection
         services.AddScoped<Infrastructure.Persistence.TreinamentoContext>();
 
         services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-        services.AddScoped<IUsuarioRepository, UsuarioRepository>();
         services.AddScoped<ILogarUsuarioHandler, LogarUsuarioHandler>();
+
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+            options.RequireHttpsMetadata = false;
+            options.SaveToken = true;
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,  
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("ChaveSuperSeguraParaOMod10DoTreinamento")),
+                ValidateIssuer = false,
+                ValidateAudience = false
+            };
+        });
 
         return services;
     }

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/Button";
 import { fazerLoginSimples } from "@/services/authService";
 import { Mail, Lock, ClipboardList } from "lucide-react";
+import CustomToast from "@/components/CustomToast";
 
 interface LoginScreenProps {
   onLoginSucesso: (novoToken: string) => void;
@@ -14,16 +15,18 @@ export default function LoginScreen({ onLoginSucesso }: LoginScreenProps) {
   const [senha, setSenha] = useState("");
   const [lembrarAcesso, setLembrarAcesso] = useState(false);
   const [statusLogin, setStatusLogin] = useState("");
+  const [erroLogin, setErroLogin] = useState("");
 
   const handleSubmeter = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErroLogin("");
     setStatusLogin("Conectando...");
 
     const resultado = await fazerLoginSimples(email, senha);
 
     if (resultado.sucesso) {
       setStatusLogin("Logado com sucesso!");
-      
+
       if (resultado.token) {
         onLoginSucesso(resultado.token);
       }
@@ -32,7 +35,8 @@ export default function LoginScreen({ onLoginSucesso }: LoginScreenProps) {
         navigate("/home", { replace: true });
       }, 50);
     } else {
-      setStatusLogin(`Falhou: ${resultado.erro}`);
+      setStatusLogin("");
+      setErroLogin(resultado.erro || "E-mail ou senha incorretos."); 
     }
   };
 
@@ -74,7 +78,7 @@ export default function LoginScreen({ onLoginSucesso }: LoginScreenProps) {
       </div>
 
       {/* LADO DIREITO*/}
-      <div className="lg:col-span-2 flex flex-col justify-center items-center bg-[#0f172a] p-8">
+      <div className="lg:col-span-2 flex flex-col justify-center items-center bg-[#0f172a] p-8 h-full relative">
         <div className="w-full max-w-xs">
           <div className="mb-10 text-white flex items-center gap-3">
             <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20">
@@ -91,7 +95,7 @@ export default function LoginScreen({ onLoginSucesso }: LoginScreenProps) {
             <p className="text-xs text-gray-500 mt-1">Insira suas credenciais para continuar</p>
           </div>
 
-          <form onSubmit={handleSubmeter} className="flex flex-col gap-4">
+          <form onSubmit={handleSubmeter} className="flex flex-col gap-4" noValidate>
             <div>
               <label className="text-xs font-semibold text-gray-400 block mb-1.5">E-mail <span className="text-red-500">*</span></label>
               <div className="relative flex items-center">
@@ -119,7 +123,7 @@ export default function LoginScreen({ onLoginSucesso }: LoginScreenProps) {
                   type="password"
                   className="w-full p-2.5 pl-10 border border-[#3a475c] rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none bg-gray-800/40 text-white text-sm transition-all placeholder-slate-600"
                   value={senha}
-                  onChange={(e) => setSenha(e.target.value)}                 
+                  onChange={(e) => setSenha(e.target.value)}
                   required
                 />
               </div>
@@ -150,8 +154,6 @@ export default function LoginScreen({ onLoginSucesso }: LoginScreenProps) {
             >
               Entrar
             </Button>
-
-            {statusLogin && <p className="text-center text-xs text-slate-300 mt-2">{statusLogin}</p>}
           </form>
 
           <div className="mt-8">
@@ -161,6 +163,20 @@ export default function LoginScreen({ onLoginSucesso }: LoginScreenProps) {
               <button type="button" className="text-blue-500 hover:text-blue-400 font-medium transition-colors cursor-pointer">Fale com o administrador</button>
             </div>
           </div>
+        </div>
+
+        <div className="absolute bottom-4 right-4 z-50">
+          {erroLogin && (
+            <div className="animate-in fade-in slide-in-from-bottom-5 duration-300 ease-out">
+              <CustomToast
+                title="Falha no Acesso"
+                message={erroLogin}
+                onClose={() => setErroLogin("")}
+                type="error"
+                // duration={5000}
+              />
+            </div>
+          )}
         </div>
       </div>
     </main>

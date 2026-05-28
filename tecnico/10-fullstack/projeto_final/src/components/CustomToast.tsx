@@ -51,7 +51,7 @@ const CustomToast: React.FC<CustomToastProps> = React.memo(
           };
         case 'error':
           return {
-            container: 'bg-rose-950/40 border-rose-500/30 text-rose-400',
+            container: 'bg-rose-950/40 border-rose-500/30 text-white',
             iconBg: 'bg-rose-500/20',
             IconComponent: AlertCircle,
           };
@@ -111,17 +111,17 @@ const CustomToast: React.FC<CustomToastProps> = React.memo(
             <Icon size={18} className="currentColor" />
           </div>
           <div className="flex-1 flex flex-col justify-start items-start gap-1">
-            <div className="text-sm font-semibold text-white font-['Inter']">
+            <div className="text-md font-semibold text-white">
               {title}
             </div>
             <div className="w-full flex flex-col gap-1">
               {mainMessage && (
-                <div className="text-xs text-slate-300 font-normal font-['Inter']">
+                <div className="text-xs text-slate-300 font-normal text-white">
                   {mainMessage}
                 </div>
               )}
               {errors.length > 0 && (
-                <ul className="w-full list-disc list-inside text-xs text-slate-400 font-normal font-['Inter'] space-y-1 ml-1 mt-1">
+                <ul className="w-full list-disc list-inside text-xs text-slate-400 font-normal space-y-1 ml-1 mt-1">
                   {errors.map((error, index) => (
                     <li key={index}>{error}</li>
                   ))}

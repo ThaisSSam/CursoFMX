@@ -2,7 +2,7 @@ import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios';
 
 const baseURL = (import.meta.env.VITE_API_URL || 'http://localhost:5050').replace(/\/+$/, '');
 
-// Cache para evitar requisições síncronas idênticas duplicadas
+// cache para evitar requisições síncronas idênticas duplicadas
 const pendingRequests = new Map<string, Promise<AxiosResponse>>();
 
 const normalizeObject = (obj: any): any => {
@@ -48,7 +48,7 @@ const api = axios.create({
   timeout: 30000,
 });
 
-// Interceptor de Requisição: Injeta o Token JWT
+// injeta o Token
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('auth_token') || localStorage.getItem('token');
   if (token) {
@@ -60,7 +60,6 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Tratamento de Concorrência de Chamadas
 const originalRequest = api.request.bind(api);
 api.request = function (config: AxiosRequestConfig): any {
   if (config.responseType === 'blob' || config.responseType === 'arraybuffer') {
@@ -86,16 +85,17 @@ api.request = function (config: AxiosRequestConfig): any {
   return requestPromise;
 };
 
-// Interceptor de Resposta: Redirecionamento em caso de perda de sessão (401/403)
+// redirecionamento em caso de perda de sessão
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error.response?.status === 401 || error.response?.status === 403) {
+    const ehRotaLogin = error.config?.url?.includes('/usuarios/login');
+
+    if ((error.response?.status === 401 || error.response?.status === 403) && !ehRotaLogin) {
       localStorage.removeItem('auth_token');
       localStorage.removeItem('token');
       localStorage.removeItem('auth_user');
-      
-      window.location.href = '/login';
+
       window.dispatchEvent(new CustomEvent('auth:unauthorized'));
     }
     return Promise.reject(error);
