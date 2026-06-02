@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Treinamento.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using Treinamento.Infrastructure.Persistence;
 namespace Treinamento.Infrastructure.Migrations
 {
     [DbContext(typeof(TreinamentoContext))]
-    partial class TreinamentoContextModelSnapshot : ModelSnapshot
+    [Migration("20260602003418_AdicionarTabelaTarefas")]
+    partial class AdicionarTabelaTarefas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,15 +44,14 @@ namespace Treinamento.Infrastructure.Migrations
                     b.Property<int>("Prioridade")
                         .HasColumnType("INT");
 
+                    b.Property<string>("Responsavel")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(100)");
+
                     b.Property<int>("Situacao")
                         .HasColumnType("INT");
 
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UsuarioId");
 
                     b.ToTable("tb_tarefas", (string)null);
                 });
@@ -95,17 +97,6 @@ namespace Treinamento.Infrastructure.Migrations
                         .HasName("pk_tb_usuarios_id");
 
                     b.ToTable("tb_usuarios", "treinamento");
-                });
-
-            modelBuilder.Entity("Treinamento.Domain.Aggregates.Tarefas.Tarefa", b =>
-                {
-                    b.HasOne("Treinamento.Domain.Aggregates.Usuarios.Usuario", "UsuarioResponsavel")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("UsuarioResponsavel");
                 });
 #pragma warning restore 612, 618
         }

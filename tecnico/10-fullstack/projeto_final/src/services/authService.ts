@@ -1,56 +1,86 @@
-import api from './config';
-import { loginEndpoints } from './endpoints/login';
+import axios, { AxiosError } from 'axios';
+import api from '../services/config';
 
-export async function fazerLoginSimples(email: string, senha: string) {
-  const corpoRequest = {
-    Email: email.trim(),
-    Senha: senha,
-    LembrarAcesso: true
-  };
+export interface LoginRequestData {
+  Email: string;
+  Senha: string;
+  LembrarAcesso: boolean;
+}
 
-  try {
-    const { data } = await api.post('/usuarios/login', corpoRequest);
+export interface LoginResponseSuccess {
+  message: string;
+  token: string;
+}
 
-    const tokenGerado = data?.token || data?.data?.token;
+export interface ApiErrorResponse {
+  errors?: string[];
+  message?: string;
+}
 
-    if (tokenGerado) {
-      localStorage.setItem('auth_token', tokenGerado);
-      localStorage.setItem('token', tokenGerado);
+export interface LoginEndpointResult {
+  data: LoginResponseSuccess;
+  success: boolean;
+}
+
+export interface RecoveryEndpointResult {
+  success: boolean;
+  message: string;
+}
+
+export interface AppHandledError extends Error {
+  success: boolean;
+}
+
+export const loginEndpoints = {
+  executarLogin: async (corpoRequest: LoginRequestData): Promise<LoginEndpointResult> => {
+    try {
+      const response = await api.post<LoginResponseSuccess>('/usuarios/login?api-version=1', corpoRequest);
+      return { data: response.data, success: true };
+    } catch (error: unknown) {
+      let mensagem = 'Erro ao tentar realizar o login.';
+
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError<ApiErrorResponse>;
+        mensagem = axiosError.response?.data?.errors?.[0] || axiosError.message || mensagem;
+      } else if (error instanceof Error) {
+        mensagem = error.message;
+      }
+
+      const erroTratado = new Error(mensagem) as AppHandledError;
+      erroTratado.success = false;
+      throw erroTratado;
     }
+  },
 
-    return { sucesso: true, token: tokenGerado };
-  } catch (erro: any) {
-    const respostaErro = erro.response?.data;
+  solicitarRecuperacao: async (login: string): Promise<RecoveryEndpointResult> => {
+    try {
+      const response = await api.post<{ success?: boolean; message?: string }>('/api/v1/auth/esqueci-senha', { login: login.trim() });
+      return {
+        success: response.data?.success ?? true,
+        message: response.data?.message || 'Link de recuperação enviado com sucesso.',
+      };
+    } catch (error: unknown) {
+      let mensagem = 'Erro ao solicitar recuperação.';
 
-    const mensagemErro =
-      respostaErro?.errors?.[0] ||
-      erro.message ||
-      'Erro ao tentar realizar o login.';
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError<ApiErrorResponse>;
+        mensagem = axiosError.response?.data?.errors?.[0] || axiosError.message;
+      } else if (error instanceof Error) {
+        mensagem = error.message;
+      }
 
-    return { sucesso: false, erro: mensagemErro };
+      throw new Error(mensagem);
+    }
+  },
+
+  executarLogout: async (): Promise<{ success: boolean }> => {
+    try {
+      await api.post('/usuarios/logout?api-version=1');
+      return { success: true };
+    } catch {
+      return { success: false };
+    }
   }
-}
+};
 
-export async function esqueciSenhaService(email: string) {
-  try {
-    return await loginEndpoints.solicitarRecuperacao(email);
-  } catch (erro: any) {
-    throw new Error(erro.message);
-  }
-}
-
-// Função de logout 
-export async function sairDoSistema() {
-  await loginEndpoints.executarLogout();
-
-  localStorage.removeItem('auth_token');
-  localStorage.removeItem('token');
-  localStorage.removeItem('refresh_token');
-  localStorage.removeItem('auth_user');
-}
-
-export function tokenEstaExpirado(): boolean {
-  const expiraEm = localStorage.getItem('auth_expires_at');
-  if (!expiraEm) return false;
-  return new Date(expiraEm) <= new Date();
-}
+export default loginEndpoints;

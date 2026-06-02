@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Treinamento.Domain.Aggregates.Tarefas;
 
 namespace Treinamento.Infrastructure.Persistence;
 
@@ -9,6 +10,8 @@ public class TreinamentoContext(DbContextOptions<TreinamentoWriteContext> option
 public class TreinamentoWriteContext : TreinamentoContextBase
 {
     private readonly ILoggerFactory _loggerFactory;
+
+    public DbSet<Tarefa> Tarefas { get; set; }
 
     public TreinamentoWriteContext(DbContextOptions<TreinamentoWriteContext> options, ILoggerFactory loggerFactory)
         : base(options)

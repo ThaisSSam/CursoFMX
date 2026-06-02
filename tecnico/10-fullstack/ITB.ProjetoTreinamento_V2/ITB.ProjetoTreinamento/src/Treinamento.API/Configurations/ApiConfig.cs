@@ -30,14 +30,15 @@ public static class ApiConfig
             options.GroupNameFormat = "'v'VVV";
             options.SubstituteApiVersionInUrl = true;
         });
-
+        
         services.AddCors(options =>
         {
             options.AddPolicy("Desenvolvimento", policy =>
             {
-                policy.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
+                policy.WithOrigins("http://localhost:5173") 
+                      .AllowAnyMethod()
+                      .AllowAnyHeader()
+                      .AllowCredentials();
             });
         });
 
@@ -46,13 +47,13 @@ public static class ApiConfig
 
     public static IApplicationBuilder UseWebApiConfig(this IApplicationBuilder app, IWebHostEnvironment env)
     {
-        if (env.IsDevelopment())
-            app.UseCors("Desenvolvimento");
+        // Usando apenas a política nativa e limpa do .NET, sem duplicações manuais
+        app.UseCors("Desenvolvimento");
 
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
-    
+
         return app;
     }
 }

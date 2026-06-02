@@ -1,6 +1,6 @@
 import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios';
 
-const baseURL = (import.meta.env.VITE_API_URL || 'http://localhost:5050').replace(/\/+$/, '');
+const baseURL = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/+$/, '');
 
 // cache para evitar requisições síncronas idênticas duplicadas
 const pendingRequests = new Map<string, Promise<AxiosResponse>>();
@@ -46,6 +46,7 @@ const generateRequestKey = (config: AxiosRequestConfig): string => {
 const api = axios.create({
   baseURL,
   timeout: 30000,
+  withCredentials: true,
 });
 
 // injeta o Token

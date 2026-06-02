@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/Button";
-import { fazerLoginSimples } from "@/services/authService";
+import endpoints from "@/services/endpoints/login";
 import { Mail, Lock, ClipboardList } from "lucide-react";
 import CustomToast from "@/components/CustomToast";
 
@@ -22,21 +22,31 @@ export default function LoginScreen({ onLoginSucesso }: LoginScreenProps) {
     setErroLogin("");
     setStatusLogin("Conectando...");
 
-    const resultado = await fazerLoginSimples(email, senha);
+    try {
+      const resultado = await endpoints.executarLogin({ 
+        Email: email,
+        Senha: senha, 
+        LembrarAcesso: lembrarAcesso 
+      });
 
-    if (resultado.sucesso) {
       setStatusLogin("Logado com sucesso!");
 
-      if (resultado.token) {
-        onLoginSucesso(resultado.token);
+      if (resultado.data.token) {
+        onLoginSucesso(resultado.data.token);
       }
 
       setTimeout(() => {
         navigate("/home", { replace: true });
       }, 50);
-    } else {
+
+    } catch (error: unknown) {
       setStatusLogin("");
-      setErroLogin(resultado.erro || "E-mail ou senha incorretos."); 
+      
+      if (error instanceof Error) {
+        setErroLogin(error.message);
+      } else {
+        setErroLogin("E-mail ou senha incorretos.");
+      }
     }
   };
 
