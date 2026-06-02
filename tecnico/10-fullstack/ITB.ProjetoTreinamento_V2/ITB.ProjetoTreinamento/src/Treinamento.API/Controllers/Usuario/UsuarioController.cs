@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Treinamento.Domain.Aggregates.Usuarios;
 using Treinamento.Domain.Core.Interfaces;
 using Treinamento.Domain.Handlers;
+using Treinamento.Infrastructure.Persistence;
 
 namespace Treinamento.API.Controllers;
 
@@ -13,9 +15,11 @@ namespace Treinamento.API.Controllers;
 public class UsuarioController : ControllerBase
 {
     private readonly ILogarUsuarioHandler _handler;
-    public UsuarioController(ILogarUsuarioHandler handler)
+    private readonly TreinamentoReadContext _readContext;
+    public UsuarioController(ILogarUsuarioHandler handler, TreinamentoReadContext readContext)
     {
         _handler = handler;
+        _readContext = readContext;
     }
 
     [HttpPost("login")]
@@ -71,5 +75,29 @@ public class UsuarioController : ControllerBase
         Response.Cookies.Delete("X-Access-Token");
 
         return Ok(new { message = "Sessão encerrada com sucesso!" });
+    }
+
+    [Authorize]
+    [HttpGet] 
+    public async Task<IActionResult> ObterTodos()
+    {
+        try
+        {
+            var usuarios = await _readContext.Usuarios
+                .Select(u => new 
+                {
+                    u.Id,
+                    u.Email,
+                    u.Ativo,
+                    u.BloqueadoAte
+                })
+                .ToListAsync();
+
+            return Ok(usuarios);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, new { errors = new[] { "Erro ao listar usuários: " + ex.Message } });
+        }
     }
 }

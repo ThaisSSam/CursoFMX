@@ -12,8 +12,8 @@ using Treinamento.Infrastructure.Persistence;
 namespace Treinamento.Infrastructure.Migrations
 {
     [DbContext(typeof(TreinamentoContext))]
-    [Migration("20260602003921_CorrigirTabelaTarefasComFK")]
-    partial class CorrigirTabelaTarefasComFK
+    [Migration("20260602105359_CriarTabelaTarefaDefinitivaNoSchema")]
+    partial class CriarTabelaTarefaDefinitivaNoSchema
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace Treinamento.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Treinamento.Domain.Aggregates.Tarefas.Tarefa", b =>
+            modelBuilder.Entity("Treinamento.Domain.Aggregates.Tarefa.Tarefa", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -54,7 +54,7 @@ namespace Treinamento.Infrastructure.Migrations
 
                     b.HasIndex("UsuarioId");
 
-                    b.ToTable("tb_tarefas", (string)null);
+                    b.ToTable("tb_tarefas", "treinamento");
                 });
 
             modelBuilder.Entity("Treinamento.Domain.Aggregates.Usuarios.Usuario", b =>
@@ -100,7 +100,7 @@ namespace Treinamento.Infrastructure.Migrations
                     b.ToTable("tb_usuarios", "treinamento");
                 });
 
-            modelBuilder.Entity("Treinamento.Domain.Aggregates.Tarefas.Tarefa", b =>
+            modelBuilder.Entity("Treinamento.Domain.Aggregates.Tarefa.Tarefa", b =>
                 {
                     b.HasOne("Treinamento.Domain.Aggregates.Usuarios.Usuario", "UsuarioResponsavel")
                         .WithMany()

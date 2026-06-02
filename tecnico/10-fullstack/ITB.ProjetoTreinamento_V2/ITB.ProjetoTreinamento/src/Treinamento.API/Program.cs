@@ -30,8 +30,6 @@ builder.Services
 
 var app = builder.Build();
 
-Console.WriteLine($"\n>>>> HASH SEGURO DO BCRYPT: {BCrypt.Net.BCrypt.HashPassword("12345")}\n");
-
 var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 
 if (app.Environment.IsDevelopment())

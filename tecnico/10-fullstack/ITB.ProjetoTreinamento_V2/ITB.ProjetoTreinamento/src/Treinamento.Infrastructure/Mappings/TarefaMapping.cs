@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Treinamento.Domain.Aggregates.Tarefas;
+using Treinamento.Domain.Aggregates.Tarefa;
 
 namespace Treinamento.Infrastructure.Persistence.Mappings;
 
@@ -8,7 +8,7 @@ public class TarefaMapping : IEntityTypeConfiguration<Tarefa>
 {
     public void Configure(EntityTypeBuilder<Tarefa> builder)
     {
-        builder.ToTable("tb_tarefas"); // Nome da tabela no banco
+        builder.ToTable("tb_tarefas", "treinamento");
 
         builder.HasKey(t => t.Id);
 
@@ -35,7 +35,7 @@ public class TarefaMapping : IEntityTypeConfiguration<Tarefa>
 
         // 2. MAPEAMENTO DA CHAVE ESTRANGEIRA (FK)
         builder.HasOne(t => t.UsuarioResponsavel) // A tarefa tem um usuário responsável
-            .WithMany()                           // O usuário pode ter muitas tarefas (ou .WithMany(u => u.Tarefas) se tiver a lista lá)
+            .WithMany()                           // O usuário pode ter muitas tarefas (ou .WithMany(u => u.Tarefa) se tiver a lista lá)
             .HasForeignKey(t => t.UsuarioId)      // O campo que guarda a chave na tabela de tarefas
             .OnDelete(DeleteBehavior.Restrict);   // Impede de deletar um usuário se ele tiver tarefas pendentes
     }

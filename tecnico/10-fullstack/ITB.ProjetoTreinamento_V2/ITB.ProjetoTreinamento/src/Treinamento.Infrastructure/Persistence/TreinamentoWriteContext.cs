@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Treinamento.Domain.Aggregates.Tarefas;
+using Treinamento.Domain.Aggregates.Tarefa;
+using Treinamento.Domain.Core.Validacao;
 
 namespace Treinamento.Infrastructure.Persistence;
 
@@ -28,7 +29,10 @@ public class TreinamentoWriteContext : TreinamentoContextBase
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Ignore<ErroValidacaoDominio>();
+        modelBuilder.Ignore<ResultadoValidacaoDominio>();
         TreinamentoModelBuilder.ApplyShared(modelBuilder);
         base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(TreinamentoContext).Assembly);
     }
 }

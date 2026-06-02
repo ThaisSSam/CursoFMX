@@ -14,6 +14,8 @@ using Treinamento.Domain.Handlers;
 using Treinamento.Domain.Core.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Treinamento.Domain.Aggregates.Tarefa.Interfaces;
+using Treinamento.Infrastructure.Persistence.Repositories;
 
 namespace Treinamento.IoC;
 
@@ -39,6 +41,7 @@ public static class DependencyInjection
 
         services.AddScoped<IUsuarioRepository, UsuarioRepository>();
         services.AddScoped<ILogarUsuarioHandler, LogarUsuarioHandler>();
+        services.AddScoped<ITarefaRepository, TarefaRepository>();
 
         services.AddAuthentication(options =>
         {

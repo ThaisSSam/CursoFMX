@@ -5,9 +5,8 @@ export const loginEndpoints = {
     try {
       const response = await api.post('/usuarios/login', corpoRequest);
       return { data: response.data, success: true };
-    } catch (error: any) {
-      const respostaErro = error.response?.data;
-      const mensagem = respostaErro?.errors?.[0] || error.message || 'Erro ao tentar realizar o login.';
+    } catch (error: any) {  
+      const mensagem = error.response?.data?.errors?.[0] || error.message || 'Erro ao tentar realizar o login.';
       const erroTratado = new Error(mensagem) as any;
       erroTratado.success = false;
       throw erroTratado;
