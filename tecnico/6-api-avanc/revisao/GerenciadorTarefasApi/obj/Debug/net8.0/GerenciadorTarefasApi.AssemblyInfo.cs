@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GerenciadorTarefasApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c351e50fd006ed12f9a93cc667e1536a89d82218")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a6631c243a192a22476e752e8e89d38bdcc7ec14")]
 [assembly: System.Reflection.AssemblyProductAttribute("GerenciadorTarefasApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GerenciadorTarefasApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
