@@ -1,5 +1,9 @@
 import api from '../config';
 
+export interface LogoutProps {
+  onLogout: () => Promise<void> | void;
+}
+
 export const loginEndpoints = {
   executarLogin: async (corpoRequest: unknown) => {
     try {
@@ -35,5 +39,6 @@ export const loginEndpoints = {
     }
   }
 };
+
 
 export default loginEndpoints;

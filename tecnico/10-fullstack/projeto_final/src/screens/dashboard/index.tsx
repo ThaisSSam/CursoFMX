@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Trash2, AlertTriangle, CheckSquare, Play, Bell, Settings } from "lucide-react";
 import { tarefaEndpoints } from "@/services/endpoints/tarefas";
 import type { Tarefa } from "@/services/endpoints/tarefas";
-import customToast from "@/components/CustomToast"; 
+import customToast from "@/components/CustomToast";
+import { useNavigate } from "react-router-dom";
 
 import {
   Chart as ChartJS,
@@ -38,6 +39,7 @@ interface DashboardScreenProps {
 export default function DashboardScreen({ onLogout }: DashboardScreenProps) {
   const [tarefas, setTarefas] = useState<Tarefa[]>([]);
   const [carregando, setCarregando] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function carregarDados() {
@@ -50,7 +52,7 @@ export default function DashboardScreen({ onLogout }: DashboardScreenProps) {
           title: "Erro de Conexão",
           message: mensagem,
           type: "error",
-          onClose: () => {}
+          onClose: () => { }
         });
       } finally {
         setCarregando(false);
@@ -145,7 +147,7 @@ export default function DashboardScreen({ onLogout }: DashboardScreenProps) {
       },
     },
     scales: {
-      x: { display: false }, 
+      x: { display: false },
       y: { display: false },
     },
   };
@@ -156,7 +158,11 @@ export default function DashboardScreen({ onLogout }: DashboardScreenProps) {
 
   return (
     <div className="text-white bg-[#0f172a] min-h-screen flex flex-row font-sans selection:bg-blue-500/30">
-      <SidebarComponent onLogout={onLogout} />
+      <SidebarComponent
+        currentPath="/home"
+        onNavigate={(path) => navigate(path)}
+        onLogout={onLogout}
+      />
 
       <div className="flex flex-col w-full overflow-y-auto max-h-screen">
         <header className="flex justify-between items-center border-b border-slate-800 bg-[#0f172a] px-8 py-5 sticky top-0 z-10">

@@ -19,6 +19,17 @@ builder.Host.UseSerilog();
 builder.AddConfiguration();
 builder.Services.ResolveDependenciesApp();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FmxReactApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:5174")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.WebApiConfig();
@@ -36,6 +47,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwaggerConfig(provider);
 }
+
+app.UseCors("FmxReactApp");
 
 app.UseWebApiConfig(app.Environment);
 

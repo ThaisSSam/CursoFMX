@@ -82,8 +82,8 @@ export default function SidebarComponent({
           </SidebarItem>
           <SidebarItem 
             icon={CheckSquare} 
-            variant={currentPath === '/tasks' ? 'active' : 'default'}
-            onClick={() => onNavigate?.('/tasks')}
+            variant={currentPath === '/tarefas' ? 'active' : 'default'}
+            onClick={() => onNavigate?.('/tarefas')}
           >
             Tarefas
           </SidebarItem>
