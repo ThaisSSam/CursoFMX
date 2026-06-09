@@ -10,7 +10,7 @@ interface CustomToastProps {
   persistent?: boolean;
 }
 
-const CustomToast: React.FC<CustomToastProps> = React.memo(
+const customToast: React.FC<CustomToastProps> = React.memo(
   ({ title, message, onClose, type = 'success', duration = 10000, persistent = false }) => {
     const onCloseRef = useRef(onClose);
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -146,6 +146,6 @@ const CustomToast: React.FC<CustomToastProps> = React.memo(
   },
 );
 
-CustomToast.displayName = 'CustomToast';
+customToast.displayName = 'CustomToast';
 
-export default CustomToast;
+export default customToast;

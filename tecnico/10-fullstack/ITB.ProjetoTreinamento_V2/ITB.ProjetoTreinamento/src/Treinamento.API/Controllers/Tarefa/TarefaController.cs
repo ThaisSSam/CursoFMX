@@ -27,7 +27,7 @@ public class TarefaController : ControllerBase
         try
         {
             var tarefas = await _readContext.Tarefa
-                .Include(t => t.UsuarioResponsavel) // Faz o JOIN com a tabela de usuários
+                .Include(t => t.UsuarioResponsavel)
                 .Select(t => new
                 {
                     Codigo = t.Id,
@@ -38,7 +38,8 @@ public class TarefaController : ControllerBase
                     Responsavel = t.UsuarioResponsavel != null ? new
                     {
                         Id = t.UsuarioResponsavel.Id,
-                        Email = t.UsuarioResponsavel.Email
+                        Email = t.UsuarioResponsavel.Email,
+                        Nome = t.UsuarioResponsavel.Nome,
                     } : null
                 })
                 .ToListAsync();

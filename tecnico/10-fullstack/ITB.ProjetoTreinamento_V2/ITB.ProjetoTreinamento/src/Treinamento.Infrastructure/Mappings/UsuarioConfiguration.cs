@@ -39,7 +39,12 @@ internal class UsuarioConfiguration : IEntityTypeConfiguration<Usuario>
 
         builder.Property(u => u.BloqueadoAte)
             .HasColumnName("bloqueado_ate");
-    
+
+        builder.Property(u => u.Nome)
+            .HasColumnName("nome")
+            .HasMaxLength(100)
+            .IsRequired();
+
         builder.Ignore(u => u.ResultadoValidacao);
     }
 }

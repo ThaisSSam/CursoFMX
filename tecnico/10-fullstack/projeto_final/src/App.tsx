@@ -1,8 +1,7 @@
-import { useState, useEffect, useEffectEvent, Suspense, lazy } from "react";
+import { useState, Suspense, lazy } from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { useToast } from "./contexts/CustomToastContext";
 import AppLoadingFallback from "./components/layout/AppLoadingFallback";
-import sairDoSistema from "./services/authService";
 
 import loginEndpoints from "./services/endpoints/login";
 
@@ -25,10 +24,8 @@ export default function App() {
 
   const handleLogout = async () => {
     try {
-      // 2. CORREÇÃO: Chamamos a propriedade correta de dentro do objeto exportado
       await loginEndpoints.executarLogout();
     } catch (error: any) {
-      // Regra do PDI aplicada com segurança
       const mensagemErro =
         error.response?.data?.errors?.[0] ||
         "Erro ao encerrar sessão no servidor.";
@@ -39,7 +36,6 @@ export default function App() {
         description: mensagemErro,
       });
     } finally {
-      // Limpeza local dos estados do sistema
       localStorage.removeItem("auth_token");
       localStorage.removeItem("token");
       localStorage.removeItem("refresh_token");

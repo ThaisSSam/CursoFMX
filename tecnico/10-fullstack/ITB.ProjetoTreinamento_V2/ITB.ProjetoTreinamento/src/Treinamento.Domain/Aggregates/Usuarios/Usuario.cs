@@ -8,6 +8,7 @@ namespace Treinamento.Domain.Aggregates.Usuarios;
 /// </summary>
 public class Usuario : Entity<Usuario>
 {
+    public string Nome { get; private set; }
     public string Email { get; private set; }
     public string SenhaHash { get; private set; }
     public bool Ativo { get; private set; }
@@ -15,12 +16,14 @@ public class Usuario : Entity<Usuario>
     public DateTime? BloqueadoAte { get; private set; }
     protected Usuario() : base()
     {
+        Nome = string.Empty;
         Email = string.Empty;
         SenhaHash = string.Empty;
     }
 
-    public Usuario(string email, string senhaLimpa, bool ativo) : base()
+    public Usuario(string nome, string email, string senhaLimpa, bool ativo) : base()
     {
+        Nome = nome;
         Email = email;
         SenhaHash = BCrypt.Net.BCrypt.HashPassword(senhaLimpa);
         Ativo = ativo;

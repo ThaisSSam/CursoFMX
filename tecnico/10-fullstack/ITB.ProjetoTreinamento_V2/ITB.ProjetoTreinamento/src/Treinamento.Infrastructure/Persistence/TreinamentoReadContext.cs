@@ -38,8 +38,9 @@ public class TreinamentoReadContext : TreinamentoContextBase
             entity.Property(u => u.Id).HasColumnName("id");
             entity.Property(u => u.Ativo).HasColumnName("ativo");
             entity.Property(u => u.BloqueadoAte).HasColumnName("bloqueado_ate");
-            entity.Property(u => u.Email).HasColumnName("email");
-            entity.Property(u => u.SenhaHash).HasColumnName("senha_hash");
+            entity.Property(u => u.Nome).HasColumnName("nome");
+            entity.Property(u => u.Email).HasColumnName("email").IsRequired();
+            entity.Property(u => u.SenhaHash).HasColumnName("senha_hash").IsRequired();
             entity.Property(u => u.TentativasLoginInvalidas).HasColumnName("tentativas_login_invalidas");
         });
 

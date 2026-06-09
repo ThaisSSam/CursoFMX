@@ -1,7 +1,7 @@
 import api from '../config';
 
 export const loginEndpoints = {
-  executarLogin: async (corpoRequest: any) => {
+  executarLogin: async (corpoRequest: unknown) => {
     try {
       const response = await api.post('/usuarios/login', corpoRequest);
       return { data: response.data, success: true };
