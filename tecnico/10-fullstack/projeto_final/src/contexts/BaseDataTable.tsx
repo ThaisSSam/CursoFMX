@@ -76,9 +76,9 @@ export function BaseDataTable<TData>({
             width: enableColumnResizing ? table.getTotalSize() : '100%',
           }}
         >
-          <TableHeader className="bg-[#111827]/40 border-b border-r border-slate-800 sticky top-0 z-10">
+          <TableHeader className="border-b border-r border-slate-800 sticky top-0 z-10 bg-[#111827]">
             {headerGroups.map((headerGroup) => (
-              <TableRow key={headerGroup.id} className="hover:bg-transparent border-slate-800">
+              <TableRow key={headerGroup.id} className="hover:border-slate-800">
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead

@@ -4,6 +4,7 @@ import { useToast } from "./contexts/CustomToastContext";
 import AppLoadingFallback from "./components/layout/AppLoadingFallback";
 
 import loginEndpoints from "./services/endpoints/login";
+import CadastroTarefaScreen from "./screens/tarefas/cadastrar";
 
 const LoginScreen = lazy(() => import("./screens/login/index"));
 const ForgotPasswordScreen = lazy(() => import("./screens/login/esqueciSenha"));
@@ -68,6 +69,7 @@ export default function App() {
         <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="/home" element={<DashboardScreen onLogout={handleLogout} />} />
         <Route path="/tarefas" element={<TarefasScreen onLogout={handleLogout} />} />
+        <Route path="/tarefas/cadastro" element={<CadastroTarefaScreen onLogout={handleLogout} />} />
         <Route path="/login" element={<Navigate to="/home" replace />} />
         <Route path="*" element={<Navigate to="/home" replace />} />
       </Routes>

@@ -1,6 +1,5 @@
 import api from '../config';
 
-// 1. Exportando a interface isolada para o TypeScript não se confundir
 export type Tarefa = {
   codigo: number;
   nome: string;
@@ -13,8 +12,15 @@ export type Tarefa = {
   } | null;
 }
 
+export type CriarTarefaInput = {
+  nome: string;
+  prioridade: number;
+  situacao: number;
+  usuarioId: number;
+}
+
 export const tarefaEndpoints = {
-  obterTodas: async (): Promise<Tarefa[]> => {
+  obterTodasTarefas: async (): Promise<Tarefa[]> => {
     try {
       const response = await api.get<Tarefa[]>('/tarefas?api-version=1');
       return response.data;
@@ -24,12 +30,23 @@ export const tarefaEndpoints = {
       throw error;
     }
   },
+  
   obterMetricasDashboard: async () => {
     try {
       const response = await api.get('/tarefas/dashboard-cards?api-version=1');
       return response.data;
     } catch (error: any) {
       const mensagem = error.response?.data?.errors?.[0] || error.message || 'Erro ao carregar métricas.';
+      throw new Error(mensagem);
+    }
+  },
+
+  criarTarefa: async (corpoRequest: CriarTarefaInput): Promise<{ success: boolean; message: string }> => {
+    try {
+      const response = await api.post('/tarefas?api-version=1', corpoRequest);
+      return response.data;
+    } catch (error: any) {
+      const mensagem = error.response?.data?.errors?.[0] || error.message || 'Falha ao tentar cadastrar a nova tarefa.';      
       throw new Error(mensagem);
     }
   }

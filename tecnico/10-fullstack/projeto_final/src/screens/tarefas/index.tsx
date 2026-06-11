@@ -24,7 +24,7 @@ export default function TarefasScreen({ onLogout }: LogoutProps) {
   useEffect(() => {
     async function carregarTarefas() {
       try {
-        const dados = await tarefaEndpoints.obterTodas();
+        const dados = await tarefaEndpoints.obterTodasTarefas();
         setTarefas(dados);
       } catch (err: any) {
         const mensagem = err.response?.data?.errors?.[0] || err.message || "Erro ao carregar a listagem de tarefas.";
@@ -90,7 +90,10 @@ export default function TarefasScreen({ onLogout }: LogoutProps) {
             <Button variant="outline" className="border-slate-800 bg-[#131b2e] text-slate-300 hover:bg-slate-800 text-xs gap-2 h-9">
               <Download size={14} /> Exportar CSV
             </Button>
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white text-xs gap-2 h-9 font-medium rounded-lg shadow-lg shadow-blue-600/10">
+            <Button 
+              className="bg-blue-600 hover:bg-blue-700 text-white text-xs gap-2 h-9 font-medium rounded-lg shadow-lg shadow-blue-600/10"
+              onClick={() => navigate("/tarefas/cadastro")}
+            >
               <Plus size={14} /> Adicionar tarefa
             </Button>
           </div>
