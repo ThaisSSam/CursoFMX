@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Treinamento.Domain.Aggregates.Usuarios;
+using Treinamento.CrossCutting.Dtos;
 
 namespace Treinamento.Domain.Core.Interfaces;
 

@@ -2,7 +2,6 @@ import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios';
 
 const baseURL = (import.meta.env.VITE_API_URL || 'http://localhost:5050').replace(/\/+$/, '');
 
-// cache para evitar requisições síncronas idênticas duplicadas
 const pendingRequests = new Map<string, Promise<AxiosResponse>>();
 
 const normalizeObject = (obj: any): any => {

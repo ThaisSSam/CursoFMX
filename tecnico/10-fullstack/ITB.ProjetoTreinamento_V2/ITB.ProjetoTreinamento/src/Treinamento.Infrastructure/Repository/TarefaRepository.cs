@@ -8,9 +8,9 @@ namespace Treinamento.Infrastructure.Persistence.Repositories;
 
 public class TarefaRepository : ITarefaRepository
 {
-  private readonly TreinamentoWriteContext _context;
+  private readonly TreinamentoContext _context;
 
-  public TarefaRepository(TreinamentoWriteContext context)
+  public TarefaRepository(TreinamentoContext context)
   {
     _context = context;
   }
@@ -18,6 +18,7 @@ public class TarefaRepository : ITarefaRepository
   public async Task AdicionarAsync(Tarefa tarefa)
   {
     await _context.Tarefa.AddAsync(tarefa);
+    await _context.SaveChangesAsync();
   }
 
   public void Atualizar(Tarefa tarefa)

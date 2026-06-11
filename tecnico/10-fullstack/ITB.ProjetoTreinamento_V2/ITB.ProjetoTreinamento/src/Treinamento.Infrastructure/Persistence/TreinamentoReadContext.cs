@@ -54,13 +54,13 @@ public class TreinamentoReadContext : TreinamentoContextBase
             entity.Property(t => t.Nome).HasColumnType("VARCHAR(150)");
             entity.Property(t => t.Situacao).HasColumnType("INT");
             entity.Property(t => t.Prioridade).HasColumnType("INT");
-            entity.Property(t => t.DataCriacao).HasColumnType("TIMESTAMP");
+            entity.Property(t => t.DataCriacao).HasColumnType("timestamp with time zone");
             entity.Property(t => t.UsuarioId).HasColumnType("integer");
 
             // Relacionamento de leitura
             entity.HasOne(t => t.UsuarioResponsavel)
                 .WithMany()
-                .HasForeignKey(t => t.UsuarioId);
+                .HasForeignKey(t => t.UsuarioId);        
         });
 
         base.OnModelCreating(modelBuilder);

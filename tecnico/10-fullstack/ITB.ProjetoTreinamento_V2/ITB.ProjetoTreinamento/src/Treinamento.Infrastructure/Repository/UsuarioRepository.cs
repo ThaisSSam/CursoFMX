@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using Treinamento.Domain.Aggregates.Usuarios;
 using Treinamento.Infrastructure.Persistence; 
@@ -13,6 +12,12 @@ public class UsuarioRepository : IUsuarioRepository
   public UsuarioRepository(TreinamentoContext context)
   {
     _context = context;
+  }
+
+  public async Task<Usuario?> ObterPorIdAsync(int id)
+  {
+    return await _context.Usuarios
+        .FirstOrDefaultAsync(u => u.Id == id);
   }
 
   public async Task<Usuario?> ObterPorEmailAsync(string email)

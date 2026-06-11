@@ -7,6 +7,7 @@ using Treinamento.Domain.Aggregates.Usuarios;
 using Treinamento.Domain.Core.Interfaces;
 using Treinamento.Domain.Handlers;
 using Treinamento.Infrastructure.Persistence;
+using Treinamento.CrossCutting.Dtos;
 
 namespace Treinamento.API.Controllers;
 

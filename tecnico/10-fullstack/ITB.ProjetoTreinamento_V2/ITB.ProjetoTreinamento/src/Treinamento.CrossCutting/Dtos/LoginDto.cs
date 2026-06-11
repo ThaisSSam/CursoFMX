@@ -1,4 +1,4 @@
-namespace Treinamento.Domain.Aggregates.Usuarios;
+namespace Treinamento.CrossCutting.Dtos;
 
 public class LoginDto
 {

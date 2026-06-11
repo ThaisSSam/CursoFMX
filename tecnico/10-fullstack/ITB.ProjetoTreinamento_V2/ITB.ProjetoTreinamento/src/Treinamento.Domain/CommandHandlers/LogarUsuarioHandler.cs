@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Treinamento.Domain.Aggregates.Usuarios;
 using Treinamento.Domain.Core.Interfaces;
+using Treinamento.CrossCutting.Dtos;
 
 namespace Treinamento.Domain.Handlers;
 

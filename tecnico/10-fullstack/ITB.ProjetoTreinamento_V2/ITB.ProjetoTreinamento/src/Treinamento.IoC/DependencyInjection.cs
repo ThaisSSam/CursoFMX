@@ -42,6 +42,8 @@ public static class DependencyInjection
         services.AddScoped<IUsuarioRepository, UsuarioRepository>();
         services.AddScoped<ILogarUsuarioHandler, LogarUsuarioHandler>();
         services.AddScoped<ITarefaRepository, TarefaRepository>();
+        services.AddScoped<CriarTarefaHandler>();
+        services.AddScoped<ITarefaRepository, TarefaRepository>();
 
         services.AddAuthentication(options =>
         {

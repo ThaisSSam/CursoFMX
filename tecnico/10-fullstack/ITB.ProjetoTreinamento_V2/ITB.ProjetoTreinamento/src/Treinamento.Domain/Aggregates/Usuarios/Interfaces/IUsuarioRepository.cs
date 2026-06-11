@@ -7,4 +7,5 @@ public interface IUsuarioRepository
 {
     Task<Usuario?> ObterPorEmailAsync(string email);
     Task LogarAsync(Usuario usuario);
+    Task<Usuario?> ObterPorIdAsync(int id);
 }
