@@ -13,6 +13,8 @@ import { useNavigate } from "react-router-dom";
 import customToast from "@/components/CustomToast";
 import { BaseDataTable } from "@/contexts/BaseDataTable"
 import { createTarefaColumns } from "./table/tableConfig";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import TarefaForm from "./cadastrar/tarefaForm";
 
 export default function TarefasScreen({ onLogout }: LogoutProps) {
   const [tarefas, setTarefas] = useState<Tarefa[]>([]);
@@ -20,6 +22,9 @@ export default function TarefasScreen({ onLogout }: LogoutProps) {
   const [exibirFiltros, setExibirFiltros] = useState(false);
   const [busca, setBusca] = useState("");
   const navigate = useNavigate();
+  const [modalVisualizarAberto, setModalVisualizarAberto] = useState(false);
+  const [modalEditarAberto, setModalEditarAberto] = useState(false);
+  const [tarefaSelecionada, setTarefaSelecionada] = useState<Tarefa | null>(null);
 
   useEffect(() => {
     async function carregarTarefas() {
@@ -49,16 +54,32 @@ export default function TarefasScreen({ onLogout }: LogoutProps) {
   }, [tarefas, busca]);
 
   const handleVisualizarClick = (data: Tarefa) => {
-    customToast({ title: "Visualizar", message: `Visualizando tarefa ${data.codigo}`, type: "success", onClose: () => { } });
+    setTarefaSelecionada(data);
+    setModalVisualizarAberto(true);
   };
 
   const handleEditarClick = (data: Tarefa) => {
-    customToast({ title: "Editar", message: `Editando tarefa ${data.codigo}`, type: "success", onClose: () => { } });
+    setTarefaSelecionada(data);
+    setModalEditarAberto(true);
   };
 
+  async function handleSucessoEdicao() {
+    setModalEditarAberto(false);
+    setTarefaSelecionada(null);
+
+    try {
+      setCarregando(true);
+      const dados = await tarefaEndpoints.obterTodasTarefas();
+      setTarefas(dados);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setCarregando(false);
+    }
+  }
+
   const columns = useMemo(() =>
-    createTarefaColumns(handleVisualizarClick, handleEditarClick),
-    []);
+    createTarefaColumns(handleVisualizarClick, handleEditarClick), [handleVisualizarClick, handleEditarClick]);
 
   const table = useReactTable({
     data: tarefasFiltradas,
@@ -81,7 +102,6 @@ export default function TarefasScreen({ onLogout }: LogoutProps) {
       <SidebarComponent currentPath="/tarefas" onNavigate={(path) => navigate(path)} onLogout={onLogout} />
 
       <div className="flex flex-col flex-1 h-full min-h-0 overflow-hidden">
-        {/* HEADER */}
         <header className="flex justify-between items-center border-b border-slate-800 bg-[#0f172a] px-8 py-5 sticky top-0 z-10">
           <div className="flex items-center gap-2 text-sm text-slate-400">
             <span className="font-semibold text-slate-200 text-lg">Tarefas</span>
@@ -90,7 +110,7 @@ export default function TarefasScreen({ onLogout }: LogoutProps) {
             <Button variant="outline" className="border-slate-800 bg-[#131b2e] text-slate-300 hover:bg-slate-800 text-xs gap-2 h-9">
               <Download size={14} /> Exportar CSV
             </Button>
-            <Button 
+            <Button
               className="bg-blue-600 hover:bg-blue-700 text-white text-xs gap-2 h-9 font-medium rounded-lg shadow-lg shadow-blue-600/10"
               onClick={() => navigate("/tarefas/cadastro")}
             >
@@ -180,6 +200,60 @@ export default function TarefasScreen({ onLogout }: LogoutProps) {
           </div>
         </main>
       </div>
+      <Dialog open={modalVisualizarAberto} onOpenChange={setModalVisualizarAberto}>
+        <DialogContent className="sm:max-w-[500px] border-slate-800 bg-[#131b2e] text-white">
+          <DialogHeader>
+            <DialogTitle className="text-lg font-bold text-slate-100">
+              Detalhes da Tarefa (TASK-{String(tarefaSelecionada?.codigo).padStart(4, '0')})
+            </DialogTitle>
+          </DialogHeader>
+
+          {tarefaSelecionada && (
+            <div className="space-y-4 pt-2 text-sm">
+              <div className="border-b border-slate-800 pb-3">
+                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Título</span>
+                <p className="text-slate-100 text-base font-medium">{tarefaSelecionada.nome}</p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 border-b border-slate-800 pb-3">
+                <div>
+                  <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Situação</span>
+                  <p className="text-slate-200">{tarefaSelecionada.situacao === 3 ? "Concluída" : tarefaSelecionada.situacao === 2 ? "Em Andamento" : "A Fazer"}</p>
+                </div>
+                <div>
+                  <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Prioridade</span>
+                  <p className="text-slate-200">{tarefaSelecionada.prioridade === 3 ? "Crítica" : tarefaSelecionada.prioridade === 2 ? "Alta" : "Média"}</p>
+                </div>
+              </div>
+
+              <div>
+                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Responsável</span>
+                <p className="text-slate-200 capitalize">{tarefaSelecionada.responsavel?.email?.split('@')[0] || "Sem dono"}</p>
+              </div>
+            </div>
+          )}
+          <div className="flex justify-end pt-4">
+            <Button onClick={() => setModalVisualizarAberto(false)} className="bg-slate-800 hover:bg-slate-700 text-slate-200">
+              Fechar
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={modalEditarAberto} onOpenChange={setModalEditarAberto}>
+        <DialogContent className="sm:max-w-[500px] border-slate-800 bg-[#131b2e] text-white">
+          <DialogHeader>
+            <DialogTitle className="text-lg font-bold text-slate-100">
+              Editar Tarefa
+            </DialogTitle>
+          </DialogHeader>
+
+          <TarefaForm
+            onSucesso={handleSucessoEdicao}
+            onCancelar={() => setModalEditarAberto(false)}
+          />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
