@@ -5,7 +5,6 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Settings, Bell, ArrowLeft } from "lucide-react";
 import TarefaForm from "./tarefaForm"; 
-import customToast from "@/components/CustomToast";
 
 interface CadastroTarefaScreenProps {
   onLogout: () => Promise<void> | void;
@@ -14,14 +13,12 @@ interface CadastroTarefaScreenProps {
 export default function CadastroTarefaScreen({ onLogout }: CadastroTarefaScreenProps) {
   const navigate = useNavigate();
 
-  function handleSucesso() {
-    customToast({
-      title: "Sucesso!",
-      message: "Tarefa adicionada com sucesso ao banco.",
-      type: "success",
-      onClose: () => {},
+  function handleSucesso() { 
+    navigate("/tarefas", { 
+      state: { 
+        mensagemSucesso: "Tarefa cadastrada com sucesso!" 
+      } 
     });
-    navigate("/tarefas"); 
   }
 
   return (

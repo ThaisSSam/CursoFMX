@@ -49,6 +49,55 @@ export const tarefaEndpoints = {
       const mensagem = error.response?.data?.errors?.[0] || error.message || 'Falha ao tentar cadastrar a nova tarefa.';      
       throw new Error(mensagem);
     }
+  },
+
+  excluirTarefa: async (id: number): Promise<{ success: boolean; message: string }> => {
+    try {
+      const response = await api.delete(`/tarefas/${id}?api-version=1`);
+      return response.data;
+    } catch (error: any) {
+      const mensagem = error.response?.data?.errors?.[0] || error.message || 'Falha ao tentar excluir a tarefa.';
+      throw new Error(mensagem);
+    }
+  },
+
+  atualizarTarefa: async (id: number, corpoRequest: CriarTarefaInput): Promise<{ success: boolean; message: string }> => {
+    try {
+      const response = await api.put(`/tarefas/${id}?api-version=1`, corpoRequest);
+      return response.data;
+    } catch (error: any) {
+      const mensagem = error.response?.data?.errors?.[0] || error.message || 'Falha ao tentar atualizar a tarefa.';
+      throw new Error(mensagem);
+    }
+  },
+
+  obterOpcoesSituacao: async (): Promise<Array<{ id: string; label: string }>> => {
+    try {
+      const response = await api.get('/tarefas/situacoes?api-version=1');
+      // Garante a extração seja o dado direto ou encapsulado em um envelope .data
+      const dados = response.data?.data ?? response.data;
+      return dados.map((item: any) => ({
+        id: String(item.id ?? item.Id),
+        label: item.label ?? item.Label
+      }));
+    } catch (error) {
+      console.error("Falha ao buscar situações do back-end", error);
+      return [];
+    }
+  },
+
+  obterOpcoesPrioridade: async (): Promise<Array<{ id: string; label: string }>> => {
+    try {
+      const response = await api.get('/tarefas/prioridades?api-version=1');
+      const dados = response.data?.data ?? response.data;
+      return dados.map((item: any) => ({
+        id: String(item.id ?? item.Id),
+        label: item.label ?? item.Label
+      }));
+    } catch (error) {
+      console.error("Falha ao buscar prioridades do back-end", error);
+      return [];
+    }
   }
 };
 

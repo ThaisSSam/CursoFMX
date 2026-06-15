@@ -78,7 +78,7 @@ export function BaseDataTable<TData>({
         >
           <TableHeader className="border-b border-r border-slate-800 sticky top-0 z-10 bg-[#111827]">
             {headerGroups.map((headerGroup) => (
-              <TableRow key={headerGroup.id} className="hover:border-slate-800">
+              <TableRow key={headerGroup.id} >
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead

@@ -2,56 +2,82 @@ import { useEffect, useState, useMemo } from "react";
 import SidebarComponent from "../../components/Sidebar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-import { SlidersHorizontal, Download, Plus, Search, X } from "lucide-react";
-import { useReactTable, getCoreRowModel, getPaginationRowModel } from "@tanstack/react-table";
+import { SlidersHorizontal, Download, Plus, Search } from "lucide-react";
+import { useReactTable, getCoreRowModel, getPaginationRowModel, type PaginationState, type SortingState } from "@tanstack/react-table";
 
 import { tarefaEndpoints } from "@/services/endpoints/tarefas";
 import type { Tarefa } from "@/services/endpoints/tarefas";
 import { type LogoutProps } from "@/services/endpoints/login";
-import { useNavigate } from "react-router-dom";
-import customToast from "@/components/CustomToast";
-import { BaseDataTable } from "@/contexts/BaseDataTable"
+import { useLocation, useNavigate } from "react-router-dom";
+import CustomToast from "@/components/CustomToast";
+import { BaseDataTable } from "@/contexts/BaseDataTable";
 import { createTarefaColumns } from "./table/tableConfig";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import TarefaForm from "./cadastrar/tarefaForm";
+import ConfirmDeleteModal from "@/components/ConfirmDeleteModal";
+import ViewModal from "./modals/modalVisualizar";
+import EditarModal from "./modals/modalEditar";
+import { consultarTarefaData } from "@/services/tarefasSearch";
+
+import FiltrosTarefas, { type FiltrosTarefasData } from "@/components/function/FiltrosTarefa";
 
 export default function TarefasScreen({ onLogout }: LogoutProps) {
   const [tarefas, setTarefas] = useState<Tarefa[]>([]);
   const [carregando, setCarregando] = useState(true);
+  const [excluindo, setExcluindo] = useState(false);
   const [exibirFiltros, setExibirFiltros] = useState(false);
   const [busca, setBusca] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
   const [modalVisualizarAberto, setModalVisualizarAberto] = useState(false);
   const [modalEditarAberto, setModalEditarAberto] = useState(false);
+  const [modalExcluirAberto, setModalExcluirAberto] = useState(false);
   const [tarefaSelecionada, setTarefaSelecionada] = useState<Tarefa | null>(null);
 
-  useEffect(() => {
-    async function carregarTarefas() {
-      try {
-        const dados = await tarefaEndpoints.obterTodasTarefas();
-        setTarefas(dados);
-      } catch (err: any) {
-        const mensagem = err.response?.data?.errors?.[0] || err.message || "Erro ao carregar a listagem de tarefas.";
-        customToast({
-          title: "Erro de Carregamento",
-          message: mensagem,
-          type: "error",
-          onClose: () => { }
-        });
-      } finally {
-        setCarregando(false);
-      }
-    }
-    carregarTarefas();
-  }, []);
+  const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 });
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [totalLinhas, setTotalLinhas] = useState(0);
 
-  const tarefasFiltradas = useMemo(() => {
-    return tarefas.filter(t =>
-      t.nome.toLowerCase().includes(busca.toLowerCase()) ||
-      t.codigo.toString().includes(busca)
-    );
-  }, [tarefas, busca]);
+  const [filtrosAtivos, setFiltrosAtivos] = useState<FiltrosTarefasData>({
+    pesquisaGenerica: "",
+    situacao: [],
+    prioridade: [],
+    responsavelBusca: "",
+    dataMinima: ""
+  });
+
+  const [toastConfig, setToastConfig] = useState<{
+    title: string;
+    message: string;
+    type: 'success' | 'error' | 'warning' | 'info';
+  } | null>(null);
+
+  const carregarTarefas = async () => {
+    try {
+      setCarregando(true);
+
+      const resultado = await consultarTarefaData(
+        pagination.pageIndex + 1,
+        pagination.pageSize,
+        sorting as any,
+        filtrosAtivos
+      );
+
+      setTarefas(resultado?.data ?? resultado?.items ?? []);
+      setTotalLinhas(resultado?.totalCount ?? resultado?.totalRegistros ?? 0);
+
+    } catch (err: any) {
+      const mensagem = err.message || "Erro ao atualizar grid.";
+      const disparar = (typeof CustomToast === "function") ? CustomToast : (CustomToast as any).default;
+      if (typeof disparar === "function") {
+        disparar({ title: "Erro de Carregamento", message: mensagem, type: "error", onClose: () => { } });
+      }
+    } finally {
+      setCarregando(false);
+    }
+  };
+
+  useEffect(() => {
+    carregarTarefas();
+  }, [pagination.pageIndex, pagination.pageSize, sorting, filtrosAtivos]);
 
   const handleVisualizarClick = (data: Tarefa) => {
     setTarefaSelecionada(data);
@@ -66,31 +92,64 @@ export default function TarefasScreen({ onLogout }: LogoutProps) {
   async function handleSucessoEdicao() {
     setModalEditarAberto(false);
     setTarefaSelecionada(null);
-
-    try {
-      setCarregando(true);
-      const dados = await tarefaEndpoints.obterTodasTarefas();
-      setTarefas(dados);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setCarregando(false);
-    }
+    await carregarTarefas();
   }
 
+  const handleExcluirClick = (data: Tarefa) => {
+    setTarefaSelecionada(data);
+    setModalExcluirAberto(true);
+  };
+
+  const confirmarExclusaoComBanco = async () => {
+    if (!tarefaSelecionada) return;
+
+    try {
+      setExcluindo(true);
+      await tarefaEndpoints.excluirTarefa(tarefaSelecionada.codigo);
+
+      setModalExcluirAberto(false);
+      setTarefaSelecionada(null);
+
+      setToastConfig({
+        title: "Sucesso!",
+        message: "Tarefa removida com sucesso do banco de dados.",
+        type: "success"
+      });
+
+      await carregarTarefas();
+
+    } catch (err: any) {
+      const mensagemErro = err.response?.data?.errors?.[0] || err.message || "Erro ao excluir a tarefa.";
+
+      setToastConfig({
+        title: "Erro ao Excluir",
+        message: mensagemErro,
+        type: "error"
+      });
+    } finally {
+      setExcluindo(false);
+    }
+  };
+
   const columns = useMemo(() =>
-    createTarefaColumns(handleVisualizarClick, handleEditarClick), [handleVisualizarClick, handleEditarClick]);
+    createTarefaColumns(handleVisualizarClick, handleEditarClick, handleExcluirClick),
+    [tarefas]);
 
   const table = useReactTable({
-    data: tarefasFiltradas,
+    data: tarefas,
     columns,
+    pageCount: Math.ceil(totalLinhas / pagination.pageSize),
+    state: {
+      pagination,
+      sorting
+    },
+    onPaginationChange: setPagination,
+    onSortingChange: setSorting,
+    manualPagination: true,
+    manualSorting: true,
+    getRowId: (row) => String(row.codigo),
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    initialState: {
-      pagination: {
-        pageSize: 10,
-      }
-    }
   });
 
   if (carregando) {
@@ -99,6 +158,16 @@ export default function TarefasScreen({ onLogout }: LogoutProps) {
 
   return (
     <div className="text-white bg-[#0f172a] h-screen max-h-screen w-screen flex flex-row font-sans selection:bg-blue-500/30 overflow-hidden">
+      {toastConfig && (
+        <div className="absolute top-5 right-5 z-50 animate-in slide-in-from-top-5 duration-300">
+          <CustomToast
+            title={toastConfig.title}
+            message={toastConfig.message}
+            type={toastConfig.type}
+            onClose={() => setToastConfig(null)}
+          />
+        </div>
+      )}
       <SidebarComponent currentPath="/tarefas" onNavigate={(path) => navigate(path)} onLogout={onLogout} />
 
       <div className="flex flex-col flex-1 h-full min-h-0 overflow-hidden">
@@ -124,9 +193,14 @@ export default function TarefasScreen({ onLogout }: LogoutProps) {
             <div className="relative flex-1">
               <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-500" />
               <Input
-                placeholder="Buscar por título ou código..."
+                placeholder="Buscar por título ou código... (Aperte Enter)"
                 value={busca}
                 onChange={(e) => setBusca(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    setFiltrosAtivos(prev => ({ ...prev, pesquisaGenerica: busca }));
+                  }
+                }}
                 className="pl-9 bg-[#131b2e] border-slate-800 text-slate-200 placeholder:text-slate-500 h-9 focus-visible:ring-blue-500/50"
               />
             </div>
@@ -137,53 +211,32 @@ export default function TarefasScreen({ onLogout }: LogoutProps) {
             >
               <SlidersHorizontal size={14} /> Filtros
             </Button>
-            <Button variant="ghost" onClick={() => setBusca("")} className="text-slate-500 hover:text-slate-300 text-xs h-9">× Limpar</Button>
+            <Button 
+              variant="ghost" 
+              onClick={() => { 
+                setBusca(""); 
+                setFiltrosAtivos({ pesquisaGenerica: "", situacao: [], prioridade: [], responsavelBusca: "", dataMinima: "" }); 
+              }} 
+              className="text-slate-500 hover:text-slate-300 text-xs h-9"
+            >
+              × Limpar
+            </Button>
           </div>
 
-          {exibirFiltros && (
-            <div className="bg-[#131b2e] border border-slate-800 rounded-xl p-5 grid grid-cols-1 md:grid-cols-4 gap-6 relative animate-in fade-in duration-200">
-              <button onClick={() => setExibirFiltros(false)} className="absolute top-4 right-4 text-slate-500 hover:text-slate-300">
-                <X size={16} />
-              </button>
-              <div className="space-y-2">
-                <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Situação</h4>
-                <div className="space-y-2 pt-1">
-                  {["A fazer", "Em andamento", "Concluída", "Bloqueada", "Em validação"].map((sit) => (
-                    <div key={sit} className="flex items-center gap-2 text-xs text-slate-300">
-                      <Checkbox id={sit} className="border-slate-700 data-[state=checked]:bg-blue-600" />
-                      <label htmlFor={sit} className="cursor-pointer">{sit}</label>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="space-y-2">
-                <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Prioridade</h4>
-                <div className="space-y-2 pt-1">
-                  {["Média", "Alta", "Crítica"].map((prio) => (
-                    <div key={prio} className="flex items-center gap-2 text-xs text-slate-300">
-                      <Checkbox id={prio} className="border-slate-700 data-[state=checked]:bg-blue-600" />
-                      <label htmlFor={prio} className="cursor-pointer">{prio}</label>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="space-y-2">
-                <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Responsável</h4>
-                <Input placeholder="Buscar usuário..." className="bg-[#090d16] border-slate-800 text-xs h-8 text-slate-300 placeholder:text-slate-600" />
-              </div>
-              <div className="space-y-2">
-                <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Data Mínima</h4>
-                <Input type="date" className="bg-[#090d16] border-slate-800 text-xs h-8 text-slate-400 dark:[color-scheme:dark]" />
-              </div>
-            </div>
-          )}
+          <FiltrosTarefas
+            isOpen={exibirFiltros}
+            onClose={() => setExibirFiltros(false)}
+            initialFiltros={filtrosAtivos}
+            onFiltrosChange={(novosFiltros) => setFiltrosAtivos(novosFiltros)}
+            onPesquisar={(novosFiltros) => setFiltrosAtivos(novosFiltros)}
+          />
 
-          <div className="rounded-xl border border-slate-800 bg-[#131b2e] text-slate-900 flex-1 min-h-0 text-slate-900">
+          <div className="rounded-xl border border-slate-800 bg-[#131b2e] flex-1 min-h-0">
             <BaseDataTable
               table={table}
               isLoading={false}
               enablePagination={true}
-              enableServerSidePagination={false}
+              enableServerSidePagination={true}
               enableColumnPinning={true}
               enableColumnResizing={true}
               alturaAutomatica={false}
@@ -200,60 +253,36 @@ export default function TarefasScreen({ onLogout }: LogoutProps) {
           </div>
         </main>
       </div>
-      <Dialog open={modalVisualizarAberto} onOpenChange={setModalVisualizarAberto}>
-        <DialogContent className="sm:max-w-[500px] border-slate-800 bg-[#131b2e] text-white">
-          <DialogHeader>
-            <DialogTitle className="text-lg font-bold text-slate-100">
-              Detalhes da Tarefa (TASK-{String(tarefaSelecionada?.codigo).padStart(4, '0')})
-            </DialogTitle>
-          </DialogHeader>
 
-          {tarefaSelecionada && (
-            <div className="space-y-4 pt-2 text-sm">
-              <div className="border-b border-slate-800 pb-3">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Título</span>
-                <p className="text-slate-100 text-base font-medium">{tarefaSelecionada.nome}</p>
-              </div>
+      <ViewModal
+        isOpen={modalVisualizarAberto}
+        tarefa={tarefaSelecionada}
+        onClose={() => {
+          setModalVisualizarAberto(false);
+          setTarefaSelecionada(null);
+        }}
+      />
 
-              <div className="grid grid-cols-2 gap-4 border-b border-slate-800 pb-3">
-                <div>
-                  <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Situação</span>
-                  <p className="text-slate-200">{tarefaSelecionada.situacao === 3 ? "Concluída" : tarefaSelecionada.situacao === 2 ? "Em Andamento" : "A Fazer"}</p>
-                </div>
-                <div>
-                  <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Prioridade</span>
-                  <p className="text-slate-200">{tarefaSelecionada.prioridade === 3 ? "Crítica" : tarefaSelecionada.prioridade === 2 ? "Alta" : "Média"}</p>
-                </div>
-              </div>
+      <EditarModal
+        isOpen={modalEditarAberto}
+        tarefa={tarefaSelecionada}
+        onClose={() => {
+          setModalEditarAberto(false);
+          setTarefaSelecionada(null);
+        }}
+        onSucesso={handleSucessoEdicao}
+      />
 
-              <div>
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Responsável</span>
-                <p className="text-slate-200 capitalize">{tarefaSelecionada.responsavel?.email?.split('@')[0] || "Sem dono"}</p>
-              </div>
-            </div>
-          )}
-          <div className="flex justify-end pt-4">
-            <Button onClick={() => setModalVisualizarAberto(false)} className="bg-slate-800 hover:bg-slate-700 text-slate-200">
-              Fechar
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      <Dialog open={modalEditarAberto} onOpenChange={setModalEditarAberto}>
-        <DialogContent className="sm:max-w-[500px] border-slate-800 bg-[#131b2e] text-white">
-          <DialogHeader>
-            <DialogTitle className="text-lg font-bold text-slate-100">
-              Editar Tarefa
-            </DialogTitle>
-          </DialogHeader>
-
-          <TarefaForm
-            onSucesso={handleSucessoEdicao}
-            onCancelar={() => setModalEditarAberto(false)}
-          />
-        </DialogContent>
-      </Dialog>
+      <ConfirmDeleteModal
+        isOpen={modalExcluirAberto}
+        isLoading={excluindo}
+        taskCode={tarefaSelecionada?.codigo}
+        onClose={() => {
+          setModalExcluirAberto(false);
+          setTarefaSelecionada(null);
+        }}
+        onConfirm={confirmarExclusaoComBanco}
+      />
     </div>
   );
 }

@@ -21,14 +21,16 @@ public class TarefaRepository : ITarefaRepository
     await _context.SaveChangesAsync();
   }
 
-  public void Atualizar(Tarefa tarefa)
+  public async Task AtualizarAsync(Tarefa tarefa)
   {
     _context.Tarefa.Update(tarefa);
+    await _context.SaveChangesAsync();
   }
 
-  public void Remover(Tarefa tarefa)
+  public async Task RemoverAsync(Tarefa tarefa)
   {
     _context.Tarefa.Remove(tarefa);
+    await _context.SaveChangesAsync();
   }
 
   public async Task<Tarefa?> ObterPorIdAsync(int id)

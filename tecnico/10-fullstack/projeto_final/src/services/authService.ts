@@ -1,6 +1,5 @@
-import axios, { AxiosError } from 'axios';
-import api from '../services/config';
-
+import type { AxiosError } from 'axios';
+import api from './config';
 export interface LoginRequestData {
   Email: string;
   Senha: string;
@@ -8,79 +7,85 @@ export interface LoginRequestData {
 }
 
 export interface LoginResponseSuccess {
-  message: string;
-  token: string;
-}
-
-export interface ApiErrorResponse {
-  errors?: string[];
   message?: string;
+  mensagem?: string;
+  token?: string;
+  accessToken?: string;
+  AccessToken?: string;
 }
 
-export interface LoginEndpointResult {
-  data: LoginResponseSuccess;
+export interface RespostaApi<T> {
+  data?: T;
+  dados?: T;
   success: boolean;
+  message?: string;
+  mensagem?: string;
+  errors?: string[] | null;
 }
 
-export interface RecoveryEndpointResult {
-  success: boolean;
+export interface ResultadoLogin {
+  tokenAcesso: string | null;
   message: string;
 }
 
-export interface AppHandledError extends Error {
-  success: boolean;
+function extrairCargaLogin<T>(data: RespostaApi<T> | T): T {
+  const envelope = data as RespostaApi<T>;
+  return (envelope?.data ?? envelope?.dados ?? data) as T;
 }
 
-// export const loginEndpoints = {
-//   executarLogin: async (corpoRequest: LoginRequestData): Promise<LoginEndpointResult> => {
-//     try {
-//       const response = await api.post<LoginResponseSuccess>('/usuarios/login?api-version=1', corpoRequest);
-//       return { data: response.data, success: true };
-//     } catch (error: unknown) {
-//       let mensagem = 'Erro ao tentar realizar o login.';
+function montarResultadoLogin(
+  carga: any,
+  dataRaw?: RespostaApi<any>
+): ResultadoLogin {
+  const token = carga?.token ?? carga?.accessToken ?? carga?.AccessToken;
+  const mensagem = dataRaw?.message ?? dataRaw?.mensagem ?? carga?.message ?? carga?.mensagem ?? "Operação realizada com sucesso.";
 
-//       if (axios.isAxiosError(error)) {
-//         const axiosError = error as AxiosError<ApiErrorResponse>;
-//         mensagem = axiosError.response?.data?.errors?.[0] || axiosError.message || mensagem;
-//       } else if (error instanceof Error) {
-//         mensagem = error.message;
-//       }
+  if (!token) {
+    throw new Error(dataRaw?.message ?? dataRaw?.mensagem ?? 'A autenticação falhou.');
+  }
 
-//       const erroTratado = new Error(mensagem) as AppHandledError;
-//       erroTratado.success = false;
-//       throw erroTratado;
-//     }
-//   },
+  return {
+    tokenAcesso: token,
+    message: mensagem,
+  };
+}
 
-//   solicitarRecuperacao: async (login: string): Promise<RecoveryEndpointResult> => {
-//     try {
-//       const response = await api.post<{ success?: boolean; message?: string }>('/api/v1/auth/esqueci-senha', { login: login.trim() });
-//       return {
-//         success: response.data?.success ?? true,
-//         message: response.data?.message || 'Link de recuperação enviado com sucesso.',
-//       };
-//     } catch (error: unknown) {
-//       let mensagem = 'Erro ao solicitar recuperação.';
+export async function login(credenciais: LoginRequestData): Promise<ResultadoLogin> {
+  try {
+    const { data } = await api.post<RespostaApi<any>>('/api/v1/auth/login', {
+      email: credenciais.Email,
+      password: credenciais.Senha,
+    });
 
-//       if (axios.isAxiosError(error)) {
-//         const axiosError = error as AxiosError<ApiErrorResponse>;
-//         mensagem = axiosError.response?.data?.errors?.[0] || axiosError.message;
-//       } else if (error instanceof Error) {
-//         mensagem = error.message;
-//       }
+    const cargaExtraida = extrairCargaLogin(data);
+    const resultado = montarResultadoLogin(cargaExtraida, data);
 
-//       throw new Error(mensagem);
-//     }
-//   },
+    if (resultado.tokenAcesso) {
+      localStorage.setItem('auth_token', resultado.tokenAcesso);
+    }
 
-//   executarLogout: async (): Promise<{ success: boolean }> => {
-//     try {
-//       await api.post('/usuarios/logout?api-version=1');
-//       return { success: true };
-//     } catch {
-//       return { success: false };
-//     }
-//   }
-// };
+    return resultado;
+  } catch (error: unknown) {
+    const axiosErro = error as AxiosError<RespostaApi<any>>;
+    const mensagemTratada = axiosErro.response?.data?.errors?.[0] || axiosErro.response?.data?.message || axiosErro.message || "Erro desconhecido ao efetuar login.";
+    throw new Error(mensagemTratada);
+  }
+}
 
-// export default loginEndpoints;
+export async function recuperarSenha(email: string): Promise<{ success: boolean; message: string }> {
+  try {
+    const { data } = await api.post<RespostaApi<unknown>>(
+      '/api/v1/auth/esqueci-senha',
+      { email: String(email ?? '').trim() }
+    );
+    
+    return {
+      success: data?.success ?? true,
+      message: data?.message ?? data?.mensagem ?? 'Instruções de recuperação enviadas com sucesso.',
+    };
+  } catch (error: unknown) {
+    const axiosErro = error as AxiosError<RespostaApi<any>>;
+    const mensagemTratada = axiosErro.response?.data?.errors?.[0] || axiosErro.message || "Erro ao solicitar recuperação de senha.";
+    throw new Error(mensagemTratada);
+  }
+}

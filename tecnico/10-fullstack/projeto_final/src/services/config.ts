@@ -1,18 +1,24 @@
-import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios';
+import axios, {
+  type AxiosError,
+  type AxiosInstance,
+  type AxiosRequestConfig,
+  type InternalAxiosRequestConfig,
+} from 'axios';
 
 const baseURL = (import.meta.env.VITE_API_URL || 'http://localhost:5050').replace(/\/+$/, '');
 
-const pendingRequests = new Map<string, Promise<AxiosResponse>>();
+const pendingRequests = new Map<string, Promise<unknown>>();
 
-const normalizeObject = (obj: any): any => {
+const normalizeObject = (obj: unknown): unknown => {
   if (obj === null || obj === undefined) return obj;
   if (Array.isArray(obj)) return obj.map((item) => normalizeObject(item));
   if (typeof obj !== 'object' || obj instanceof FormData || obj instanceof Date) return obj;
 
-  return Object.keys(obj)
+  const registro = obj as Record<string, unknown>;
+  return Object.keys(registro)
     .sort()
-    .reduce((acc: any, key) => {
-      acc[key] = normalizeObject(obj[key]);
+    .reduce<Record<string, unknown>>((acc, key) => {
+      acc[key] = normalizeObject(registro[key]);
       return acc;
     }, {});
 };
@@ -20,7 +26,7 @@ const normalizeObject = (obj: any): any => {
 const generateRequestKey = (config: AxiosRequestConfig): string => {
   const method = (config.method || 'GET').toUpperCase();
   let url = config.url || '';
-  const allParams: Record<string, any> = {};
+  const allParams: Record<string, unknown> = {};
 
   if (url.includes('?')) {
     const [baseUrl, queryString] = url.split('?');
@@ -30,26 +36,31 @@ const generateRequestKey = (config: AxiosRequestConfig): string => {
     });
   }
 
-  if (config.params) Object.assign(allParams, config.params);
+  if (config.params) Object.assign(allParams, config.params as Record<string, unknown>);
   const normalizedParams = normalizeObject(allParams);
-  const paramsStr = Object.keys(normalizedParams).length > 0 ? JSON.stringify(normalizedParams) : '';
+  const paramsStr = normalizedParams && typeof normalizedParams === 'object' ? JSON.stringify(normalizedParams) : '';
 
   let dataStr = '';
   if (config.data) {
-    dataStr = config.data instanceof FormData ? 'FormData' : JSON.stringify(normalizeObject(config.data));
+    if (typeof config.data === 'object' && !(config.data instanceof FormData)) {
+      dataStr = JSON.stringify(normalizeObject(config.data));
+    } else if (config.data instanceof FormData) {
+      dataStr = 'FormData';
+    } else {
+      dataStr = String(config.data);
+    }
   }
 
   return `${method}_${url}_${paramsStr}_${dataStr}`;
 };
 
-const api = axios.create({
+const api: AxiosInstance = axios.create({
   baseURL,
   timeout: 30000,
   withCredentials: true,
 });
 
-// injeta o Token
-api.interceptors.request.use((config) => {
+api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   const token = localStorage.getItem('auth_token') || localStorage.getItem('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -61,14 +72,16 @@ api.interceptors.request.use((config) => {
 });
 
 const originalRequest = api.request.bind(api);
-api.request = function (config: AxiosRequestConfig): any {
+
+api.request = function requestComDedupe<T = unknown>(config: AxiosRequestConfig): Promise<T> {
   if (config.responseType === 'blob' || config.responseType === 'arraybuffer') {
-    return originalRequest(config);
+    return originalRequest(config) as Promise<T>;
   }
 
   const requestKey = generateRequestKey(config);
+
   if (pendingRequests.has(requestKey)) {
-    return pendingRequests.get(requestKey);
+    return pendingRequests.get(requestKey) as Promise<T>;
   }
 
   const requestPromise = originalRequest(config)
@@ -76,28 +89,53 @@ api.request = function (config: AxiosRequestConfig): any {
       pendingRequests.delete(requestKey);
       return response;
     })
-    .catch((error) => {
+    .catch((error: unknown) => {
       pendingRequests.delete(requestKey);
       throw error;
     });
 
   pendingRequests.set(requestKey, requestPromise);
-  return requestPromise;
+  return requestPromise as Promise<T>;
 };
 
-// redirecionamento em caso de perda de sessão
+(['get', 'post', 'put', 'patch', 'delete', 'head', 'options'] as const).forEach((method) => {
+  api[method] = function metodoApi<T = unknown>(...args: unknown[]): Promise<T> {
+    let config: AxiosRequestConfig =
+      typeof args[0] === 'string'
+        ? { method, url: args[0] as string }
+        : { method, ...(args[0] as object) };
+
+    if (typeof args[0] === 'string') {
+      config.url = args[0] as string;
+      if (method === 'get' || method === 'delete' || method === 'head' || method === 'options') {
+        if (args[1]) Object.assign(config, args[1] as object);
+      } else {
+        config.data = args[1];
+        if (args[2]) Object.assign(config, args[2] as object);
+      }
+    }
+    return api.request<T>(config) as Promise<T>;
+  };
+});
+
 api.interceptors.response.use(
   (response) => response,
-  async (error) => {
+  async (error: AxiosError) => {
     const ehRotaLogin = error.config?.url?.includes('/usuarios/login');
 
     if ((error.response?.status === 401 || error.response?.status === 403) && !ehRotaLogin) {
       localStorage.removeItem('auth_token');
       localStorage.removeItem('token');
       localStorage.removeItem('auth_user');
+      pendingRequests.clear();
 
       window.dispatchEvent(new CustomEvent('auth:unauthorized'));
     }
+
+    if (!error.response && (error.code === 'ERR_NETWORK' || error.code === 'ECONNABORTED')) {
+      window.dispatchEvent(new CustomEvent('api:offline'));
+    }
+
     return Promise.reject(error);
   }
 );

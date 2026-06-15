@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import {  Plus, Eye } from 'lucide-react';
+import { Eye, PenBox, Trash2 } from 'lucide-react';
 import type { Tarefa } from "@/services/endpoints/tarefas";
 
 export const DEFAULT_TAREFA_COLUMNS = [
@@ -40,6 +40,7 @@ const getSituacaoConfig = (sit: number) => {
 export const createTarefaColumns = (
   onViewClick?: (data: Tarefa) => void,
   onEditClick?: (data: Tarefa) => void,
+  onDeleteClick?: (data: Tarefa) => void,
 ): ColumnDef<Tarefa>[] => [
   {
     id: 'select',
@@ -72,7 +73,7 @@ export const createTarefaColumns = (
           className="h-7 w-7 text-slate-500 hover:text-slate-300"
           onClick={() => onEditClick?.(row.original)}
         >
-          <Plus size={14} />
+          <PenBox size={14} />
         </Button>
         <Button 
           variant="ghost" 
@@ -82,9 +83,17 @@ export const createTarefaColumns = (
         >
           <Eye size={14} />
         </Button>
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          className="h-7 w-7 text-rose-500 hover:text-rose-400 hover:bg-rose-500/10"
+          onClick={() => onDeleteClick?.(row.original)}
+        >
+          <Trash2 size={14} />
+        </Button>
       </div>
     ),
-    size: 80,
+    size: 120,
     enableResizing: false,
   },
   {

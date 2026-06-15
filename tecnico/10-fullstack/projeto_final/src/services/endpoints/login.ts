@@ -39,6 +39,17 @@ export const loginEndpoints = {
     }
   }
 };
-
-
 export default loginEndpoints;
+
+
+export const usuarioEndpoints = {
+  obterTodosUsuarios: async (): Promise<any[]> => {
+    try {
+      const response = await api.get('/usuarios?api-version=1');
+      return response.data;
+    } catch (error: any) {
+      const mensagem = error.response?.data?.errors?.[0] || error.message || 'Erro ao carregar os usuários.';
+      throw new Error(mensagem);
+    }
+  }
+}
