@@ -137,7 +137,7 @@ const customToast: React.FC<CustomToastProps> = React.memo(
             onClose();
           }}
           aria-label="Fechar"
-          className="text-slate-500 hover:text-slate-300 transition-colors flex-shrink-0 mt-0.5"
+          className="text-slate-500 hover:text-slate-300 transition-colors flex-shrink-0 mt-0.5 cursor-pointer"
         >
           <X size={16} />
         </button>

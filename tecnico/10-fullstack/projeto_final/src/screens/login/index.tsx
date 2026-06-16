@@ -14,7 +14,7 @@ export default function LoginScreen({ onLoginSucesso }: LoginScreenProps) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [lembrarAcesso, setLembrarAcesso] = useState(false);
-  const [statusLogin, setStatusLogin] = useState("");
+  const [, setStatusLogin] = useState("");
   const [erroLogin, setErroLogin] = useState("");
 
   const handleSubmeter = async (e: React.FormEvent) => {
@@ -52,7 +52,6 @@ export default function LoginScreen({ onLoginSucesso }: LoginScreenProps) {
 
   return (
     <main className="grid grid-cols-1 lg:grid-cols-5 min-h-screen font-sans">
-      {/* LADO ESQUERDO*/}
       <div className="hidden lg:flex lg:col-span-3 bg-[#0b1d45] flex-col justify-center items-center px-20 text-white">
         <h1 className="text-4xl font-bold mb-6 text-center leading-tight">
           Gerencie seu time <br />
@@ -86,8 +85,7 @@ export default function LoginScreen({ onLoginSucesso }: LoginScreenProps) {
           </div>
         </div>
       </div>
-
-      {/* LADO DIREITO*/}
+    
       <div className="lg:col-span-2 flex flex-col justify-center items-center bg-[#0f172a] p-8 h-full relative">
         <div className="w-full max-w-xs">
           <div className="mb-10 text-white flex items-center gap-3">
@@ -182,8 +180,7 @@ export default function LoginScreen({ onLoginSucesso }: LoginScreenProps) {
                 title="Falha no Acesso"
                 message={erroLogin}
                 onClose={() => setErroLogin("")}
-                type="error"
-                // duration={5000}
+                type="error"                
               />
             </div>
           )}

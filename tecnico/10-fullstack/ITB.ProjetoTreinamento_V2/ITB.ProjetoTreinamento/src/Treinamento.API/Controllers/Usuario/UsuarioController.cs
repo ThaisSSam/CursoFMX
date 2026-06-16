@@ -58,10 +58,8 @@ public class UsuarioController : ControllerBase
             Expires = request.LembrarAcesso ? DateTime.UtcNow.AddDays(30) : null
         };
 
-        // Injeta o token diretamente no cabeçalho de resposta do navegador
         Response.Cookies.Append("X-Access-Token", token!, cookieOptions);
 
-        // devolve a mensagem e o token 
         return Ok(new
         {
             message = "Login realizado com sucesso!",

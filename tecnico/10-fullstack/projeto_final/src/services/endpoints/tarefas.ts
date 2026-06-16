@@ -3,9 +3,10 @@ import api from '../config';
 export type Tarefa = {
   codigo: number;
   nome: string;
-  situacao: number;
-  prioridade: number;
+  situacao: string;
+  prioridade: string;
   dataCriacao: string;
+  excluido: boolean;
   responsavel: {
     id: number;
     email: string;
@@ -14,9 +15,21 @@ export type Tarefa = {
 
 export type CriarTarefaInput = {
   nome: string;
-  prioridade: number;
-  situacao: number;
+  prioridade: string;
+  situacao: string;
   usuarioId: number;
+}
+
+export type TarefaHistorico = {
+  id: number;
+  tarefaId: number;
+  nome: string;
+  situacao: string;
+  prioridade: string; 
+  usuarioId: number;
+  dataAlteracao: string;
+  tipoAcao: 'Criar' | 'Editar' | 'Excluir' | string;
+  usuarioAlteracaoId: number | null;
 }
 
 export const tarefaEndpoints = {
@@ -74,7 +87,6 @@ export const tarefaEndpoints = {
   obterOpcoesSituacao: async (): Promise<Array<{ id: string; label: string }>> => {
     try {
       const response = await api.get('/tarefas/situacoes?api-version=1');
-      // Garante a extração seja o dado direto ou encapsulado em um envelope .data
       const dados = response.data?.data ?? response.data;
       return dados.map((item: any) => ({
         id: String(item.id ?? item.Id),
@@ -97,6 +109,26 @@ export const tarefaEndpoints = {
     } catch (error) {
       console.error("Falha ao buscar prioridades do back-end", error);
       return [];
+    }
+  },
+
+  obterHistoricoPorTarefa: async (id: number): Promise<TarefaHistorico[]> => {
+    try {
+      const response = await api.get<TarefaHistorico[]>(`/tarefas/${id}/historico?api-version=1`);
+      return response.data;
+    } catch (error: any) {
+      const mensagem = error.response?.data?.errors?.[0] || error.message || 'Falha ao buscar linha do tempo da tarefa.';
+      throw new Error(mensagem);
+    }
+  },
+
+  obterHistoricoGeral: async (pagina = 1, registrosPorPagina = 20): Promise<{ data: TarefaHistorico[], totalCount: number }> => {
+    try {
+      const response = await api.get(`/tarefas/historico-geral?pagina=${pagina}&registrosPorPagina=${registrosPorPagina}&api-version=1`);
+      return response.data;
+    } catch (error: any) {
+      const mensagem = error.response?.data?.errors?.[0] || error.message || 'Falha ao carregar log de auditoria geral.';
+      throw new Error(mensagem);
     }
   }
 };

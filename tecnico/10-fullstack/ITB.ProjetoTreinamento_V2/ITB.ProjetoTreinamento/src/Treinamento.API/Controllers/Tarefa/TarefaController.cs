@@ -10,6 +10,8 @@ using Treinamento.Domain.Commands;
 using Treinamento.Domain.Handlers;
 using Treinamento.Infrastructure.Persistence;
 using Treinamento.Domain.Aggregates.Tarefa.Interfaces;
+using Treinamento.Domain.Aggregates.Tarefa;
+using Treinamento.Infrastructure.Queries;
 
 namespace Treinamento.API.Controllers.Tarefa;
 
@@ -22,19 +24,22 @@ public class TarefaController : ControllerBase
     private readonly ITarefaRepository _tarefaRepository;
     private readonly EditarTarefaHandler _editarHandler;
     private readonly ExcluirTarefaHandler _excluirHandler;
+    private readonly TarefaQueryService _queryService; 
 
     public TarefaController(
         TreinamentoReadContext readContext,
         ITarefaRepository tarefaRepository,
         CriarTarefaHandler criarHandler,
         EditarTarefaHandler editarHandler,
-        ExcluirTarefaHandler excluirHandler)
+        ExcluirTarefaHandler excluirHandler,
+        TarefaQueryService queryService) 
     {
         _readContext = readContext;
         _tarefaRepository = tarefaRepository;
         _criarHandler = criarHandler;
         _editarHandler = editarHandler;
         _excluirHandler = excluirHandler;
+        _queryService = queryService;
     }
 
     [HttpPost]
@@ -88,14 +93,16 @@ public class TarefaController : ControllerBase
         try
         {
             var tarefas = await _readContext.Tarefas
+                .IgnoreQueryFilters() 
                 .Include(t => t.UsuarioResponsavel)
                 .Select(t => new
                 {
                     Codigo = t.Id,
                     t.Nome,
-                    t.Situacao,
-                    t.Prioridade,
+                    Situacao= t.Situacao.ToString(),
+                    Prioridade = t.Prioridade.ToString(),
                     t.DataCriacao,
+                    t.Excluido, 
                     Responsavel = t.UsuarioResponsavel != null ? new
                     {
                         Id = t.UsuarioResponsavel.Id,
@@ -158,10 +165,10 @@ public class TarefaController : ControllerBase
     {
         try
         {
-            var commandComId = command with { Id = id };
-            var resultado = await _editarHandler.ExecutarAsync(commandComId);
+            command.Id = id;
+            var resultado = await _editarHandler.ExecutarAsync(command);
 
-            return Ok(new { success = resultado, message = "Tarefa atualizada com sucesso!" });
+            return Ok(new { success = resultado, message = "Tarefa updated com sucesso!" });
         }
         catch (Exception ex)
         {
@@ -214,115 +221,84 @@ public class TarefaController : ControllerBase
     {
         try
         {
-            var tarefasQuery = _readContext.Tarefas.Include(t => t.UsuarioResponsavel).AsQueryable();
-
-            if (payload.TryGetProperty("grupoRaiz", out var grupoRaiz) &&
-                grupoRaiz.TryGetProperty("filtros", out var filtros))
-            {
-                foreach (var filtro in filtros.EnumerateArray())
-                {
-                    string nomeParametro = filtro.GetProperty("nomeParametro").GetString();
-                    var valores = filtro.GetProperty("valores");
-
-                    if (valores.ValueKind == JsonValueKind.Array && valores.GetArrayLength() > 0)
-                    {
-                        if (nomeParametro == "situacao")
-                        {
-                            var situacoesIds = valores.EnumerateArray().Select(v => v.GetInt32()).ToList();
-                            tarefasQuery = tarefasQuery.Where(t => situacoesIds.Contains((int)t.Situacao));
-                        }
-
-                        else if (nomeParametro == "prioridade")
-                        {
-                            var prioridadesIds = valores.EnumerateArray().Select(v => v.GetInt32()).ToList();
-                            tarefasQuery = tarefasQuery.Where(t => prioridadesIds.Contains((int)t.Prioridade));
-                        }
-
-                        else if (nomeParametro == "usuarioId" || nomeParametro == "responsavelBusca")
-                        {
-                            int idFiltro = valores.EnumerateArray().First().GetInt32();
-
-                            tarefasQuery = tarefasQuery.Where(t => t.UsuarioId.Equals(idFiltro));
-                        }
-
-                        else if (nomeParametro == "dataCriacao")
-                        {
-                            var dataStr = valores.EnumerateArray().First().GetString();
-                            if (DateTime.TryParse(dataStr, out var dataMinima))
-                            {
-                                var dataMinimaUtc = DateTime.SpecifyKind(dataMinima.Date, DateTimeKind.Utc);
-                                tarefasQuery = tarefasQuery.Where(t => t.DataCriacao >= dataMinimaUtc);
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (payload.TryGetProperty("grupoRaiz", out var grupoRaizTexto) &&
-                grupoRaizTexto.TryGetProperty("grupos", out var grupos))
-            {
-                foreach (var grupo in grupos.EnumerateArray())
-                {
-                    if (grupo.TryGetProperty("filtros", out var filtrosTexto))
-                    {
-                        foreach (var filtro in filtrosTexto.EnumerateArray())
-                        {
-                            string nomeParametro = filtro.GetProperty("nomeParametro").GetString();
-                            var valores = filtro.GetProperty("valores");
-
-                            if (valores.ValueKind == JsonValueKind.Array && valores.GetArrayLength() > 0)
-                            {
-                                var termoBusca = valores.EnumerateArray().First().GetString()?.ToLower().Trim();
-
-                                if (!string.IsNullOrEmpty(termoBusca))
-                                {
-                                    if (nomeParametro == "nome")
-                                    {
-                                        tarefasQuery = tarefasQuery.Where(t => t.Nome.ToLower().Contains(termoBusca));
-                                    }
-                                    else if (nomeParametro == "codigo")
-                                    {
-                                        if (int.TryParse(termoBusca, out var codigoNum))
-                                        {
-                                            tarefasQuery = tarefasQuery.Where(t => t.Id == codigoNum);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            int pagina = payload.TryGetProperty("pagina", out var p) ? p.GetInt32() : 1;
-            int registrosPorPagina = payload.TryGetProperty("registrosPorPagina", out var r) ? r.GetInt32() : 10;
-
-            var totalCount = await tarefasQuery.CountAsync();
-
-            var tarefasLista = await tarefasQuery
-                .Skip((pagina - 1) * registrosPorPagina)
-                .Take(registrosPorPagina)
-                .Select(t => new
-                {
-                    Codigo = t.Id,
-                    t.Nome,
-                    t.Situacao,
-                    t.Prioridade,
-                    t.DataCriacao,
-                    Responsavel = t.UsuarioResponsavel != null ? new
-                    {
-                        Id = t.UsuarioResponsavel.Id,
-                        Email = t.UsuarioResponsavel.Email,
-                        Nome = t.UsuarioResponsavel.Nome
-                    } : null
-                })
-                .ToListAsync();
-
-            return Ok(new { data = tarefasLista, totalCount = totalCount });
+            var (dados, totalCount) = await _queryService.ExecutarConsultaDinamicaAsync(payload);
+            
+            return Ok(new { data = dados, totalCount });
         }
         catch (Exception ex)
         {
             return StatusCode(StatusCodes.Status500InternalServerError,
                 new { errors = new[] { "Erro ao processar consulta dinâmica: " + ex.Message } });
+        }
+    }
+
+    // HISTORICO
+    [Authorize]
+    [HttpGet("{id:int}/historico")]
+    public async Task<IActionResult> ObterHistoricoPorTarefa(int id)
+    {
+        try
+        {
+            var historico = await _readContext.Set<TarefaHistorico>()
+                .Where(h => h.TarefaId == id)
+                .OrderByDescending(h => h.DataAlteracao)
+                .Select(h => new
+                {
+                    h.Id,
+                    h.TarefaId,
+                    h.Nome,
+                    Situacao = ((Treinamento.Domain.Aggregates.Tarefa.TipoSituacao)h.Situacao).ToString(),
+                    Prioridade = ((Treinamento.Domain.Aggregates.Tarefa.TipoPrioridade)h.Prioridade).ToString(),
+                    h.UsuarioId,
+                    h.DataAlteracao,
+                    h.TipoAcao,
+                    h.UsuarioAlteracaoId
+                })
+                .ToListAsync();
+
+            return Ok(historico);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                new { errors = new[] { "Erro ao buscar histórico da tarefa: " + ex.Message } });
+        }
+    }
+
+    [Authorize]
+    [HttpGet("historico-geral")]
+    public async Task<IActionResult> ObterHistoricoGeral([FromQuery] int pagina = 1, [FromQuery] int registrosPorPagina = 20)
+    {
+        try
+        {
+            var query = _readContext.Set<TarefaHistorico>().AsQueryable();
+
+            var totalCount = await query.CountAsync();
+
+            var historicoGeral = await query
+                .OrderByDescending(h => h.DataAlteracao)
+                .Skip((pagina - 1) * registrosPorPagina)
+                .Take(registrosPorPagina)
+                .Select(h => new
+                {
+                    h.Id,
+                    h.TarefaId,
+                    h.Nome,
+                    Situacao = ((Treinamento.Domain.Aggregates.Tarefa.TipoSituacao)h.Situacao).ToString(),
+                    Prioridade = ((Treinamento.Domain.Aggregates.Tarefa.TipoPrioridade)h.Prioridade).ToString(),
+                    h.UsuarioId,
+                    h.DataAlteracao,
+                    h.TipoAcao,
+                    h.UsuarioAlteracaoId
+                })
+                .ToListAsync();
+
+            return Ok(new { data = historicoGeral, totalCount });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                new { errors = new[] { "Erro ao buscar histórico geral: " + ex.Message } });
         }
     }
 }

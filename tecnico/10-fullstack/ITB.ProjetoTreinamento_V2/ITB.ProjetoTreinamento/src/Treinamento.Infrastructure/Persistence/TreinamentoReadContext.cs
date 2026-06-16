@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Treinamento.Domain.Aggregates.Usuarios;
 using Treinamento.Domain.Aggregates.Tarefa;
-using Treinamento.Domain.Core.Validacao; // 1. Adicione o import das tarefas aqui em cima
+using Treinamento.Domain.Core.Validacao;
 
 namespace Treinamento.Infrastructure.Persistence;
 
@@ -10,6 +10,7 @@ public class TreinamentoReadContext : TreinamentoContextBase
 {
     private readonly ILoggerFactory _loggerFactory;
     public DbSet<Tarefa> Tarefas { get; set; }
+    public DbSet<TarefaHistorico> TarefasHistorico { get; set; } 
 
     public TreinamentoReadContext(DbContextOptions<TreinamentoReadContext> options, ILoggerFactory loggerFactory)
         : base(options)
@@ -29,7 +30,7 @@ public class TreinamentoReadContext : TreinamentoContextBase
     {
         modelBuilder.Ignore<ErroValidacaoDominio>();
         modelBuilder.Ignore<ResultadoValidacaoDominio>();
-        // Mapeamento do Usuário
+
         modelBuilder.Entity<Usuario>(entity =>
         {
             entity.ToTable("tb_usuarios", "treinamento"); 
@@ -44,7 +45,6 @@ public class TreinamentoReadContext : TreinamentoContextBase
             entity.Property(u => u.TentativasLoginInvalidas).HasColumnName("tentativas_login_invalidas");
         });
 
-        // Mapeamento da Tarefa
         modelBuilder.Entity<Tarefa>(entity =>
         {
             entity.ToTable("tb_tarefas", "treinamento"); 
@@ -56,11 +56,30 @@ public class TreinamentoReadContext : TreinamentoContextBase
             entity.Property(t => t.Prioridade).HasColumnType("INT");
             entity.Property(t => t.DataCriacao).HasColumnType("timestamp with time zone");
             entity.Property(t => t.UsuarioId).HasColumnType("integer");
+            entity.Property(t => t.Excluido).HasColumnName("Excluido").HasColumnType("boolean");
+            entity.Property(t => t.DataExclusao).HasColumnName("DataExclusao").HasColumnType("timestamp with time zone");
 
-            // Relacionamento de leitura
+            entity.HasQueryFilter(t => !t.Excluido);
+
             entity.HasOne(t => t.UsuarioResponsavel)
                 .WithMany()
                 .HasForeignKey(t => t.UsuarioId);        
+        });
+
+        modelBuilder.Entity<TarefaHistorico>(entity =>
+        {
+            entity.ToTable("tb_tarefas_historico", "treinamento");
+
+            entity.HasKey(h => h.Id);
+            entity.Property(h => h.Id).HasColumnName("Id");
+            entity.Property(h => h.TarefaId).HasColumnName("TarefaId").HasColumnType("integer");
+            entity.Property(h => h.Nome).HasColumnName("Nome").HasColumnType("VARCHAR(255)");
+            entity.Property(h => h.Situacao).HasColumnName("Situacao").HasColumnType("integer");
+            entity.Property(h => h.Prioridade).HasColumnName("Prioridade").HasColumnType("integer");
+            entity.Property(h => h.UsuarioId).HasColumnName("UsuarioId").HasColumnType("integer");
+            entity.Property(h => h.DataAlteracao).HasColumnName("DataAlteracao").HasColumnType("timestamp with time zone");
+            entity.Property(h => h.TipoAcao).HasColumnName("TipoAcao").HasColumnType("VARCHAR(20)");
+            entity.Property(h => h.UsuarioAlteracaoId).HasColumnName("UsuarioAlteracaoId").HasColumnType("integer");
         });
 
         base.OnModelCreating(modelBuilder);

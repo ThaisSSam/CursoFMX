@@ -16,8 +16,8 @@ export default function TarefaForm({ onSucesso, onCancelar, tarefaParaEditar }: 
   const isEdicao = !!tarefaParaEditar;
 
   const [nome, setNome] = useState("");
-  const [prioridade, setPrioridade] = useState(1);
-  const [situacao, setSituacao] = useState(1);
+  const [prioridade, setPrioridade] = useState("Baixa");
+  const [situacao, setSituacao] = useState("Pendente");
   const [usuarioId, setUsuarioId] = useState<number>(0);
   const [salvando, setSalvando] = useState(false);
   const [usuarios, setUsuarios] = useState<any[]>([]);
@@ -116,12 +116,12 @@ export default function TarefaForm({ onSucesso, onCancelar, tarefaParaEditar }: 
           </label>
           <select
             value={prioridade}
-            onChange={(e) => setPrioridade(Number(e.target.value))}
-            className="w-full h-10 px-3 rounded-md bg-[#0f172a] border border-slate-800 text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+            onChange={(e) => setPrioridade(e.target.value)}
+            className="w-full h-10 px-3 rounded-md bg-[#0f172a] border border-slate-800 text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm cursor-pointer"
           >
-            <option value={1}>Baixa</option>
-            <option value={2}>Média</option>
-            <option value={3}>Alta / Crítica</option>
+            <option value="Baixa">Baixa</option>
+            <option value="Media">Média</option>
+            <option value="Alta">Alta / Crítica</option>
           </select>
         </div>
 
@@ -131,12 +131,12 @@ export default function TarefaForm({ onSucesso, onCancelar, tarefaParaEditar }: 
           </label>
           <select
             value={situacao}
-            onChange={(e) => setSituacao(Number(e.target.value))}
-            className="w-full h-10 px-3 rounded-md bg-[#0f172a] border border-slate-800 text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+            onChange={(e) => setSituacao(e.target.value)}
+            className="w-full h-10 px-3 rounded-md bg-[#0f172a] border border-slate-800 text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm cursor-pointer"
           >
-            <option value={1}>A Fazer (Em Aberto)</option>
-            <option value={2}>Em Andamento</option>
-            <option value={3}>Concluída</option>
+            <option value="Pendente">A Fazer (Em Aberto)</option>
+            <option value="EmAndamento">Em Andamento</option>
+            <option value="Concluido">Concluída</option>
           </select>
         </div>
       </div>
@@ -148,7 +148,7 @@ export default function TarefaForm({ onSucesso, onCancelar, tarefaParaEditar }: 
         <select
           value={usuarioId}
           onChange={(e) => setUsuarioId(Number(e.target.value))}
-          className="w-full h-10 px-3 rounded-md bg-[#0f172a] border border-slate-800 text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+          className="w-full h-10 px-3 rounded-md bg-[#0f172a] border border-slate-800 text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm cursor-pointer"
         >
           <option value={0} className="bg-[#131b2e] text-slate-400">
             Selecione um usuário...
@@ -174,11 +174,11 @@ export default function TarefaForm({ onSucesso, onCancelar, tarefaParaEditar }: 
           type="button"
           variant="ghost"
           onClick={onCancelar}
-          className="text-slate-400 hover:text-white hover:bg-slate-800"
+          className="text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer"
         >
           Cancelar
         </Button>
-        <Button type="submit" disabled={salvando} className="bg-blue-600 hover:bg-blue-700 text-white font-medium">
+        <Button type="submit" disabled={salvando} className="bg-blue-600 hover:bg-blue-700 text-white font-medium cursor-pointer">
           {salvando ? "Salvando..." : isEdicao ? "Salvar Alterações" : "Cadastrar Tarefa"}
         </Button>
       </div>

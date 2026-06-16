@@ -45,7 +45,7 @@ export default function ConfirmDeleteModal({
             variant="ghost"
             disabled={isLoading}
             onClick={onClose}
-            className="text-slate-400 hover:text-white hover:bg-slate-800 text-xs"
+            className="text-slate-400 hover:text-white hover:bg-slate-800 text-xs cursor-pointer"
           >
             Cancelar
           </Button>
@@ -53,7 +53,7 @@ export default function ConfirmDeleteModal({
             type="button"
             disabled={isLoading}
             onClick={onConfirm}
-            className="bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold px-5 shadow-lg shadow-rose-600/10"
+            className="bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold px-5 shadow-lg shadow-rose-600/10 cursor-pointer"
           >
             {isLoading ? "Excluindo..." : "Sim, Excluir"}
           </Button>

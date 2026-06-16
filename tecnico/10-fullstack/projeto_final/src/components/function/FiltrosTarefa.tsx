@@ -39,13 +39,14 @@ export const usuarioEndpoints = {
   }
 };
 
+
+
 export default function FiltrosTarefas({
   isOpen,
   onClose,
-  onFiltrosChange,
   onPesquisar,
   initialFiltros
-}: FiltrosTarefasProps) {
+}: Omit<FiltrosTarefasProps, 'onFiltrosChange'> & { onFiltrosChange?: any }) {
 
   const [filtros, setFiltros] = useState<FiltrosTarefasData>(() => {
     return initialFiltros || {
@@ -62,8 +63,6 @@ export default function FiltrosTarefas({
   const [opcoesUsuarios, setOpcoesUsuarios] = useState<OpcaoFiltro[]>([]);
 
   useEffect(() => {
-    if (!isOpen) return;
-
     async function carregarDicionariosDoBackend() {
       try {
         const [situacoesDoBanco, prioridadesDoBanco, respostaUsuarios] = await Promise.all([
@@ -89,7 +88,7 @@ export default function FiltrosTarefas({
     }
 
     carregarDicionariosDoBackend();
-  }, [isOpen]);
+  }, []); 
 
   useEffect(() => {
     if (initialFiltros) {
@@ -99,7 +98,6 @@ export default function FiltrosTarefas({
 
   const aplicarMudancaFiltro = (novosFiltros: FiltrosTarefasData) => {
     setFiltros(novosFiltros);
-    onFiltrosChange(novosFiltros);
     onPesquisar(novosFiltros);
   };
 
@@ -118,7 +116,7 @@ export default function FiltrosTarefas({
       <button 
         type="button" 
         onClick={onClose} 
-        className="absolute top-4 right-4 text-slate-500 hover:text-slate-300 transition-colors"
+        className="absolute top-4 right-4 text-slate-500 hover:text-slate-300 transition-colors cursor-pointer"
       >
         <X size={16} />
       </button>
@@ -179,7 +177,7 @@ export default function FiltrosTarefas({
           type="date" 
           value={filtros.dataMinima}
           onChange={(e) => aplicarMudancaFiltro({ ...filtros, dataMinima: e.target.value })}
-          className="bg-[#090d16] border-slate-800 text-xs h-8 text-slate-400 dark:[color-scheme:dark] focus-visible:ring-blue-500/50" 
+          className="bg-[#090d16] border-slate-800 text-xs h-8 text-slate-200 focus-visible:ring-blue-500/50 cursor-pointer [color-scheme:dark] [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-80 hover:[&::-webkit-calendar-picker-indicator]:opacity-100 transition-opacity"
         />
       </div>
 

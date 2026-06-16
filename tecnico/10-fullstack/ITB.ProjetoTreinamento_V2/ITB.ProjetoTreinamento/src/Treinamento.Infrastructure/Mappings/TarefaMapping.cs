@@ -20,7 +20,6 @@ public class TarefaMapping : IEntityTypeConfiguration<Tarefa>
             .HasColumnType("VARCHAR(150)")
             .IsRequired();
 
-        // Salva os Enums como INT no Postgres
         builder.Property(t => t.Situacao)
             .HasColumnType("INT")
             .IsRequired();
@@ -33,10 +32,9 @@ public class TarefaMapping : IEntityTypeConfiguration<Tarefa>
             .HasColumnType("TIMESTAMP") 
             .IsRequired();
 
-        // 2. MAPEAMENTO DA CHAVE ESTRANGEIRA (FK)
-        builder.HasOne(t => t.UsuarioResponsavel) // A tarefa tem um usuário responsável
-            .WithMany()                           // O usuário pode ter muitas tarefas (ou .WithMany(u => u.Tarefa) se tiver a lista lá)
-            .HasForeignKey(t => t.UsuarioId)      // O campo que guarda a chave na tabela de tarefas
-            .OnDelete(DeleteBehavior.Restrict);   // Impede de deletar um usuário se ele tiver tarefas pendentes
+        builder.HasOne(t => t.UsuarioResponsavel) 
+            .WithMany()                        
+            .HasForeignKey(t => t.UsuarioId)    
+            .OnDelete(DeleteBehavior.Restrict); 
     }
 }

@@ -2,15 +2,15 @@ import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { LayoutDashboard, CheckSquare, Calendar, FolderKanban, Users, Settings, Power, ClipboardList, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
-// import { useNavigate } from 'react-router-dom';
 
 const sidebarItemVariants = cva(
-  'w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer group',
+  'w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group',
   {
     variants: {
       variant: {
-        default: 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/30',
-        active: 'text-blue-400 bg-blue-500/10 font-semibold border-r-2 border-blue-500 rounded-r-none lg:rounded-xl lg:border-none',
+        default: 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/30 cursor-pointer',
+        active: 'text-blue-400 bg-blue-500/10 font-semibold border-r-2 border-blue-500 rounded-r-none lg:rounded-xl lg:border-none cursor-pointer',
+        disabled: 'text-slate-600 opacity-40 cursor-default select-none pointer-events-none',
       },
     },
     defaultVariants: {
@@ -32,6 +32,7 @@ const SidebarItem = React.forwardRef<HTMLButtonElement, SidebarItemProps>(
       <button
         ref={ref}
         type="button"
+        disabled={variant === 'disabled'}
         className={cn(sidebarItemVariants({ variant, className }))}
         {...props}
       >      
@@ -70,7 +71,6 @@ export default function SidebarComponent({
         </div>
         <hr className="border-slate-600/60 mb-3"/>
 
-        {/* PRINCIPAL */}
         <div className="space-y-1 mb-6">
           <p className="text-[10px] font-bold tracking-wider text-slate-500 px-3 mb-2 uppercase">Principal</p>
           <SidebarItem 
@@ -89,41 +89,38 @@ export default function SidebarComponent({
           </SidebarItem>
           <SidebarItem 
             icon={Calendar} 
-            variant={currentPath === '/my-week' ? 'active' : 'default'}
-            onClick={() => onNavigate?.('/my-week')}
+            variant="disabled"            
           >
             Minha Semana
           </SidebarItem>
+
           <SidebarItem 
             icon={FolderKanban} 
-            variant={currentPath === '/projects' ? 'active' : 'default'}
-            onClick={() => onNavigate?.('/projects')}
+            variant="disabled"
           >
             Projetos
           </SidebarItem>
         </div>
 
-        {/* ADM */}
         <div className="space-y-1">
           <p className="text-[10px] font-bold tracking-wider text-slate-500 px-3 mb-2 uppercase">Administração</p>
+          
           <SidebarItem 
             icon={Users} 
-            variant={currentPath === '/users' ? 'active' : 'default'}
-            onClick={() => onNavigate?.('/users')}
+            variant="disabled"
           >
             Usuários
           </SidebarItem>
+
           <SidebarItem 
             icon={Settings} 
-            variant={currentPath === '/settings' ? 'active' : 'default'}
-            onClick={() => onNavigate?.('/settings')}
+            variant="disabled"
           >
             Configurações
           </SidebarItem>
         </div>
       </div>
 
-      {/* RODAPÉ */}
       <div className="border-t border-slate-600/60 pt-4 flex items-center justify-between px-2 group">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 bg-blue-500/20 text-blue-400 rounded-full flex items-center justify-center font-bold text-xs border border-blue-500/20">

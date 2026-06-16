@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Treinamento.Domain.Aggregates.Tarefa.Interfaces;
 using Treinamento.Infrastructure.Persistence.Repositories;
+using Treinamento.Infrastructure.Queries;
 
 namespace Treinamento.IoC;
 
@@ -45,7 +46,9 @@ public static class DependencyInjection
         services.AddScoped<CriarTarefaHandler>();
         services.AddScoped<EditarTarefaHandler>();
         services.AddScoped<ExcluirTarefaHandler>();
-
+        services.AddScoped<ITarefaHistoricoRepository, TarefaHistoricoRepository>();
+        services.AddScoped<TarefaQueryService>();
+        
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

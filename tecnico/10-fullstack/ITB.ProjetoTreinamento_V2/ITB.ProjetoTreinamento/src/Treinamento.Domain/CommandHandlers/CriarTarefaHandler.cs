@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using Treinamento.Domain.Aggregates.Tarefa;
 using Treinamento.Domain.Aggregates.Tarefa.Interfaces;
 using Treinamento.Domain.Aggregates.Usuarios;
@@ -9,11 +11,16 @@ public class CriarTarefaHandler
 {
     private readonly ITarefaRepository _tarefaRepository;
     private readonly IUsuarioRepository _usuarioRepository;
+    private readonly ITarefaHistoricoRepository _historicoRepository; 
 
-    public CriarTarefaHandler(ITarefaRepository tarefaRepository, IUsuarioRepository usuarioRepository)
+    public CriarTarefaHandler(
+        ITarefaRepository tarefaRepository, 
+        IUsuarioRepository usuarioRepository,
+        ITarefaHistoricoRepository historicoRepository)
     {
         _tarefaRepository = tarefaRepository;
         _usuarioRepository = usuarioRepository;
+        _historicoRepository = historicoRepository;
     }
 
     public async Task<bool> ExecutarAsync(CriarTarefaCommand request)
@@ -33,6 +40,9 @@ public class CriarTarefaHandler
         );
 
         await _tarefaRepository.AdicionarAsync(novaTarefa);
+
+        var historico = new TarefaHistorico(novaTarefa, "Criar");
+        await _historicoRepository.AdicionarAsync(historico);
 
         return true;
     }

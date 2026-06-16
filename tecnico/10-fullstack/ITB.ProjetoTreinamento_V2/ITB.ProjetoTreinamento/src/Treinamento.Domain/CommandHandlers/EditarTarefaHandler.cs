@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Treinamento.Domain.Commands;
+using Treinamento.Domain.Aggregates.Tarefa;
 using Treinamento.Domain.Aggregates.Tarefa.Interfaces;
 
 namespace Treinamento.Domain.Handlers;
@@ -8,10 +9,12 @@ namespace Treinamento.Domain.Handlers;
 public class EditarTarefaHandler
 {
     private readonly ITarefaRepository _tarefaRepository;
+    private readonly ITarefaHistoricoRepository _historicoRepository;
 
-    public EditarTarefaHandler(ITarefaRepository tarefaRepository)
+    public EditarTarefaHandler(ITarefaRepository tarefaRepository, ITarefaHistoricoRepository historicoRepository)
     {
         _tarefaRepository = tarefaRepository;
+        _historicoRepository = historicoRepository;
     }
 
     public async Task<bool> ExecutarAsync(EditarTarefaCommand command)
@@ -23,26 +26,17 @@ public class EditarTarefaHandler
             throw new Exception("Tarefa não encontrada para atualização.");
         }
 
-        var tipoTarefa = typeof(Treinamento.Domain.Aggregates.Tarefa.Tarefa);
-
-        tipoTarefa.GetProperty("Nome")?.SetValue(tarefa, command.Nome);
-        tipoTarefa.GetProperty("UsuarioId")?.SetValue(tarefa, command.UsuarioId);
-
-        var propriedadeSituacao = tipoTarefa.GetProperty("Situacao");
-        if (propriedadeSituacao != null)
-        {
-            var enumSituacao = Enum.ToObject(propriedadeSituacao.PropertyType, command.Situacao);
-            propriedadeSituacao.SetValue(tarefa, enumSituacao);
-        }
-
-        var propriedadeprioridade = tipoTarefa.GetProperty("Prioridade");
-        if (propriedadeprioridade != null)
-        {
-            var enumPrioridade = Enum.ToObject(propriedadeprioridade.PropertyType, command.Prioridade);
-            propriedadeprioridade.SetValue(tarefa, enumPrioridade);
-        }
+        tarefa.AtualizarDados(
+            command.Nome,
+            (TipoSituacao)command.Situacao,
+            (TipoPrioridade)command.Prioridade,
+            command.UsuarioId
+        );
 
         await _tarefaRepository.AtualizarAsync(tarefa);
+
+        var historico = new TarefaHistorico(tarefa, "Editar");
+        await _historicoRepository.AdicionarAsync(historico);
 
         return true;
     }

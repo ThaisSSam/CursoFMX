@@ -2,13 +2,13 @@ import { useEffect, useState, useMemo } from "react";
 import SidebarComponent from "../../components/Sidebar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { SlidersHorizontal, Download, Plus, Search } from "lucide-react";
+import { SlidersHorizontal, Plus, Search } from "lucide-react";
 import { useReactTable, getCoreRowModel, getPaginationRowModel, type PaginationState, type SortingState } from "@tanstack/react-table";
 
 import { tarefaEndpoints } from "@/services/endpoints/tarefas";
 import type { Tarefa } from "@/services/endpoints/tarefas";
 import { type LogoutProps } from "@/services/endpoints/login";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CustomToast from "@/components/CustomToast";
 import { BaseDataTable } from "@/contexts/BaseDataTable";
 import { createTarefaColumns } from "./table/tableConfig";
@@ -26,7 +26,6 @@ export default function TarefasScreen({ onLogout }: LogoutProps) {
   const [exibirFiltros, setExibirFiltros] = useState(false);
   const [busca, setBusca] = useState("");
   const navigate = useNavigate();
-  const location = useLocation();
   const [modalVisualizarAberto, setModalVisualizarAberto] = useState(false);
   const [modalEditarAberto, setModalEditarAberto] = useState(false);
   const [modalExcluirAberto, setModalExcluirAberto] = useState(false);
@@ -112,7 +111,7 @@ export default function TarefasScreen({ onLogout }: LogoutProps) {
 
       setToastConfig({
         title: "Sucesso!",
-        message: "Tarefa removida com sucesso do banco de dados.",
+        message: "Tarefa excluída com sucesso",
         type: "success"
       });
 
@@ -152,9 +151,6 @@ export default function TarefasScreen({ onLogout }: LogoutProps) {
     getPaginationRowModel: getPaginationRowModel(),
   });
 
-  if (carregando) {
-    return <div className="flex h-screen items-center justify-center bg-[#090d16] text-white">Carregando tarefas do banco de dados...</div>;
-  }
 
   return (
     <div className="text-white bg-[#0f172a] h-screen max-h-screen w-screen flex flex-row font-sans selection:bg-blue-500/30 overflow-hidden">
@@ -176,11 +172,11 @@ export default function TarefasScreen({ onLogout }: LogoutProps) {
             <span className="font-semibold text-slate-200 text-lg">Tarefas</span>
           </div>
           <div className="flex items-center gap-3">
-            <Button variant="outline" className="border-slate-800 bg-[#131b2e] text-slate-300 hover:bg-slate-800 text-xs gap-2 h-9">
+            {/* <Button variant="outline" className="border-slate-800 bg-[#131b2e] text-slate-300 hover:bg-slate-800 text-xs gap-2 h-9">
               <Download size={14} /> Exportar CSV
-            </Button>
+            </Button> */}
             <Button
-              className="bg-blue-600 hover:bg-blue-700 text-white text-xs gap-2 h-9 font-medium rounded-lg shadow-lg shadow-blue-600/10"
+              className="bg-blue-600 cursor-pointer hover:bg-blue-700 text-white text-xs gap-2 h-9 font-medium rounded-lg shadow-lg shadow-blue-600/10"
               onClick={() => navigate("/tarefas/cadastro")}
             >
               <Plus size={14} /> Adicionar tarefa
@@ -207,7 +203,7 @@ export default function TarefasScreen({ onLogout }: LogoutProps) {
             <Button
               variant="outline"
               onClick={() => setExibirFiltros(!exibirFiltros)}
-              className={`border-slate-800 bg-[#131b2e] text-slate-300 hover:bg-slate-800 h-9 text-xs gap-2 ${exibirFiltros ? 'border-blue-500 text-blue-400' : ''}`}
+              className={`border-slate-800 bg-[#131b2e] text-slate-300 hover:bg-slate-800 h-9 text-xs gap-2 cursor-pointer ${exibirFiltros ? 'border-blue-500 text-blue-400' : ''}`}
             >
               <SlidersHorizontal size={14} /> Filtros
             </Button>
@@ -217,7 +213,7 @@ export default function TarefasScreen({ onLogout }: LogoutProps) {
                 setBusca(""); 
                 setFiltrosAtivos({ pesquisaGenerica: "", situacao: [], prioridade: [], responsavelBusca: "", dataMinima: "" }); 
               }} 
-              className="text-slate-500 hover:text-slate-300 text-xs h-9"
+              className="text-slate-500 hover:text-slate-300 text-xs h-9 cursor-pointer"
             >
               × Limpar
             </Button>
@@ -227,29 +223,34 @@ export default function TarefasScreen({ onLogout }: LogoutProps) {
             isOpen={exibirFiltros}
             onClose={() => setExibirFiltros(false)}
             initialFiltros={filtrosAtivos}
-            onFiltrosChange={(novosFiltros) => setFiltrosAtivos(novosFiltros)}
             onPesquisar={(novosFiltros) => setFiltrosAtivos(novosFiltros)}
           />
 
           <div className="rounded-xl border border-slate-800 bg-[#131b2e] flex-1 min-h-0">
-            <BaseDataTable
-              table={table}
-              isLoading={false}
-              enablePagination={true}
-              enableServerSidePagination={true}
-              enableColumnPinning={true}
-              enableColumnResizing={true}
-              alturaAutomatica={false}
-              rolagemHorizontalExterna={false}
-              columnLabels={{
-                codigo: 'Código',
-                nome: 'Título',
-                responsavel: 'Responsável',
-                prioridade: 'Prioridade',
-                situacao: 'Situação',
-                dataCriacao: 'Data Criação'
-              }}
-            />
+            {carregando ? (
+              <div className="flex h-full w-full items-center justify-center text-xs text-slate-400 italic">
+                Atualizando dados da grid...
+              </div>
+            ) : (
+              <BaseDataTable
+                table={table}
+                isLoading={false}
+                enablePagination={true}
+                enableServerSidePagination={true}
+                enableColumnPinning={true}
+                enableColumnResizing={true}
+                alturaAutomatica={false}
+                rolagemHorizontalExterna={false}
+                columnLabels={{
+                  codigo: 'Código',
+                  nome: 'Título',
+                  responsavel: 'Responsável',
+                  prioridade: 'Prioridade',
+                  situacao: 'Situação',
+                  dataCriacao: 'Data Criação'
+                }}
+              />
+            )}
           </div>
         </main>
       </div>

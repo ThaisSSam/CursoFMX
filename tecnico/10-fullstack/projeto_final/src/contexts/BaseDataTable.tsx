@@ -148,7 +148,6 @@ export function BaseDataTable<TData>({
         </Table>
       </div>
 
-      {/* FOOTER PAGINAÇÃO */}
       {enablePagination && (
         <div className="flex-shrink-0 flex items-center justify-between px-4 bg-[#111827]/20 border-t border-slate-800 h-12">
           <div className="flex-1 text-xs text-slate-500">
@@ -165,7 +164,7 @@ export function BaseDataTable<TData>({
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setIsPageSizeDropdownOpen(!isPageSizeDropdownOpen)}
-                  className="flex items-center gap-1 bg-[#131b2e] border border-slate-800 rounded px-2 py-1 text-slate-300 outline-none"
+                  className="flex items-center gap-1 bg-[#131b2e] border border-slate-800 rounded px-2 py-1 text-slate-300 outline-none cursor-pointer"
                 >
                   {table.getState().pagination.pageSize}
                   <ChevronDown size={12} />
@@ -179,7 +178,7 @@ export function BaseDataTable<TData>({
                           table.setPageSize(size);
                           setIsPageSizeDropdownOpen(false);
                         }}
-                        className="w-full text-left px-2 py-1 hover:bg-slate-800 text-slate-300 text-xs"
+                        className="w-full text-left px-2 py-1 hover:bg-slate-800 text-slate-300 text-xs "
                       >
                         {size} linhas
                       </button>
@@ -195,7 +194,7 @@ export function BaseDataTable<TData>({
               <Button
                 variant="outline"
                 size="icon"
-                className="w-7 h-7 bg-[#131b2e] border-slate-800 text-slate-400 hover:bg-slate-800"
+                className="w-7 h-7 bg-[#131b2e] border-slate-800 text-slate-400 hover:bg-slate-800 cursor-pointer"
                 onClick={() => table.previousPage()}
                 disabled={!table.getCanPreviousPage()}
               >
@@ -204,7 +203,7 @@ export function BaseDataTable<TData>({
               <Button
                 variant="outline"
                 size="icon"
-                className="w-7 h-7 bg-[#131b2e] border-slate-800 text-slate-400 hover:bg-slate-800"
+                className="w-7 h-7 bg-[#131b2e] border-slate-800 text-slate-400 hover:bg-slate-800 cursor-pointer"
                 onClick={() => table.nextPage()}
                 disabled={!table.getCanNextPage()}
               >

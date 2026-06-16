@@ -9,9 +9,6 @@ internal static class CommandsDependencyInjection
     internal static IServiceCollection AddCommands(this IServiceCollection services)
     {
         services.AddScoped<IHandler<PingCommand>, PingCommandHandler>();
-
-        // Módulo 1: registrar handlers de autenticação aqui (ex.: LoginCommandHandler)
-
         return services;
     }
 }

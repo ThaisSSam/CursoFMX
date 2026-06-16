@@ -1,11 +1,5 @@
 using Treinamento.Domain.Core.Entities;
-
 namespace Treinamento.Domain.Aggregates.Usuarios;
-
-/// <summary>
-/// Agregado de usuário — base do Módulo 1 (US001).
-/// No boilerplate contém apenas <see cref="Id"/>; os alunos acrescentam e-mail, senha, situação, etc.
-/// </summary>
 public class Usuario : Entity<Usuario>
 {
     public string Nome { get; private set; }
@@ -66,7 +60,6 @@ public class Usuario : Entity<Usuario>
             return false;
         }
 
-        // usa verify do BCrypt diretamente aqui dentro
         bool senhaValida = BCrypt.Net.BCrypt.Verify(senhaInformada.Trim(), SenhaHash);
 
         if (!senhaValida)

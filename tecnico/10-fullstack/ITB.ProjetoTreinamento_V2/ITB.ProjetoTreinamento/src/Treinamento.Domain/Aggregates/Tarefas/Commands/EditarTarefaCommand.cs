@@ -1,11 +1,20 @@
 using System;
+using Treinamento.Domain.Aggregates.Tarefa;
 
 namespace Treinamento.Domain.Commands;
 
-public record EditarTarefaCommand(
-    int Id, 
-    string Nome, 
-    int Situacao, 
-    int Prioridade, 
-    int UsuarioId
-);
+using System.Text.Json.Serialization;
+
+public class EditarTarefaCommand
+{
+    public int Id { get; set; }
+    public string Nome { get; set; } = "";
+
+    [JsonConverter(typeof(JsonConversorStringOuInt))] 
+    public int Prioridade { get; set; }
+
+    [JsonConverter(typeof(JsonConversorStringOuInt))] 
+    public int Situacao { get; set; }
+
+    public int UsuarioId { get; set; }
+}
