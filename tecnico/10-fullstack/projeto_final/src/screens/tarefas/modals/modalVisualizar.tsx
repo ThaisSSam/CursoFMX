@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, User } from "lucide-react"; 
 import { tarefaEndpoints, type Tarefa, type TarefaHistorico } from "@/services/endpoints/tarefas";
 import { usuarioEndpoints } from "@/components/function/FiltrosTarefa";
+import customToast from "@/components/CustomToast"; 
 
 interface ViewTarefaModalProps {
   isOpen: boolean;
@@ -16,41 +17,51 @@ export default function ViewTarefaModal({ isOpen, onClose, tarefa }: ViewTarefaM
   const [carregandoHistorico, setCarregandoHistorico] = useState(false);
   const [mapaUsuarios, setMapaUsuarios] = useState<Record<string, string>>({});
 
+  const exibirToastErro = (titulo: string, mensagem: string) => {
+    const disparar = (typeof customToast === "function") ? customToast : (customToast as any).default;
+    
+    if (typeof disparar === "function") {
+      disparar({ title: titulo, message: mensagem, type: "error", onClose: () => { } });
+    } else if ((customToast as any).error) {
+      (customToast as any).error({ title: titulo, message: mensagem });
+    }
+  };
+
+  const buscarLogs = useCallback(async (codigoTarefa: number) => {
+    try {
+      setCarregandoHistorico(true);
+      const [logs, respostaUsuarios] = await Promise.all([
+        tarefaEndpoints.obterHistoricoPorTarefa(codigoTarefa),
+        usuarioEndpoints.obterTodosUsuarios()
+      ]);
+      const dadosUsuarios = (respostaUsuarios as any)?.data ?? (respostaUsuarios as any)?.dados ?? respostaUsuarios ?? [];
+      const listaNormalizada = Array.isArray(dadosUsuarios) ? dadosUsuarios : [];
+      
+      const dicionario: Record<string, string> = {};
+      listaNormalizada.forEach((u: any) => {
+        const id = String(u.id ?? u.Id);
+        const nomeBruto = u.nome ?? u.Nome ?? u.email ?? u.Email ?? `Usuário ${id}`;
+        dicionario[id] = nomeBruto.includes('@') ? nomeBruto.split('@')[0] : nomeBruto;
+      });
+
+      setMapaUsuarios(dicionario);
+      setHistorico(logs);
+    } catch (error: any) {
+      const mensagemErro = error.response?.data?.errors?.[0] || error.message || "Erro ao obter histórico.";
+      exibirToastErro("Erro de Histórico", mensagemErro);
+    } finally {
+      setCarregandoHistorico(false);
+    }
+  }, []);
+
   useEffect(() => {
     if (!isOpen || !tarefa?.codigo) {
       setHistorico([]);
       return;
     }
 
-    async function buscarLogs() {
-      try {
-        setCarregandoHistorico(true);
-        const [logs, respostaUsuarios] = await Promise.all([
-          tarefaEndpoints.obterHistoricoPorTarefa(tarefa!.codigo),
-          usuarioEndpoints.obterTodosUsuarios()
-        ]);
-        const dadosUsuarios = (respostaUsuarios as any)?.data ?? (respostaUsuarios as any)?.dados ?? respostaUsuarios ?? [];
-        const listaNormalizada = Array.isArray(dadosUsuarios) ? dadosUsuarios : [];
-        
-        const dicionario: Record<string, string> = {};
-        listaNormalizada.forEach((u: any) => {
-          const id = String(u.id ?? u.Id);
-          const nomeBruto = u.nome ?? u.Nome ?? u.email ?? u.Email ?? `Usuário ${id}`;
-          dicionario[id] = nomeBruto.includes('@') ? nomeBruto.split('@')[0] : nomeBruto;
-        });
-
-        setMapaUsuarios(dicionario);
-        setHistorico(logs)
-      } catch (error: any) {
-        const mensagemErro = error.response?.data?.errors?.[0] || error.message || "Erro ao obter histórico.";
-        console.error("Erro capturado:", mensagemErro);
-      } finally {
-        setCarregandoHistorico(false);
-      }
-    }
-
-    buscarLogs();
-  }, [isOpen, tarefa]);
+    buscarLogs(tarefa.codigo);
+  }, [isOpen, tarefa, buscarLogs]);
 
   const formatarEnumTexto = (texto: string | undefined) => {
     if (!texto) return "";
@@ -128,8 +139,8 @@ export default function ViewTarefaModal({ isOpen, onClose, tarefa }: ViewTarefaM
                         <p className="text-slate-300 font-medium text-xs pt-0.5">"{log.nome}"</p>
                         
                         <div className="grid grid-cols-2 gap-y-1.5 pt-2 text-[11px] text-slate-400 border-t border-slate-800/30 mt-1.5">
-                          <span>Situação: <strong className="text-slate-300 font-normal">{log.situacao}</strong></span>
-                          <span>Prioridade: <strong className="text-slate-300 font-normal">{log.prioridade}</strong></span>
+                          <span>Situação: <strong className="text-slate-300 font-normal">{formatarEnumTexto(log.situacao)}</strong></span>
+                          <span>Prioridade: <strong className="text-slate-300 font-normal">{formatarEnumTexto(log.prioridade)}</strong></span>
                           
                           <span className="col-span-2 flex items-center gap-1 text-slate-400 pt-0.5">
                             <User size={11} className="text-slate-500" />

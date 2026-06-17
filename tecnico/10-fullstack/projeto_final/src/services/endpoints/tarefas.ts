@@ -39,8 +39,7 @@ export const tarefaEndpoints = {
       return response.data;
     } catch (error: any) {
       const mensagem = error.response?.data?.errors?.[0] || error.message || 'Erro ao carregar a listagem de tarefas.';
-      console.error(mensagem);
-      throw error;
+      throw new Error(mensagem);
     }
   },
   
@@ -92,9 +91,9 @@ export const tarefaEndpoints = {
         id: String(item.id ?? item.Id),
         label: item.label ?? item.Label
       }));
-    } catch (error) {
-      console.error("Falha ao buscar situações do back-end", error);
-      return [];
+    } catch (error: any) {
+      const mensagem = error.response?.data?.errors?.[0] || error.message || 'Falha ao buscar situações do back-end.';
+      throw new Error(mensagem);
     }
   },
 
@@ -106,9 +105,9 @@ export const tarefaEndpoints = {
         id: String(item.id ?? item.Id),
         label: item.label ?? item.Label
       }));
-    } catch (error) {
-      console.error("Falha ao buscar prioridades do back-end", error);
-      return [];
+    } catch (error: any) {
+      const mensagem = error.response?.data?.errors?.[0] || error.message || 'Falha ao buscar prioridades do back-end.';
+      throw new Error(mensagem);
     }
   },
 

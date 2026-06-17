@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { X } from 'lucide-react';
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { tarefaEndpoints } from "@/services/endpoints/tarefas"; 
 import api from '@/services/config';
+import customToast from "@/components/CustomToast";
 
 export interface FiltrosTarefasData {
   pesquisaGenerica: string;
@@ -39,8 +40,6 @@ export const usuarioEndpoints = {
   }
 };
 
-
-
 export default function FiltrosTarefas({
   isOpen,
   onClose,
@@ -62,33 +61,48 @@ export default function FiltrosTarefas({
   const [opcoesPrioridade, setOpcoesPrioridade] = useState<OpcaoFiltro[]>([]);
   const [opcoesUsuarios, setOpcoesUsuarios] = useState<OpcaoFiltro[]>([]);
 
-  useEffect(() => {
-    async function carregarDicionariosDoBackend() {
-      try {
-        const [situacoesDoBanco, prioridadesDoBanco, respostaUsuarios] = await Promise.all([
-          tarefaEndpoints.obterOpcoesSituacao(),
-          tarefaEndpoints.obterOpcoesPrioridade(),
-          usuarioEndpoints.obterTodosUsuarios()
-        ]);
+  const exibirToastErro = (titulo: string, mensagem: string) => {
+    const disparar = (typeof customToast === "function") ? customToast : (customToast as any).default;
+    
+    if (typeof disparar === "function") {
+      disparar({ title: titulo, message: mensagem, type: "error", onClose: () => { } });
+    } else if ((customToast as any).error) {
+      (customToast as any).error({ title: titulo, message: mensagem });
+    }
+  };
 
-        if (situacoesDoBanco.length > 0) setOpcoesSituacao(situacoesDoBanco);
-        if (prioridadesDoBanco.length > 0) setOpcoesPrioridade(prioridadesDoBanco);
-
-        const dadosUsuarios = (respostaUsuarios as any)?.data ?? (respostaUsuarios as any)?.dados ?? respostaUsuarios ?? [];
-        const listaNormalizada = Array.isArray(dadosUsuarios) ? dadosUsuarios : [];
-
-        setOpcoesUsuarios(listaNormalizada.map((u: any) => ({
-          id: String(u.id ?? u.Id),
-          label: u.nome ?? u.Nome ?? u.email ?? u.Email ?? `Usuário ${u.id}`
-        })));
-
-      } catch (error) {
-        console.error("Falha ao carregar dicionários de filtros", error);
-      }
+  const carregarDicionariosDoBackend = useCallback(async () => {
+    if (opcoesSituacao.length > 0 || opcoesPrioridade.length > 0 || opcoesUsuarios.length > 0) {
+      return;
     }
 
+    try {
+      const [situacoesDoBanco, prioridadesDoBanco, respostaUsuarios] = await Promise.all([
+        tarefaEndpoints.obterOpcoesSituacao(),
+        tarefaEndpoints.obterOpcoesPrioridade(),
+        usuarioEndpoints.obterTodosUsuarios()
+      ]);
+
+      if (situacoesDoBanco.length > 0) setOpcoesSituacao(situacoesDoBanco);
+      if (prioridadesDoBanco.length > 0) setOpcoesPrioridade(prioridadesDoBanco);
+
+      const dadosUsuarios = (respostaUsuarios as any)?.data ?? (respostaUsuarios as any)?.dados ?? respostaUsuarios ?? [];
+      const listaNormalizada = Array.isArray(dadosUsuarios) ? dadosUsuarios : [];
+
+      setOpcoesUsuarios(listaNormalizada.map((u: any) => ({
+        id: String(u.id ?? u.Id),
+        label: u.nome ?? u.Nome ?? u.email ?? u.Email ?? `Usuário ${u.id}`
+      })));
+
+    } catch (error: any) {
+      const mensagemErro = error.response?.data?.errors?.[0] || error.message || "Falha ao carregar dicionários de filtros.";
+      exibirToastErro("Erro de Carregamento", mensagemErro);
+    }
+  }, [opcoesSituacao.length, opcoesPrioridade.length, opcoesUsuarios.length]);
+
+  useEffect(() => {
     carregarDicionariosDoBackend();
-  }, []); 
+  }, [carregarDicionariosDoBackend]); 
 
   useEffect(() => {
     if (initialFiltros) {

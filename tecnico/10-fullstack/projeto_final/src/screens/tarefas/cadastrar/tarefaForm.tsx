@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { tarefaEndpoints } from "@/services/endpoints/tarefas";
@@ -22,23 +22,29 @@ export default function TarefaForm({ onSucesso, onCancelar, tarefaParaEditar }: 
   const [salvando, setSalvando] = useState(false);
   const [usuarios, setUsuarios] = useState<any[]>([]);
 
-  useEffect(() => {
-    async function carregarUsuarios() {
-      try {
-        const dados = await usuarioEndpoints.obterTodosUsuarios();
-        setUsuarios(dados);
-      } catch (err: any) {
-        const mensagemErro = err.response?.data?.errors?.[0] || err.message || "Erro ao listar responsáveis.";
-
-        if (typeof customToast === "function") {
-          customToast({ title: "Erro", message: mensagemErro, type: "error", onClose: () => { } });
-        } else {
-          (customToast as any).error?.({ title: "Erro", message: mensagemErro });
-        }
-      }
+  const exibirToastErro = (titulo: string, mensagem: string) => {
+    const disparar = (typeof customToast === "function") ? customToast : (customToast as any).default;
+    
+    if (typeof disparar === "function") {
+      disparar({ title: titulo, message: mensagem, type: "error", onClose: () => { } });
+    } else if ((customToast as any).error) {
+      (customToast as any).error({ title: titulo, message: mensagem });
     }
-    carregarUsuarios();
+  };
+
+  const carregarUsuarios = useCallback(async () => {
+    try {
+      const dados = await usuarioEndpoints.obterTodosUsuarios();
+      setUsuarios(dados);
+    } catch (err: any) {
+      const mensagemErro = err.response?.data?.errors?.[0] || err.message || "Erro ao listar responsáveis.";
+      exibirToastErro("Erro ao Carregar", mensagemErro);
+    }
   }, []);
+
+  useEffect(() => {
+    carregarUsuarios();
+  }, [carregarUsuarios]);
 
   useEffect(() => {
     if (tarefaParaEditar) {
@@ -79,24 +85,18 @@ export default function TarefaForm({ onSucesso, onCancelar, tarefaParaEditar }: 
           type: "success",
           onClose: () => { }
         });
+      } else if ((customToast as any).success) {
+        (customToast as any).success({
+          title: "Sucesso!",
+          message: isEdicao ? "Tarefa alterada com sucesso." : "Tarefa cadastrada com sucesso."
+        });
       }
+      
       await onSucesso();
 
     } catch (err: any) {
       const mensagem = err.response?.data?.errors?.[0] || err.message || "Erro ao salvar os dados da tarefa.";
-      
-      const dispararToastErro = (typeof customToast === "function") 
-        ? customToast 
-        : (customToast as any).default;
-
-      if (typeof dispararToastErro === "function") {
-        dispararToastErro({ 
-          title: "Erro ao Salvar", 
-          message: mensagem, 
-          type: "error", 
-          onClose: () => { } 
-        });
-      }
+      exibirToastErro("Erro ao Salvar", mensagem);
     } finally {
       setSalvando(false);
     }
